@@ -1,27 +1,7 @@
 {
-  "buildCommand": "echo \"No build needed for static HTML\"",
-  "outputDirectory": "website",
-  "devCommand": "echo \"No dev command needed\"",
-  "installCommand": "echo \"No install needed\"",
-  "functions": {
-    "api/send-email.js": {
-      "runtime": "nodejs@18"
-    },
-    "api/get-form.js": {
-      "runtime": "nodejs@18"
-    },
-    "api/submit-form.js": {
-      "runtime": "nodejs@18"
-    }
-  },
-  "rewrites": [
-    {
-      "source": "/",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/forms/:token",
-      "destination": "/forms.html"
-    }
-  ]
+  "buildCommand": "npm run build",
+  "outputDirectory": "renderer/dist",
+  "devCommand": "npm run dev",
+  "installCommand": "npm install",
+  "cwd": "renderer"
 }
