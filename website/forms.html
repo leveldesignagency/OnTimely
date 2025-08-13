@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guest Form - OnTimely</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .form-container {
+            padding: 40px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-group.required label::after {
+            content: " *";
+            color: #e74c3c;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .success-message {
+            display: none;
+            background: #d4edda;
+            color: #155724;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .error-message {
+            display: none;
+            background: #f8d7da;
+            color: #721c24;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 id="formTitle">Loading Form...</h1>
+            <p id="formDescription">Please wait while we load your form...</p>
+        </div>
+
+        <div class="form-container">
+            <div id="successMessage" class="success-message">
+                <h3>✅ Form Submitted Successfully!</h3>
+                <p>Thank you for your response. We've received your information.</p>
+            </div>
+
+            <div id="errorMessage" class="error-message">
+                <h3>❌ Error</h3>
+                <p id="errorText">Something went wrong. Please try again.</p>
+            </div>
+
+            <form id="guestForm">
+                <div id="formFields">
+                    <!-- Form fields will be dynamically generated here -->
+                </div>
+
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    Submit Form
+                </button>
+            </form>
+
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Submitting your form...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Get token from URL
+        const token = window.location.pathname.split('/forms/')[1];
+        
+        if (!token) {
+            showError('Invalid form link. Please check your email.');
+            return;
+        }
+
+        // Load form data
+        async function loadForm() {
+            try {
+                const response = await fetch(`/api/get-form?token=${token}`);
+                
+                if (!response.ok) {
+                    throw new Error('Form not found');
+                }
+
+                const formData = await response.json();
+                
+                // Update header
+                document.getElementById('formTitle').textContent = formData.title || 'Guest Form';
+                document.getElementById('formDescription').textContent = formData.description || 'Please fill out the form below.';
+                
+                // Generate form fields
+                generateFormFields(formData.fields || []);
+                
+            } catch (error) {
+                console.error('Error loading form:', error);
+                showError('Failed to load form. Please check your link and try again.');
+            }
+        }
+
+        // Generate form fields based on configuration
+        function generateFormFields(fields) {
+            const formFieldsContainer = document.getElementById('formFields');
+            
+            if (fields.length === 0) {
+                formFieldsContainer.innerHTML = '<p>No fields configured for this form.</p>';
+                return;
+            }
+
+            const fieldConfigs = {
+                prefix: { type: 'select', options: ['Mr', 'Mrs', 'Ms', 'Mx', 'Dr', 'Prof'], label: 'Prefix' },
+                gender: { type: 'select', options: ['Male', 'Female', 'Transgender', 'Non Binary', 'Other', 'Prefer Not to Say'], label: 'Gender' },
+                firstName: { type: 'text', label: 'First Name', required: true, placeholder: 'Enter your first name' },
+                middleName: { type: 'text', label: 'Middle Name', placeholder: 'Enter your middle name' },
+                lastName: { type: 'text', label: 'Last Name', required: true, placeholder: 'Enter your last name' },
+                dob: { type: 'date', label: 'Date of Birth' },
+                countryCode: { type: 'tel', label: 'Contact Number', required: true, placeholder: 'Enter your phone number' },
+                email: { type: 'email', label: 'Email', required: true, placeholder: 'Enter your email address' },
+                idType: { type: 'select', options: ['Passport', 'Driving License', 'National ID', 'Other'], label: 'ID Type', required: true },
+                idNumber: { type: 'text', label: 'ID Number', required: true, placeholder: 'Enter your ID number' },
+                idCountry: { type: 'text', label: 'Country of Origin', placeholder: 'Enter your country' },
+                nextOfKinName: { type: 'text', label: 'Next of Kin Name', placeholder: 'Enter emergency contact name' },
+                nextOfKinEmail: { type: 'email', label: 'Next of Kin Email', placeholder: 'Enter emergency contact email' },
+                nextOfKinPhone: { type: 'tel', label: 'Next of Kin Phone', placeholder: 'Enter emergency contact phone' },
+                dietary: { type: 'textarea', label: 'Dietary Requirements', placeholder: 'Any special dietary needs?' },
+                medical: { type: 'textarea', label: 'Medical/Accessibility', placeholder: 'Any medical conditions or accessibility requirements?' }
+            };
+
+            fields.forEach(fieldKey => {
+                const fieldConfig = fieldConfigs[fieldKey];
+                if (!fieldConfig) return;
+
+                const formGroup = document.createElement('div');
+                formGroup.className = `form-group ${fieldConfig.required ? 'required' : ''}`;
+
+                const label = document.createElement('label');
+                label.textContent = fieldConfig.label;
+                label.setAttribute('for', fieldKey);
+
+                let input;
+                if (fieldConfig.type === 'select') {
+                    input = document.createElement('select');
+                    input.id = fieldKey;
+                    input.name = fieldKey;
+                    
+                    const defaultOption = document.createElement('option');
+                    defaultOption.value = '';
+                    defaultOption.textContent = `Select ${fieldConfig.label}`;
+                    input.appendChild(defaultOption);
+                    
+                    fieldConfig.options.forEach(option => {
+                        const optionElement = document.createElement('option');
+                        optionElement.value = option;
+                        optionElement.textContent = option;
+                        input.appendChild(optionElement);
+                    });
+                } else if (fieldConfig.type === 'textarea') {
+                    input = document.createElement('textarea');
+                    input.id = fieldKey;
+                    input.name = fieldKey;
+                    input.rows = 3;
+                    input.placeholder = fieldConfig.placeholder;
+                } else {
+                    input = document.createElement('input');
+                    input.type = fieldConfig.type;
+                    input.id = fieldKey;
+                    input.name = fieldKey;
+                    input.placeholder = fieldConfig.placeholder;
+                }
+
+                if (fieldConfig.required) {
+                    input.required = true;
+                }
+
+                formGroup.appendChild(label);
+                formGroup.appendChild(input);
+                formFieldsContainer.appendChild(formGroup);
+            });
+        }
+
+        // Handle form submission
+        document.getElementById('guestForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const loading = document.getElementById('loading');
+            
+            submitBtn.disabled = true;
+            loading.style.display = 'block';
+            
+            try {
+                const formData = new FormData(e.target);
+                const responses = {};
+                
+                for (let [key, value] of formData.entries()) {
+                    responses[key] = value;
+                }
+
+                const response = await fetch('/api/submit-form', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        token: token,
+                        responses: responses
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to submit form');
+                }
+
+                showSuccess();
+                
+            } catch (error) {
+                console.error('Error submitting form:', error);
+                showError('Failed to submit form. Please try again.');
+            } finally {
+                submitBtn.disabled = false;
+                loading.style.display = 'none';
+            }
+        });
+
+        function showSuccess() {
+            document.getElementById('successMessage').style.display = 'block';
+            document.getElementById('guestForm').style.display = 'none';
+        }
+
+        function showError(message) {
+            document.getElementById('errorText').textContent = message;
+            document.getElementById('errorMessage').style.display = 'block';
+            document.getElementById('guestForm').style.display = 'none';
+        }
+
+        // Load form when page loads
+        loadForm();
+    </script>
+</body>
+</html> 
