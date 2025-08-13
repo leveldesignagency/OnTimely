@@ -195,12 +195,21 @@
         const token = window.location.pathname.split('/forms/')[1];
         
         if (!token) {
+            console.error('No token found in URL');
+            showError('Invalid form link. Please check your email.');
+        } else {
+            // Load form when page loads
+            loadForm();
+        }
+
+        // Load form data
             showError('Invalid form link. Please check your email.');
             return;
         }
 
         // Load form data
         async function loadForm() {
+            console.log('Loading form for token:', token);
             console.log('Loading form for token:', token);
             try {
                 const response = await fetch(`/api/get-form?token=${token}`);
