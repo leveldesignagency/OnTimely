@@ -1,13 +1,5 @@
 {
+  "buildCommand": "echo 'No build needed for static HTML'",
   "outputDirectory": "website",
-  "rewrites": [
-    {
-      "source": "/",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/forms/:token",
-      "destination": "/forms.html"
-    }
-  ]
-}
+  "installCommand": "echo 'No install needed'"
+} 
