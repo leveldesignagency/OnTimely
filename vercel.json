@@ -1,7 +1,1 @@
-{
-  "buildCommand": "npm run build",
-  "outputDirectory": "renderer/dist",
-  "devCommand": "npm run dev",
-  "installCommand": "npm install",
-  "cwd": "renderer"
-}
+{"functions":{"api/send-email.js":{"runtime":"nodejs18.x"}},"buildCommand":"echo \"No build needed\"","outputDirectory":".","installCommand":"cd api && npm install"}
