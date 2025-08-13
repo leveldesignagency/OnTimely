@@ -1,8 +1,4 @@
 {
-  "functions": {
-    "api/*.js": {
-    }
-  },
   "routes": [
     { "src": "/", "dest": "/website/index.html" },
     { "src": "/forms(?:/.*)?", "dest": "/website/forms.html" }
