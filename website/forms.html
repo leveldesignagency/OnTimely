@@ -202,7 +202,7 @@
         // Load form data
         async function loadForm() {
             try {
-                const response = await fetch(`/api/get-form?token=${token}`);
+                const response = await getFormByToken(token);
                 
                 if (!response.ok) {
                     throw new Error('Form not found');
@@ -321,7 +321,7 @@
                     responses[key] = value;
                 }
 
-                const response = await fetch('/api/submit-form', {
+                const response = await submitFormResponse(token, email, responses)
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -362,4 +362,5 @@
         loadForm();
     </script>
 </body>
-</html> 
+</html> <script src="get-form.js"></script>
+<script src="submit-form.js"></script>
