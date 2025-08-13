@@ -2,13 +2,13 @@
   "outputDirectory": "website",
   "functions": {
     "api/send-email.js": {
-      "runtime": "nodejs18"
+      "runtime": "nodejs22"
     },
     "api/get-form.js": {
-      "runtime": "nodejs18"
+      "runtime": "nodejs22"
     },
     "api/submit-form.js": {
-      "runtime": "nodejs18"
+      "runtime": "nodejs22"
     }
   },
   "routes": [
