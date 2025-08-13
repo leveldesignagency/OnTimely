@@ -1,0 +1,1 @@
+{"name":"ontimely","version":"1.0.0","description":"Timely Event Management Platform","main":"index.js","scripts":{"build":"echo \"Build completed\"","dev":"echo \"Dev mode\""},"keywords":[],"author":"","license":"ISC"}

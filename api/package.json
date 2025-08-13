@@ -1,0 +1,1 @@
+{"name":"ontimely-api","version":"1.0.0","description":"API functions for OnTimely","main":"index.js","dependencies":{"resend":"^3.5.0"},"scripts":{"test":"echo \"API ready\""}}
