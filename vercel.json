@@ -1,4 +1,9 @@
 {
+  "functions": {
+    "api/*.js": {
+      "runtime": "nodejs22"
+    }
+  },
   "routes": [
     { "src": "/", "dest": "/website/index.html" },
     { "src": "/forms(?:/.*)?", "dest": "/website/forms.html" }
