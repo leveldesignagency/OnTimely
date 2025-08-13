@@ -201,6 +201,7 @@
 
         // Load form data
         async function loadForm() {
+            console.log('Loading form for token:', token);
             try {
                 const response = await fetch(`/api/get-form?token=${token}`);
                 
