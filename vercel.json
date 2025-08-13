@@ -5,13 +5,13 @@
   "installCommand": "echo \"No install needed\"",
   "functions": {
     "api/send-email.js": {
-      "runtime": "nodejs18"
+      "runtime": "nodejs@18"
     },
     "api/get-form.js": {
-      "runtime": "nodejs18"
+      "runtime": "nodejs@18"
     },
     "api/submit-form.js": {
-      "runtime": "nodejs18"
+      "runtime": "nodejs@18"
     }
   },
   "rewrites": [
