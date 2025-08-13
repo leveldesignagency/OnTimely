@@ -1,1 +1,13 @@
-{}
+{
+  "outputDirectory": "website",
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/forms/:token",
+      "destination": "/forms.html"
+    }
+  ]
+}
