@@ -541,6 +541,33 @@
                     input.id = fieldKey;
                     input.name = fieldKey;
                     input.placeholder = fieldConfig.placeholder;
+                    
+                    // Add field-specific restrictions
+                    if (fieldKey === 'countryCode') {
+                        input.maxLength = 10;
+                        input.title = 'Country code (max 10 characters)';
+                        addCharacterCounter(input, 10);
+                    } else if (fieldKey === 'nextOfKinPhoneCountry') {
+                        input.maxLength = 10;
+                        input.title = 'Phone country code (max 10 characters)';
+                        addCharacterCounter(input, 10);
+                    } else if (fieldKey === 'idType') {
+                        input.maxLength = 50;
+                        input.title = 'ID Type (max 50 characters)';
+                        addCharacterCounter(input, 50);
+                    } else if (fieldKey === 'idNumber') {
+                        input.maxLength = 50;
+                        input.title = 'ID Number (max 50 characters)';
+                        addCharacterCounter(input, 50);
+                    } else if (fieldKey === 'firstName' || fieldKey === 'lastName') {
+                        input.maxLength = 100;
+                        input.title = 'Name (max 100 characters)';
+                        addCharacterCounter(input, 100);
+                    } else if (fieldKey === 'contactNumber') {
+                        input.maxLength = 20;
+                        input.title = 'Contact number (max 20 characters)';
+                        addCharacterCounter(input, 20);
+                    }
                 }
                 if (fieldConfig.required) {
                     input.required = true;
@@ -556,6 +583,14 @@
             e.preventDefault();
             const submitBtn = document.getElementById('submitBtn');
             const loading = document.getElementById('loading');
+            
+            // Validate form before submission
+            const validationResult = validateForm();
+            if (!validationResult.isValid) {
+                showError(validationResult.message);
+                return;
+            }
+            
             submitBtn.disabled = true;
             loading.style.display = 'block';
             try {
@@ -565,16 +600,144 @@
                     responses[key] = value;
                 }
                 const emailValue = responses.email || '';
-                await submitFormResponse(token, emailValue, responses);
-                showSuccess();
+                
+                // Call the function and check the actual response
+                const result = await submitFormResponse(token, emailValue, responses);
+                
+                // Check if the function actually succeeded
+                if (result && result.success) {
+                    showSuccess();
+                } else {
+                    // Function failed - show the actual error
+                    const errorMessage = result?.message || result?.error || 'Form submission failed';
+                    showError(`Submission failed: ${errorMessage}`);
+                }
             } catch (error) {
                 console.error('Error submitting form:', error);
-                showError('Failed to submit form. Please try again.');
+                showError(`Failed to submit form: ${error.message}`);
             } finally {
                 submitBtn.disabled = false;
                 loading.style.display = 'none';
             }
         });
+
+        // Form validation function
+        function validateForm() {
+            const form = document.getElementById('guestForm');
+            const inputs = form.querySelectorAll('input, select, textarea');
+            
+            for (let input of inputs) {
+                const value = input.value.trim();
+                const fieldKey = input.name;
+                
+                // Required field validation
+                if (input.required && !value) {
+                    return {
+                        isValid: false,
+                        message: `Please fill in ${input.placeholder || fieldKey}`
+                    };
+                }
+                
+                // Field-specific validation
+                if (value) {
+                    // Country code validation (max 10 chars)
+                    if (fieldKey === 'countryCode' && value.length > 10) {
+                        return {
+                            isValid: false,
+                            message: `Country code must be 10 characters or less (current: ${value.length})`
+                        };
+                    }
+                    
+                    // Next of kin phone country validation (max 10 chars)
+                    if (fieldKey === 'nextOfKinPhoneCountry' && value.length > 10) {
+                        return {
+                            isValid: false,
+                            message: `Phone country code must be 10 characters or less (current: ${value.length})`
+                        };
+                    }
+                    
+                    // ID Type validation (max 50 chars)
+                    if (fieldKey === 'idType' && value.length > 50) {
+                        return {
+                            isValid: false,
+                            message: `ID Type must be 50 characters or less (current: ${value.length})`
+                        };
+                    }
+                    
+                    // ID Number validation (max 50 chars)
+                    if (fieldKey === 'idNumber' && value.length > 50) {
+                        return {
+                            isValid: false,
+                            message: `ID Number must be 50 characters or less (current: ${value.length})`
+                        };
+                    }
+                    
+                    // Name validation (max 100 chars)
+                    if ((fieldKey === 'firstName' || fieldKey === 'lastName') && value.length > 100) {
+                        return {
+                            isValid: false,
+                            message: `${fieldKey === 'firstName' ? 'First Name' : 'Last Name'} must be 100 characters or less (current: ${value.length})`
+                        };
+                    }
+                    
+                    // Contact number validation (max 20 chars)
+                    if (fieldKey === 'contactNumber' && value.length > 20) {
+                        return {
+                            isValid: false,
+                            message: `Contact number must be 20 characters or less (current: ${value.length})`
+                        };
+                    }
+                    
+                    // Email validation
+                    if (fieldKey === 'email' && !isValidEmail(value)) {
+                        return {
+                            isValid: false,
+                            message: 'Please enter a valid email address'
+                        };
+                    }
+                    
+                    // Date validation (dd/mm/yyyy format)
+                    if (fieldKey === 'dob' && value && !/^\d{2}\/\d{2}\/\d{4}$/.test(value)) {
+                        return {
+                            isValid: false,
+                            message: 'Please enter date in dd/mm/yyyy format'
+                        };
+                    }
+                }
+            }
+            
+            return { isValid: true, message: '' };
+        }
+
+        // Email validation helper
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        // Add character counter to input fields
+        function addCharacterCounter(input, maxLength) {
+            const counter = document.createElement('div');
+            counter.style.cssText = 'font-size: 12px; color: #9ca3af; margin-top: 4px; text-align: right;';
+            counter.textContent = `0/${maxLength}`;
+            
+            input.addEventListener('input', () => {
+                const currentLength = input.value.length;
+                counter.textContent = `${currentLength}/${maxLength}`;
+                
+                // Change color based on length
+                if (currentLength > maxLength * 0.9) {
+                    counter.style.color = '#f59e0b'; // Warning color
+                } else if (currentLength > maxLength) {
+                    counter.style.color = '#ef4444'; // Error color
+                } else {
+                    counter.style.color = '#9ca3af'; // Normal color
+                }
+            });
+            
+            // Insert counter after the input
+            input.parentNode.insertBefore(counter, input.nextSibling);
+        }
 
         function showSuccess() {
             document.getElementById('successMessage').style.display = 'block';
