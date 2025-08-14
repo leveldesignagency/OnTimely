@@ -423,13 +423,15 @@
                 middleName: { type: 'text', label: 'Middle Name', placeholder: 'Enter your middle name' },
                 lastName: { type: 'text', label: 'Last Name', required: true, placeholder: 'Enter your last name' },
                 dob: { type: 'date', label: 'Date of Birth' },
-                countryCode: { type: 'tel', label: 'Contact Number', required: true, placeholder: 'Enter your phone number' },
+                countryCode: { type: 'select', options: ['+44', '+1', '+61', '+86', '+91', '+81', '+49', '+33', '+39', '+34', '+7', '+55', '+52', '+46', '+31', '+32', '+41', '+47', '+45', '+35', '+351', '+48', '+36', '+420', '+421', '+386', '+371', '+370', '+372', '+358', '+46', '+47', '+45', '+48', '+36', '+420', '+421', '+386', '+371', '+370', '+372', '+358'], label: 'Country Code', required: true, placeholder: 'Select country code' },
+                contactNumber: { type: 'tel', label: 'Contact Number', required: true, placeholder: 'Enter your phone number' },
                 email: { type: 'email', label: 'Email', required: true, placeholder: 'Enter your email address' },
                 idType: { type: 'select', options: ['Passport', 'Driving License', 'National ID', 'Other'], label: 'ID Type', required: true },
                 idNumber: { type: 'text', label: 'ID Number', required: true, placeholder: 'Enter your ID number' },
                 idCountry: { type: 'text', label: 'Country of Origin', placeholder: 'Enter your country' },
                 nextOfKinName: { type: 'text', label: 'Next of Kin Name', placeholder: 'Enter emergency contact name' },
                 nextOfKinEmail: { type: 'email', label: 'Next of Kin Email', placeholder: 'Enter emergency contact email' },
+                nextOfKinPhoneCountry: { type: 'select', options: ['+44', '+1', '+61', '+86', '+91', '+81', '+49', '+33', '+39', '+34', '+7', '+55', '+52', '+46', '+31', '+32', '+41', '+47', '+45', '+35', '+351', '+48', '+36', '+420', '+421', '+386', '+371', '+370', '+372', '+358'], label: 'Next of Kin Phone Country Code', placeholder: 'Select country code' },
                 nextOfKinPhone: { type: 'tel', label: 'Next of Kin Phone', placeholder: 'Enter emergency contact phone' },
                 dietary: { type: 'textarea', label: 'Dietary Requirements', placeholder: 'Any special dietary needs?' },
                 medical: { type: 'textarea', label: 'Medical/Accessibility', placeholder: 'Any medical conditions or accessibility requirements?' }
@@ -499,7 +501,7 @@
                     wrapper.appendChild(menu);
                     input = wrapper;
                 } else if (fieldConfig.type === 'date') {
-                    // Simple dd/mm/yyyy input
+                    // Date input that converts dd/mm/yyyy to yyyy-mm-dd for database
                     input = document.createElement('input');
                     input.type = 'text';
                     input.id = fieldKey;
@@ -527,6 +529,16 @@
                             e.target.style.borderColor = '#ef4444';
                         } else {
                             e.target.style.borderColor = '';
+                        }
+                    });
+                    
+                    // Convert dd/mm/yyyy to yyyy-mm-dd before form submission
+                    input.addEventListener('change', (e) => {
+                        const value = e.target.value;
+                        if (value && /^\d{2}\/\d{2}\/\d{4}$/.test(value)) {
+                            const [day, month, year] = value.split('/');
+                            const isoDate = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+                            e.target.setAttribute('data-iso-date', isoDate);
                         }
                     });
                 } else if (fieldConfig.type === 'textarea') {
@@ -567,6 +579,25 @@
                         input.maxLength = 20;
                         input.title = 'Contact number (max 20 characters)';
                         addCharacterCounter(input, 20);
+                    } else if (fieldKey === 'middleName') {
+                        input.maxLength = 100;
+                        input.title = 'Middle name (max 100 characters)';
+                        addCharacterCounter(input, 100);
+                    } else if (fieldKey === 'nextOfKinName') {
+                        input.maxLength = 100;
+                        input.title = 'Next of kin name (max 100 characters)';
+                        addCharacterCounter(input, 100);
+                    } else if (fieldKey === 'nextOfKinEmail') {
+                        input.maxLength = 255;
+                        input.title = 'Next of kin email (max 255 characters)';
+                    } else if (fieldKey === 'nextOfKinPhone') {
+                        input.maxLength = 50;
+                        input.title = 'Next of kin phone (max 50 characters)';
+                        addCharacterCounter(input, 50);
+                    } else if (fieldKey === 'idCountry') {
+                        input.maxLength = 100;
+                        input.title = 'ID country (max 100 characters)';
+                        addCharacterCounter(input, 100);
                     }
                 }
                 if (fieldConfig.required) {
@@ -597,12 +628,50 @@
                 const formData = new FormData(e.target);
                 const responses = {};
                 for (let [key, value] of formData.entries()) {
-                    responses[key] = value;
+                    // Convert date fields from dd/mm/yyyy to yyyy-mm-dd for database
+                    if (key === 'dob' && value) {
+                        const input = document.getElementById(key);
+                        if (input && input.getAttribute('data-iso-date')) {
+                            responses[key] = input.getAttribute('data-iso-date');
+                        } else {
+                            // Fallback: convert manually if data-iso-date not set
+                            const [day, month, year] = value.split('/');
+                            if (day && month && year) {
+                                responses[key] = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+                            } else {
+                                responses[key] = value;
+                            }
+                        }
+                    } else {
+                        responses[key] = value;
+                    }
                 }
+                
+                // Convert camelCase field names to snake_case for database compatibility
+                const convertedResponses = {};
+                Object.keys(responses).forEach(key => {
+                    let dbKey = key;
+                    switch(key) {
+                        case 'firstName': dbKey = 'first_name'; break;
+                        case 'middleName': dbKey = 'middle_name'; break;
+                        case 'lastName': dbKey = 'last_name'; break;
+                        case 'contactNumber': dbKey = 'contact_number'; break;
+                        case 'countryCode': dbKey = 'country_code'; break;
+                        case 'idType': dbKey = 'id_type'; break;
+                        case 'idNumber': dbKey = 'id_number'; break;
+                        case 'idCountry': dbKey = 'id_country'; break;
+                        case 'nextOfKinName': dbKey = 'next_of_kin_name'; break;
+                        case 'nextOfKinEmail': dbKey = 'next_of_kin_email'; break;
+                        case 'nextOfKinPhoneCountry': dbKey = 'next_of_kin_phone_country'; break;
+                        case 'nextOfKinPhone': dbKey = 'next_of_kin_phone'; break;
+                        default: dbKey = key;
+                    }
+                    convertedResponses[dbKey] = responses[key];
+                });
                 const emailValue = responses.email || '';
                 
                 // Call the function and check the actual response
-                const result = await submitFormResponse(token, emailValue, responses);
+                const result = await submitFormResponse(token, emailValue, convertedResponses);
                 
                 // Check if the function actually succeeded
                 if (result && result.success) {
