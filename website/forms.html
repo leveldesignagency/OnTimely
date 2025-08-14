@@ -735,8 +735,8 @@
                 }
             });
             
-            // Insert counter after the input
-            input.parentNode.insertBefore(counter, input.nextSibling);
+            // Insert counter after the input - use appendChild for safety
+            input.parentNode.appendChild(counter);
         }
 
         function showSuccess() {
