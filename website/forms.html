@@ -156,6 +156,8 @@
     </style>
 </head>
 <body>
+    <script src="/website/get-form.js"></script>
+    <script src="/website/submit-form.js"></script>
     <div class="container">
         <div class="header">
             <h1 id="formTitle">Loading Form...</h1>
@@ -193,30 +195,17 @@
     <script>
         // Get token from URL
         const token = window.location.pathname.split('/forms/')[1];
-        
         if (!token) {
             showError('Invalid form link. Please check your email.');
-            // return; // removed illegal return statement
         }
 
         // Load form data
         async function loadForm() {
             try {
-                const response = await getFormByToken(token);
-                
-                if (!response.ok) {
-                    throw new Error('Form not found');
-                }
-
-                const formData = await response.json();
-                
-                // Update header
+                const formData = await getFormByToken(token);
                 document.getElementById('formTitle').textContent = formData.title || 'Guest Form';
                 document.getElementById('formDescription').textContent = formData.description || 'Please fill out the form below.';
-                
-                // Generate form fields
                 generateFormFields(formData.fields || []);
-                
             } catch (error) {
                 console.error('Error loading form:', error);
                 showError('Failed to load form. Please check your link and try again.');
@@ -226,12 +215,10 @@
         // Generate form fields based on configuration
         function generateFormFields(fields) {
             const formFieldsContainer = document.getElementById('formFields');
-            
             if (fields.length === 0) {
                 formFieldsContainer.innerHTML = '<p>No fields configured for this form.</p>';
                 return;
             }
-
             const fieldConfigs = {
                 prefix: { type: 'select', options: ['Mr', 'Mrs', 'Ms', 'Mx', 'Dr', 'Prof'], label: 'Prefix' },
                 gender: { type: 'select', options: ['Male', 'Female', 'Transgender', 'Non Binary', 'Other', 'Prefer Not to Say'], label: 'Gender' },
@@ -250,29 +237,23 @@
                 dietary: { type: 'textarea', label: 'Dietary Requirements', placeholder: 'Any special dietary needs?' },
                 medical: { type: 'textarea', label: 'Medical/Accessibility', placeholder: 'Any medical conditions or accessibility requirements?' }
             };
-
             fields.forEach(fieldKey => {
                 const fieldConfig = fieldConfigs[fieldKey];
                 if (!fieldConfig) return;
-
                 const formGroup = document.createElement('div');
                 formGroup.className = `form-group ${fieldConfig.required ? 'required' : ''}`;
-
                 const label = document.createElement('label');
                 label.textContent = fieldConfig.label;
                 label.setAttribute('for', fieldKey);
-
                 let input;
                 if (fieldConfig.type === 'select') {
                     input = document.createElement('select');
                     input.id = fieldKey;
                     input.name = fieldKey;
-                    
                     const defaultOption = document.createElement('option');
                     defaultOption.value = '';
                     defaultOption.textContent = `Select ${fieldConfig.label}`;
                     input.appendChild(defaultOption);
-                    
                     fieldConfig.options.forEach(option => {
                         const optionElement = document.createElement('option');
                         optionElement.value = option;
@@ -292,11 +273,9 @@
                     input.name = fieldKey;
                     input.placeholder = fieldConfig.placeholder;
                 }
-
                 if (fieldConfig.required) {
                     input.required = true;
                 }
-
                 formGroup.appendChild(label);
                 formGroup.appendChild(input);
                 formFieldsContainer.appendChild(formGroup);
@@ -306,38 +285,19 @@
         // Handle form submission
         document.getElementById('guestForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            
             const submitBtn = document.getElementById('submitBtn');
             const loading = document.getElementById('loading');
-            
             submitBtn.disabled = true;
             loading.style.display = 'block';
-            
             try {
                 const formData = new FormData(e.target);
                 const responses = {};
-                
                 for (let [key, value] of formData.entries()) {
                     responses[key] = value;
                 }
-
-                const response = await submitFormResponse(token, email, responses)
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        token: token,
-                        responses: responses
-                    })
-                });
-
-                if (!response.ok) {
-                    throw new Error('Failed to submit form');
-                }
-
+                const emailValue = responses.email || '';
+                await submitFormResponse(token, emailValue, responses);
                 showSuccess();
-                
             } catch (error) {
                 console.error('Error submitting form:', error);
                 showError('Failed to submit form. Please try again.');
@@ -351,16 +311,14 @@
             document.getElementById('successMessage').style.display = 'block';
             document.getElementById('guestForm').style.display = 'none';
         }
-
         function showError(message) {
             document.getElementById('errorText').textContent = message;
             document.getElementById('errorMessage').style.display = 'block';
             document.getElementById('guestForm').style.display = 'none';
         }
-
         // Load form when page loads
         loadForm();
     </script>
 </body>
-</html> <script src="get-form.js"></script>
-<script src="submit-form.js"></script>
+</html>
+
