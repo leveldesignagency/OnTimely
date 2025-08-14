@@ -124,6 +124,82 @@
             background: rgba(255,255,255,0.06);
         }
 
+        /* Custom date picker */
+        .custom-date {
+            position: relative;
+        }
+        .custom-date-trigger {
+            width: 100%;
+            text-align: left;
+            padding: 12px 16px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            color: #e5e7eb;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .custom-date-trigger:focus {
+            outline: none;
+            border-color: rgba(34,197,94,0.6);
+            box-shadow: 0 0 0 4px rgba(34,197,94,0.12), inset 0 1px 0 rgba(255,255,255,0.06);
+            background: rgba(255,255,255,0.05);
+        }
+        .custom-date-calendar {
+            position: absolute;
+            top: calc(100% + 6px);
+            left: 0;
+            z-index: 20;
+            background: rgba(17, 24, 39, 0.98);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            box-shadow: 0 10px 24px rgba(0,0,0,0.45);
+            padding: 16px;
+            min-width: 280px;
+        }
+        .calendar-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+        .calendar-header button {
+            background: none;
+            border: none;
+            color: #e5e7eb;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+        .calendar-header button:hover {
+            background: rgba(255,255,255,0.06);
+        }
+        .calendar-header span {
+            font-weight: 600;
+            color: #e5e7eb;
+        }
+        .calendar-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+        }
+        .calendar-day {
+            background: none;
+            border: none;
+            color: #e5e7eb;
+            padding: 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .calendar-day:hover {
+            background: rgba(34,197,94,0.2);
+        }
+        .calendar-day.other-month {
+            color: rgba(255,255,255,0.3);
+        }
+
         .form-group input:focus,
         .form-group select:focus,
         .form-group textarea:focus {
@@ -246,6 +322,14 @@
   :root[data-theme='light'] .custom-select-menu { background: white; border-color: rgba(15,23,42,0.12); box-shadow: 0 10px 24px rgba(15,23,42,0.15); }
   :root[data-theme='light'] .custom-select-item { color: #0f172a; }
   :root[data-theme='light'] .custom-select-item:hover { background: rgba(15,23,42,0.06); }
+  :root[data-theme='light'] .custom-date-trigger { background: rgba(15,23,42,0.02); color: #0f172a; border-color: rgba(15,23,42,0.12); }
+  :root[data-theme='light'] .custom-date-calendar { background: white; border-color: rgba(15,23,42,0.12); box-shadow: 0 10px 24px rgba(15,23,42,0.15); }
+  :root[data-theme='light'] .calendar-header button { color: #0f172a; }
+  :root[data-theme='light'] .calendar-header button:hover { background: rgba(15,23,42,0.06); }
+  :root[data-theme='light'] .calendar-header span { color: #0f172a; }
+  :root[data-theme='light'] .calendar-day { color: #0f172a; }
+  :root[data-theme='light'] .calendar-day:hover { background: rgba(34,197,94,0.15); }
+  :root[data-theme='light'] .calendar-day.other-month { color: rgba(15,23,42,0.3); }
   :root[data-theme='light'] .submit-btn { color: white; border-color: rgba(15,23,42,0.08); }
   :root[data-theme='light'] .loading { color: #475569; }
   :root[data-theme='light'] .success-message { background: rgba(34,197,94,0.12); color: #166534; border-color: rgba(34,197,94,0.3); }
@@ -413,6 +497,99 @@
                     wrapper.appendChild(hiddenSelect);
                     wrapper.appendChild(trigger);
                     wrapper.appendChild(menu);
+                    input = wrapper;
+                } else if (fieldConfig.type === 'date') {
+                    // Custom date picker wrapper
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'custom-date';
+
+                    const hiddenInput = document.createElement('input');
+                    hiddenInput.type = 'hidden';
+                    hiddenInput.id = fieldKey;
+                    hiddenInput.name = fieldKey;
+
+                    const trigger = document.createElement('button');
+                    trigger.type = 'button';
+                    trigger.className = 'custom-date-trigger';
+                    trigger.textContent = 'Select Date';
+
+                    const calendar = document.createElement('div');
+                    calendar.className = 'custom-date-calendar';
+                    calendar.style.display = 'none';
+
+                    // Generate calendar grid
+                    const today = new Date();
+                    const currentMonth = today.getMonth();
+                    const currentYear = today.getFullYear();
+
+                    function generateCalendar(month, year) {
+                        calendar.innerHTML = '';
+                        
+                        const header = document.createElement('div');
+                        header.className = 'calendar-header';
+                        
+                        const prevBtn = document.createElement('button');
+                        prevBtn.innerHTML = '&lt;';
+                        prevBtn.onclick = () => generateCalendar(month - 1, year);
+                        
+                        const monthYear = document.createElement('span');
+                        monthYear.textContent = new Date(year, month).toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+                        
+                        const nextBtn = document.createElement('button');
+                        nextBtn.innerHTML = '&gt;';
+                        nextBtn.onclick = () => generateCalendar(month + 1, year);
+                        
+                        header.appendChild(prevBtn);
+                        header.appendChild(monthYear);
+                        header.appendChild(nextBtn);
+                        calendar.appendChild(header);
+
+                        const daysGrid = document.createElement('div');
+                        daysGrid.className = 'calendar-days';
+                        
+                        const firstDay = new Date(year, month, 1);
+                        const lastDay = new Date(year, month + 1, 0);
+                        const startDate = new Date(firstDay);
+                        startDate.setDate(startDate.getDate() - firstDay.getDay());
+                        
+                        for (let i = 0; i < 42; i++) {
+                            const date = new Date(startDate);
+                            date.setDate(startDate.getDate() + i);
+                            
+                            const dayBtn = document.createElement('button');
+                            dayBtn.className = 'calendar-day';
+                            dayBtn.textContent = date.getDate();
+                            
+                            if (date.getMonth() !== month) {
+                                dayBtn.classList.add('other-month');
+                            }
+                            
+                            dayBtn.onclick = () => {
+                                const formattedDate = date.toISOString().split('T')[0];
+                                hiddenInput.value = formattedDate;
+                                trigger.textContent = formattedDate;
+                                calendar.style.display = 'none';
+                            };
+                            
+                            daysGrid.appendChild(dayBtn);
+                        }
+                        
+                        calendar.appendChild(daysGrid);
+                    }
+
+                    generateCalendar(currentMonth, currentYear);
+
+                    trigger.addEventListener('click', () => {
+                        calendar.style.display = calendar.style.display === 'none' ? 'block' : 'none';
+                    });
+
+                    document.addEventListener('click', (e) => {
+                        if (!wrapper.contains(e.target)) calendar.style.display = 'none';
+                    });
+
+                    wrapper.appendChild(hiddenInput);
+                    wrapper.appendChild(trigger);
+                    wrapper.appendChild(calendar);
                     input = wrapper;
                 } else if (fieldConfig.type === 'textarea') {
                     input = document.createElement('textarea');
