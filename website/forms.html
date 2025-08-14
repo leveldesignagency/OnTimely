@@ -499,98 +499,36 @@
                     wrapper.appendChild(menu);
                     input = wrapper;
                 } else if (fieldConfig.type === 'date') {
-                    // Custom date picker wrapper
-                    const wrapper = document.createElement('div');
-                    wrapper.className = 'custom-date';
-
-                    const hiddenInput = document.createElement('input');
-                    hiddenInput.type = 'hidden';
-                    hiddenInput.id = fieldKey;
-                    hiddenInput.name = fieldKey;
-
-                    const trigger = document.createElement('button');
-                    trigger.type = 'button';
-                    trigger.className = 'custom-date-trigger';
-                    trigger.textContent = 'Select Date';
-
-                    const calendar = document.createElement('div');
-                    calendar.className = 'custom-date-calendar';
-                    calendar.style.display = 'none';
-
-                    // Generate calendar grid
-                    const today = new Date();
-                    const currentMonth = today.getMonth();
-                    const currentYear = today.getFullYear();
-
-                    function generateCalendar(month, year) {
-                        calendar.innerHTML = '';
-                        
-                        const header = document.createElement('div');
-                        header.className = 'calendar-header';
-                        
-                        const prevBtn = document.createElement('button');
-                        prevBtn.innerHTML = '&lt;';
-                        prevBtn.onclick = () => generateCalendar(month - 1, year);
-                        
-                        const monthYear = document.createElement('span');
-                        monthYear.textContent = new Date(year, month).toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
-                        
-                        const nextBtn = document.createElement('button');
-                        nextBtn.innerHTML = '&gt;';
-                        nextBtn.onclick = () => generateCalendar(month + 1, year);
-                        
-                        header.appendChild(prevBtn);
-                        header.appendChild(monthYear);
-                        header.appendChild(nextBtn);
-                        calendar.appendChild(header);
-
-                        const daysGrid = document.createElement('div');
-                        daysGrid.className = 'calendar-days';
-                        
-                        const firstDay = new Date(year, month, 1);
-                        const lastDay = new Date(year, month + 1, 0);
-                        const startDate = new Date(firstDay);
-                        startDate.setDate(startDate.getDate() - firstDay.getDay());
-                        
-                        for (let i = 0; i < 42; i++) {
-                            const date = new Date(startDate);
-                            date.setDate(startDate.getDate() + i);
-                            
-                            const dayBtn = document.createElement('button');
-                            dayBtn.className = 'calendar-day';
-                            dayBtn.textContent = date.getDate();
-                            
-                            if (date.getMonth() !== month) {
-                                dayBtn.classList.add('other-month');
-                            }
-                            
-                            dayBtn.onclick = () => {
-                                const formattedDate = date.toISOString().split('T')[0];
-                                hiddenInput.value = formattedDate;
-                                trigger.textContent = formattedDate;
-                                calendar.style.display = 'none';
-                            };
-                            
-                            daysGrid.appendChild(dayBtn);
+                    // Simple dd/mm/yyyy input
+                    input = document.createElement('input');
+                    input.type = 'text';
+                    input.id = fieldKey;
+                    input.name = fieldKey;
+                    input.placeholder = 'dd/mm/yyyy';
+                    input.pattern = '\\d{2}/\\d{2}/\\d{4}';
+                    input.title = 'Please enter date in dd/mm/yyyy format';
+                    
+                    // Add date formatting as user types
+                    input.addEventListener('input', (e) => {
+                        let value = e.target.value.replace(/\D/g, ''); // Remove non-digits
+                        if (value.length >= 2) {
+                            value = value.slice(0, 2) + '/' + value.slice(2);
                         }
-                        
-                        calendar.appendChild(daysGrid);
-                    }
-
-                    generateCalendar(currentMonth, currentYear);
-
-                    trigger.addEventListener('click', () => {
-                        calendar.style.display = calendar.style.display === 'none' ? 'block' : 'none';
+                        if (value.length >= 5) {
+                            value = value.slice(0, 5) + '/' + value.slice(5);
+                        }
+                        e.target.value = value.slice(0, 10); // Limit to 10 characters
                     });
-
-                    document.addEventListener('click', (e) => {
-                        if (!wrapper.contains(e.target)) calendar.style.display = 'none';
+                    
+                    // Validate date format on blur
+                    input.addEventListener('blur', (e) => {
+                        const value = e.target.value;
+                        if (value && !/^\d{2}\/\d{2}\/\d{4}$/.test(value)) {
+                            e.target.style.borderColor = '#ef4444';
+                        } else {
+                            e.target.style.borderColor = '';
+                        }
                     });
-
-                    wrapper.appendChild(hiddenInput);
-                    wrapper.appendChild(trigger);
-                    wrapper.appendChild(calendar);
-                    input = wrapper;
                 } else if (fieldConfig.type === 'textarea') {
                     input = document.createElement('textarea');
                     input.id = fieldKey;
