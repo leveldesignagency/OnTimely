@@ -215,7 +215,23 @@
         // Generate form fields based on configuration
         function generateFormFields(fields) {
             const formFieldsContainer = document.getElementById('formFields');
-            if (fields.length === 0) {
+            // Normalize fields from DB (array of keys, array of objects, or object of booleans)
+            let items = [];
+            const source = fields || [];
+            if (Array.isArray(source)) {
+                if (source.length && typeof source[0] === 'string') {
+                    items = source;
+                } else {
+                    source.forEach(function (f) {
+                        if (!f) return;
+                        const key = f.key || f.name || f.id || f.field || f.slug;
+                        if (key) items.push(key);
+                    });
+                }
+            } else if (source && typeof source === 'object') {
+                items = Object.keys(source).filter(function (k) { return !!source[k]; });
+            }
+            if (items.length === 0) {
                 formFieldsContainer.innerHTML = '<p>No fields configured for this form.</p>';
                 return;
             }
@@ -237,7 +253,7 @@
                 dietary: { type: 'textarea', label: 'Dietary Requirements', placeholder: 'Any special dietary needs?' },
                 medical: { type: 'textarea', label: 'Medical/Accessibility', placeholder: 'Any medical conditions or accessibility requirements?' }
             };
-            fields.forEach(fieldKey => {
+            items.forEach(fieldKey => {
                 const fieldConfig = fieldConfigs[fieldKey];
                 if (!fieldConfig) return;
                 const formGroup = document.createElement('div');
