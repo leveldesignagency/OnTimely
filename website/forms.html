@@ -717,6 +717,12 @@
 
         // Add character counter to input fields
         function addCharacterCounter(input, maxLength) {
+            // Safety check - only add counter if input has a valid parent
+            if (!input || !input.parentNode) {
+                console.warn('Cannot add character counter: input or parentNode is null');
+                return;
+            }
+            
             const counter = document.createElement('div');
             counter.style.cssText = 'font-size: 12px; color: #9ca3af; margin-top: 4px; text-align: right;';
             counter.textContent = `0/${maxLength}`;
@@ -736,7 +742,11 @@
             });
             
             // Insert counter after the input - use appendChild for safety
-            input.parentNode.appendChild(counter);
+            try {
+                input.parentNode.appendChild(counter);
+            } catch (error) {
+                console.warn('Failed to add character counter:', error);
+            }
         }
 
         function showSuccess() {
