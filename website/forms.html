@@ -79,6 +79,51 @@
             transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
         }
 
+        /* Custom select */
+        .custom-select {
+            position: relative;
+        }
+        .custom-select-trigger {
+            width: 100%;
+            text-align: left;
+            padding: 12px 16px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            color: #e5e7eb;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .custom-select-trigger:focus {
+            outline: none;
+            border-color: rgba(34,197,94,0.6);
+            box-shadow: 0 0 0 4px rgba(34,197,94,0.12), inset 0 1px 0 rgba(255,255,255,0.06);
+            background: rgba(255,255,255,0.05);
+        }
+        .custom-select-menu {
+            position: absolute;
+            top: calc(100% + 6px);
+            left: 0;
+            right: 0;
+            z-index: 20;
+            display: none;
+            background: rgba(17, 24, 39, 0.98);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            box-shadow: 0 10px 24px rgba(0,0,0,0.45);
+            max-height: 240px;
+            overflow: auto;
+        }
+        .custom-select-menu.open { display: block; }
+        .custom-select-item {
+            padding: 10px 14px;
+            color: #e5e7eb;
+            cursor: pointer;
+        }
+        .custom-select-item:hover {
+            background: rgba(255,255,255,0.06);
+        }
+
         .form-group input:focus,
         .form-group select:focus,
         .form-group textarea:focus {
@@ -170,7 +215,42 @@
                 font-size: 2rem;
             }
         }
-    </style>
+</style>
+<script>
+  // Auto theme switch (light by day, dark by night) with manual override via ?theme=light|dark
+  (function() {
+    try {
+      const params = new URLSearchParams(location.search);
+      let theme = params.get('theme');
+      if (!theme) {
+        const hour = new Date().getHours();
+        theme = (hour >= 7 && hour < 19) ? 'light' : 'dark';
+      }
+      document.documentElement.setAttribute('data-theme', theme);
+    } catch (e) {}
+  })();
+</script>
+<style>
+  /* Light theme overrides */
+  :root[data-theme='light'] body { color: #0f172a; background: #f7f8fa; }
+  :root[data-theme='light'] .container { background: rgba(255,255,255,0.85); border-color: rgba(15,23,42,0.08); box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 8px 24px rgba(15,23,42,0.06); }
+  :root[data-theme='light'] .header { background: linear-gradient(180deg, rgba(15,23,42,0.04), rgba(15,23,42,0.01)); color: #0f172a; border-bottom-color: rgba(15,23,42,0.08); }
+  :root[data-theme='light'] .form-group label { color: #334155; }
+  :root[data-theme='light'] .form-group input,
+  :root[data-theme='light'] .form-group select,
+  :root[data-theme='light'] .form-group textarea { background: rgba(15,23,42,0.02); color: #0f172a; border-color: rgba(15,23,42,0.12); }
+  :root[data-theme='light'] .form-group input:focus,
+  :root[data-theme='light'] .form-group select:focus,
+  :root[data-theme='light'] .form-group textarea:focus { background: white; box-shadow: 0 0 0 4px rgba(34,197,94,0.16), inset 0 1px 0 rgba(255,255,255,1); border-color: #22c55e; }
+  :root[data-theme='light'] .custom-select-trigger { background: rgba(15,23,42,0.02); color: #0f172a; border-color: rgba(15,23,42,0.12); }
+  :root[data-theme='light'] .custom-select-menu { background: white; border-color: rgba(15,23,42,0.12); box-shadow: 0 10px 24px rgba(15,23,42,0.15); }
+  :root[data-theme='light'] .custom-select-item { color: #0f172a; }
+  :root[data-theme='light'] .custom-select-item:hover { background: rgba(15,23,42,0.06); }
+  :root[data-theme='light'] .submit-btn { color: white; border-color: rgba(15,23,42,0.08); }
+  :root[data-theme='light'] .loading { color: #475569; }
+  :root[data-theme='light'] .success-message { background: rgba(34,197,94,0.12); color: #166534; border-color: rgba(34,197,94,0.3); }
+  :root[data-theme='light'] .error-message { background: rgba(239,68,68,0.12); color: #7f1d1d; border-color: rgba(239,68,68,0.3); }
+</style>
 </head>
 <body>
     <script src="/website/get-form.js"></script>
@@ -280,19 +360,60 @@
                 label.setAttribute('for', fieldKey);
                 let input;
                 if (fieldConfig.type === 'select') {
-                    input = document.createElement('select');
-                    input.id = fieldKey;
-                    input.name = fieldKey;
+                    // Custom dropdown wrapper
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'custom-select';
+
+                    const hiddenSelect = document.createElement('select');
+                    hiddenSelect.id = fieldKey;
+                    hiddenSelect.name = fieldKey;
+                    hiddenSelect.style.display = 'none';
+
+                    const trigger = document.createElement('button');
+                    trigger.type = 'button';
+                    trigger.className = 'custom-select-trigger';
+                    trigger.textContent = `Select ${fieldConfig.label}`;
+
+                    const menu = document.createElement('div');
+                    menu.className = 'custom-select-menu';
+
                     const defaultOption = document.createElement('option');
                     defaultOption.value = '';
                     defaultOption.textContent = `Select ${fieldConfig.label}`;
-                    input.appendChild(defaultOption);
+                    hiddenSelect.appendChild(defaultOption);
+
                     fieldConfig.options.forEach(option => {
-                        const optionElement = document.createElement('option');
-                        optionElement.value = option;
-                        optionElement.textContent = option;
-                        input.appendChild(optionElement);
+                        const value = option.value || option;
+                        const labelTxt = option.label || option;
+
+                        const opt = document.createElement('option');
+                        opt.value = value;
+                        opt.textContent = labelTxt;
+                        hiddenSelect.appendChild(opt);
+
+                        const item = document.createElement('div');
+                        item.className = 'custom-select-item';
+                        item.textContent = labelTxt;
+                        item.addEventListener('click', () => {
+                            hiddenSelect.value = value;
+                            trigger.textContent = labelTxt;
+                            menu.classList.remove('open');
+                        });
+                        menu.appendChild(item);
                     });
+
+                    trigger.addEventListener('click', () => {
+                        menu.classList.toggle('open');
+                    });
+
+                    document.addEventListener('click', (e) => {
+                        if (!wrapper.contains(e.target)) menu.classList.remove('open');
+                    });
+
+                    wrapper.appendChild(hiddenSelect);
+                    wrapper.appendChild(trigger);
+                    wrapper.appendChild(menu);
+                    input = wrapper;
                 } else if (fieldConfig.type === 'textarea') {
                     input = document.createElement('textarea');
                     input.id = fieldKey;
