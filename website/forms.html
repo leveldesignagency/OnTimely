@@ -286,6 +286,28 @@
             box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
         }
 
+        .field-error {
+            color: #ef4444;
+            font-size: 12px;
+            margin-top: 4px;
+            min-height: 16px;
+            display: none;
+            font-weight: 500;
+            animation: fadeIn 0.2s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-2px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-group input.error,
+        .form-group select.error,
+        .form-group textarea.error {
+            border-color: #ef4444 !important;
+            box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2);
+        }
+
         @media (max-width: 768px) {
             .header h1 {
                 font-size: 2rem;
@@ -444,6 +466,11 @@
                 const label = document.createElement('label');
                 label.textContent = fieldConfig.label;
                 label.setAttribute('for', fieldKey);
+                
+                // Create error message container for each field
+                const errorContainer = document.createElement('div');
+                errorContainer.className = 'field-error';
+                errorContainer.style.cssText = 'color: #ef4444; font-size: 12px; margin-top: 4px; min-height: 16px; display: none;';
                 let input;
                 if (fieldConfig.type === 'select') {
                     // Custom dropdown wrapper
@@ -605,7 +632,19 @@
                 }
                 formGroup.appendChild(label);
                 formGroup.appendChild(input);
+                formGroup.appendChild(errorContainer);
                 formFieldsContainer.appendChild(formGroup);
+                
+                // Store reference to error container for validation
+                input.errorContainer = errorContainer;
+                
+                // Add real-time validation for immediate feedback
+                if (fieldConfig.type === 'text' || fieldConfig.type === 'email' || fieldConfig.type === 'tel' || fieldConfig.type === 'textarea') {
+                    input.addEventListener('blur', () => validateField(input));
+                    input.addEventListener('input', () => clearFieldError(input));
+                } else if (fieldConfig.type === 'select') {
+                    input.addEventListener('change', () => validateField(input));
+                }
             });
         }
 
@@ -690,98 +729,225 @@
             }
         });
 
-        // Form validation function
+        // Form validation function with inline error display
         function validateForm() {
             const form = document.getElementById('guestForm');
             const inputs = form.querySelectorAll('input, select, textarea');
+            let isValid = true;
+            
+            // Clear all previous errors
+            inputs.forEach(input => {
+                if (input.errorContainer) {
+                    input.errorContainer.style.display = 'none';
+                    input.errorContainer.textContent = '';
+                }
+            });
             
             for (let input of inputs) {
                 const value = input.value.trim();
                 const fieldKey = input.name;
+                let fieldError = '';
                 
                 // Required field validation
                 if (input.required && !value) {
-                    return {
-                        isValid: false,
-                        message: `Please fill in ${input.placeholder || fieldKey}`
-                    };
+                    fieldError = `This field is required`;
+                    isValid = false;
                 }
                 
                 // Field-specific validation
                 if (value) {
                     // Country code validation (max 10 chars)
                     if (fieldKey === 'countryCode' && value.length > 10) {
-                        return {
-                            isValid: false,
-                            message: `Country code must be 10 characters or less (current: ${value.length})`
-                        };
+                        fieldError = `Country code must be 10 characters or less (current: ${value.length})`;
+                        isValid = false;
                     }
                     
                     // Next of kin phone country validation (max 10 chars)
                     if (fieldKey === 'nextOfKinPhoneCountry' && value.length > 10) {
-                        return {
-                            isValid: false,
-                            message: `Phone country code must be 10 characters or less (current: ${value.length})`
-                        };
+                        fieldError = `Phone country code must be 10 characters or less (current: ${value.length})`;
+                        isValid = false;
                     }
                     
                     // ID Type validation (max 50 chars)
                     if (fieldKey === 'idType' && value.length > 50) {
-                        return {
-                            isValid: false,
-                            message: `ID Type must be 50 characters or less (current: ${value.length})`
-                        };
+                        fieldError = `ID Type must be 50 characters or less (current: ${value.length})`;
+                        isValid = false;
                     }
                     
                     // ID Number validation (max 50 chars)
                     if (fieldKey === 'idNumber' && value.length > 50) {
-                        return {
-                            isValid: false,
-                            message: `ID Number must be 50 characters or less (current: ${value.length})`
-                        };
+                        fieldError = `ID Number must be 50 characters or less (current: ${value.length})`;
+                        isValid = false;
                     }
                     
                     // Name validation (max 100 chars)
                     if ((fieldKey === 'firstName' || fieldKey === 'lastName') && value.length > 100) {
-                        return {
-                            isValid: false,
-                            message: `${fieldKey === 'firstName' ? 'First Name' : 'Last Name'} must be 100 characters or less (current: ${value.length})`
-                        };
+                        fieldError = `${fieldKey === 'firstName' ? 'First Name' : 'Last Name'} must be 100 characters or less (current: ${value.length})`;
+                        isValid = false;
+                    }
+                    
+                    // Middle name validation (max 100 chars)
+                    if (fieldKey === 'middleName' && value.length > 100) {
+                        fieldError = `Middle name must be 100 characters or less (current: ${value.length})`;
+                        isValid = false;
                     }
                     
                     // Contact number validation (max 20 chars)
                     if (fieldKey === 'contactNumber' && value.length > 20) {
-                        return {
-                            isValid: false,
-                            message: `Contact number must be 20 characters or less (current: ${value.length})`
-                        };
+                        fieldError = `Contact number must be 20 characters or less (current: ${value.length})`;
+                        isValid = false;
                     }
                     
                     // Email validation
                     if (fieldKey === 'email' && !isValidEmail(value)) {
-                        return {
-                            isValid: false,
-                            message: 'Please enter a valid email address'
-                        };
+                        fieldError = 'Please enter a valid email address';
+                        isValid = false;
                     }
                     
                     // Date validation (dd/mm/yyyy format)
                     if (fieldKey === 'dob' && value && !/^\d{2}\/\d{2}\/\d{4}$/.test(value)) {
-                        return {
-                            isValid: false,
-                            message: 'Please enter date in dd/mm/yyyy format'
-                        };
+                        fieldError = 'Please enter date in dd/mm/yyyy format';
+                        isValid = false;
                     }
+                    
+                    // Next of kin name validation (max 100 chars)
+                    if (fieldKey === 'nextOfKinName' && value.length > 100) {
+                        fieldError = `Next of kin name must be 100 characters or less (current: ${value.length})`;
+                        isValid = false;
+                    }
+                    
+                    // Next of kin email validation
+                    if (fieldKey === 'nextOfKinEmail' && !isValidEmail(value)) {
+                        fieldError = 'Please enter a valid email address';
+                        isValid = false;
+                    }
+                    
+                    // Next of kin phone validation (max 50 chars)
+                    if (fieldKey === 'nextOfKinPhone' && value.length > 50) {
+                        fieldError = `Next of kin phone must be 50 characters or less (current: ${value.length})`;
+                        isValid = false;
+                    }
+                    
+                    // ID country validation (max 100 chars)
+                    if (fieldKey === 'idCountry' && value.length > 100) {
+                        fieldError = `ID country must be 100 characters or less (current: ${value.length})`;
+                        isValid = false;
+                    }
+                }
+                
+                // Display field-specific error if any
+                if (fieldError && input.errorContainer) {
+                    input.errorContainer.textContent = fieldError;
+                    input.errorContainer.style.display = 'block';
+                    input.style.borderColor = '#ef4444';
+                } else if (input.errorContainer) {
+                    input.style.borderColor = '';
                 }
             }
             
-            return { isValid: true, message: '' };
+            return { isValid, message: '' };
         }
 
         // Email validation helper
         function isValidEmail(email) {
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             return emailRegex.test(email);
+        }
+
+        // Individual field validation function
+        function validateField(input) {
+            const value = input.value.trim();
+            const fieldKey = input.name;
+            let fieldError = '';
+            
+            // Required field validation
+            if (input.required && !value) {
+                fieldError = `This field is required`;
+            }
+            
+            // Field-specific validation
+            if (value) {
+                switch(fieldKey) {
+                    case 'countryCode':
+                        if (value.length > 10) {
+                            fieldError = `Country code must be 10 characters or less (current: ${value.length})`;
+                        }
+                        break;
+                    case 'nextOfKinPhoneCountry':
+                        if (value.length > 10) {
+                            fieldError = `Phone country code must be 10 characters or less (current: ${value.length})`;
+                        }
+                        break;
+                    case 'idType':
+                        if (value.length > 50) {
+                            fieldError = `ID Type must be 50 characters or less (current: ${value.length})`;
+                        }
+                        break;
+                    case 'idNumber':
+                        if (value.length > 50) {
+                            fieldError = `ID Number must be 50 characters or less (current: ${value.length})`;
+                        }
+                        break;
+                    case 'firstName':
+                    case 'lastName':
+                    case 'middleName':
+                        if (value.length > 100) {
+                            fieldError = `${fieldKey === 'firstName' ? 'First Name' : fieldKey === 'lastName' ? 'Last Name' : 'Middle Name'} must be 100 characters or less (current: ${value.length})`;
+                        }
+                        break;
+                    case 'contactNumber':
+                        if (value.length > 20) {
+                            fieldError = `Contact number must be 100 characters or less (current: ${value.length})`;
+                        }
+                        break;
+                    case 'email':
+                    case 'nextOfKinEmail':
+                        if (!isValidEmail(value)) {
+                            fieldError = 'Please enter a valid email address';
+                        }
+                        break;
+                    case 'dob':
+                        if (!/^\d{2}\/\d{2}\/\d{4}$/.test(value)) {
+                            fieldError = 'Please enter date in dd/mm/yyyy format';
+                        }
+                        break;
+                    case 'nextOfKinName':
+                        if (value.length > 100) {
+                            fieldError = `Next of kin name must be 100 characters or less (current: ${value.length})`;
+                        }
+                        break;
+                    case 'nextOfKinPhone':
+                        if (value.length > 50) {
+                            fieldError = `Next of kin phone must be 50 characters or less (current: ${value.length})`;
+                        }
+                        break;
+                    case 'idCountry':
+                        if (value.length > 100) {
+                            fieldError = `ID country must be 100 characters or less (current: ${value.length})`;
+                        }
+                        break;
+                }
+            }
+            
+            // Display or clear error
+            if (fieldError && input.errorContainer) {
+                input.errorContainer.textContent = fieldError;
+                input.errorContainer.style.display = 'block';
+                input.style.borderColor = '#ef4444';
+            } else if (input.errorContainer) {
+                input.errorContainer.textContent = '';
+                input.errorContainer.style.display = 'none';
+                input.style.borderColor = '';
+            }
+        }
+
+        // Clear field error when user starts typing
+        function clearFieldError(input) {
+            if (input.errorContainer) {
+                input.errorContainer.textContent = '';
+                input.errorContainer.style.display = 'none';
+                input.style.borderColor = '';
+            }
         }
 
         // Add character counter to input fields
