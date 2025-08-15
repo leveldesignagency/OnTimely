@@ -79,6 +79,25 @@
             transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
         }
 
+        .helper-text {
+            color: #9ca3af;
+            font-size: 12px;
+            margin-top: 4px;
+            font-style: italic;
+            line-height: 1.4;
+        }
+
+        .tags-preview {
+            margin-top: 8px;
+            display: none;
+        }
+
+        .tags-preview span {
+            display: inline-block;
+            margin-right: 4px;
+            margin-bottom: 4px;
+        }
+
         /* Custom select */
         .custom-select {
             position: relative;
@@ -455,8 +474,8 @@
                 nextOfKinEmail: { type: 'email', label: 'Next of Kin Email', placeholder: 'Enter emergency contact email' },
                 nextOfKinPhoneCountry: { type: 'select', options: ['+44', '+1', '+61', '+86', '+91', '+81', '+49', '+33', '+39', '+34', '+7', '+55', '+52', '+46', '+31', '+32', '+41', '+47', '+45', '+35', '+351', '+48', '+36', '+420', '+421', '+386', '+371', '+370', '+372', '+358'], label: 'Next of Kin Phone Country Code', placeholder: 'Select country code' },
                 nextOfKinPhone: { type: 'tel', label: 'Next of Kin Phone', placeholder: 'Enter emergency contact phone' },
-                dietary: { type: 'textarea', label: 'Dietary Requirements', placeholder: 'Any special dietary needs?' },
-                medical: { type: 'textarea', label: 'Medical/Accessibility', placeholder: 'Any medical conditions or accessibility requirements?' }
+                dietary: { type: 'tags', label: 'Dietary Requirements', placeholder: 'e.g., vegetarian, gluten-free, nut allergy (separate with commas)' },
+                medical: { type: 'tags', label: 'Medical/Accessibility', placeholder: 'e.g., wheelchair access, diabetes, asthma (separate with commas)' }
             };
             items.forEach(fieldKey => {
                 const fieldConfig = fieldConfigs[fieldKey];
@@ -574,6 +593,45 @@
                     input.name = fieldKey;
                     input.rows = 3;
                     input.placeholder = fieldConfig.placeholder;
+                } else if (fieldConfig.type === 'tags') {
+                    // Create a special tags input that converts comma-separated values to arrays
+                    input = document.createElement('input');
+                    input.type = 'text';
+                    input.id = fieldKey;
+                    input.name = fieldKey;
+                    input.placeholder = fieldConfig.placeholder;
+                    input.title = 'Enter multiple values separated by commas';
+                    
+                    // Add helper text below the input
+                    const helperText = document.createElement('div');
+                    helperText.className = 'helper-text';
+                    helperText.textContent = 'Separate multiple items with commas (e.g., vegetarian, gluten-free)';
+                    
+                    // Add tags preview below the helper text
+                    const tagsPreview = document.createElement('div');
+                    tagsPreview.className = 'tags-preview';
+                    tagsPreview.style.cssText = 'margin-top: 8px; display: none;';
+                    
+                    // Store references
+                    input.helperText = helperText;
+                    input.tagsPreview = tagsPreview;
+                    
+                    // Add real-time preview as user types
+                    input.addEventListener('input', (e) => {
+                        const value = e.target.value.trim();
+                        if (value && value.includes(',')) {
+                            const tags = value.split(',').map(tag => tag.trim()).filter(tag => tag.length > 0);
+                            if (tags.length > 0) {
+                                tagsPreview.innerHTML = '<span style="color: #9ca3af; font-size: 12px; margin-right: 8px;">Preview:</span>' + 
+                                    tags.map(tag => `<span style="background: rgba(34,197,94,0.2); color: #22c55e; padding: 2px 8px; border-radius: 12px; font-size: 11px; margin-right: 4px;">${tag}</span>`).join('');
+                                tagsPreview.style.display = 'block';
+                            } else {
+                                tagsPreview.style.display = 'none';
+                            }
+                        } else {
+                            tagsPreview.style.display = 'none';
+                        }
+                    });
                 } else {
                     input = document.createElement('input');
                     input.type = fieldConfig.type;
@@ -632,6 +690,12 @@
                 }
                 formGroup.appendChild(label);
                 formGroup.appendChild(input);
+                if (input.helperText) {
+                    formGroup.appendChild(input.helperText);
+                }
+                if (input.tagsPreview) {
+                    formGroup.appendChild(input.tagsPreview);
+                }
                 formGroup.appendChild(errorContainer);
                 formFieldsContainer.appendChild(formGroup);
                 
@@ -680,6 +744,16 @@
                             } else {
                                 responses[key] = value;
                             }
+                        }
+                    } else if (key === 'dietary' || key === 'medical') {
+                        // Convert comma-separated values to arrays for dietary and medical fields
+                        if (value && value.trim()) {
+                            const tags = value.split(',').map(tag => tag.trim()).filter(tag => tag.length > 0);
+                            responses[key] = tags;
+                            console.log(`Converted ${key} to array:`, tags);
+                        } else {
+                            responses[key] = [];
+                            console.log(`Set ${key} to empty array`);
                         }
                     } else {
                         responses[key] = value;
@@ -826,6 +900,23 @@
                     if (fieldKey === 'nextOfKinPhone' && value.length > 50) {
                         fieldError = `Next of kin phone must be 50 characters or less (current: ${value.length})`;
                         isValid = false;
+                    }
+                    
+                    // Tags validation (dietary and medical)
+                    if ((fieldKey === 'dietary' || fieldKey === 'medical') && value) {
+                        const tags = value.split(',').map(tag => tag.trim()).filter(tag => tag.length > 0);
+                        if (tags.length > 10) {
+                            fieldError = `Maximum 10 items allowed (current: ${tags.length})`;
+                            isValid = false;
+                        }
+                        // Check individual tag length
+                        for (let tag of tags) {
+                            if (tag.length > 50) {
+                                fieldError = `Individual items must be 50 characters or less (e.g., "${tag.substring(0, 20)}...")`;
+                                isValid = false;
+                                break;
+                            }
+                        }
                     }
                     
                     // ID country validation (max 100 chars)

@@ -76,6 +76,10 @@ BEGIN
     id_country,
     dob,
     gender,
+    next_of_kin_name,
+    next_of_kin_email,
+    next_of_kin_phone_country,
+    next_of_kin_phone,
     dietary,
     medical,
     modules,
@@ -101,6 +105,10 @@ BEGIN
       ELSE NULL
     END,
     COALESCE(p_responses->>'gender', ''),
+    COALESCE(p_responses->>'nextOfKinName', p_responses->>'next_of_kin_name', ''),
+    COALESCE(p_responses->>'nextOfKinEmail', p_responses->>'next_of_kin_email', ''),
+    COALESCE(p_responses->>'nextOfKinPhoneCountry', p_responses->>'next_of_kin_phone_country', '+44'),
+    COALESCE(p_responses->>'nextOfKinPhone', p_responses->>'next_of_kin_phone', ''),
     CASE 
       WHEN p_responses->>'dietary' IS NOT NULL THEN p_responses->'dietary'
       ELSE '[]'::JSONB

@@ -1,6 +1,8 @@
 {
   "routes": [
     { "src": "/", "dest": "/website/index.html" },
-    { "src": "/forms(?:/.*)?", "dest": "/website/forms.html" }
+    { "src": "/forms(?:/.*)?", "dest": "/website/forms.html" },
+    { "src": "/reset-password", "dest": "/website/reset-password.html" },
+    { "src": "/config.js", "dest": "/website/config.js" }
   ]
 } 
