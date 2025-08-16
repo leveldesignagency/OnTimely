@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OnTimely - Event Management Made Simple</title>
-    <meta name="description" content="Streamline your event management with OnTimely. Create forms, manage guests, and organize events effortlessly.">
+    <title>OnTimely - Professional Event Management Platform</title>
+    <meta name="description" content="Transform your event management with OnTimely. Professional forms, guest management, and seamless organization for events of any scale.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -15,27 +16,30 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #e5e7eb;
+            background: radial-gradient(1200px 800px at 20% -10%, rgba(34,197,94,0.12), transparent 40%),
+                        radial-gradient(1000px 700px at 120% 10%, rgba(34,197,94,0.08), transparent 45%),
+                        #0f1115;
             min-height: 100vh;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 24px;
         }
 
+        /* Header & Navigation */
         header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 1rem 0;
+            background: rgba(17, 24, 39, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             z-index: 1000;
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            padding: 20px 0;
         }
 
         nav {
@@ -45,124 +49,322 @@
         }
 
         .logo {
-            font-size: 1.8rem;
+            font-size: 2rem;
             font-weight: 700;
-            color: #667eea;
+            color: #10b981;
             text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo i {
+            font-size: 2.2rem;
         }
 
         .nav-links {
             display: flex;
-            gap: 2rem;
+            gap: 2.5rem;
             list-style: none;
         }
 
         .nav-links a {
             text-decoration: none;
-            color: #333;
+            color: #e5e7eb;
             font-weight: 500;
-            transition: color 0.3s ease;
+            transition: all 0.3s ease;
+            padding: 8px 16px;
+            border-radius: 8px;
         }
 
         .nav-links a:hover {
-            color: #667eea;
+            color: #10b981;
+            background: rgba(16, 185, 129, 0.1);
         }
 
+        /* Hero Section */
         .hero {
-            padding: 120px 0 80px;
+            padding: 140px 0 100px;
             text-align: center;
-            color: white;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
         }
 
         .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
+            font-size: 4rem;
+            font-weight: 800;
             margin-bottom: 1.5rem;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(135deg, #e5e7eb 0%, #10b981 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.1;
         }
 
         .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
+            font-size: 1.4rem;
+            margin-bottom: 2.5rem;
+            color: #9ca3af;
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
-            opacity: 0.9;
+            line-height: 1.7;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
         }
 
         .cta-button {
-            display: inline-block;
-            background: white;
-            color: #667eea;
-            padding: 15px 30px;
-            border-radius: 50px;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 16px 32px;
+            border-radius: 12px;
             text-decoration: none;
             font-weight: 600;
             font-size: 1.1rem;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+            border: none;
+            cursor: pointer;
         }
 
         .cta-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 12px 35px rgba(16, 185, 129, 0.4);
         }
 
-        .features {
-            padding: 80px 0;
-            background: white;
+        .cta-button.secondary {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #e5e7eb;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
         }
 
-        .features h2 {
+        .cta-button.secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* App Download Section */
+        .app-downloads {
+            background: rgba(17, 24, 39, 0.4);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 40px;
+            margin: 0 auto;
+            max-width: 600px;
+            backdrop-filter: blur(10px);
+        }
+
+        .app-downloads h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: #e5e7eb;
             text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            color: #333;
+        }
+
+        .download-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .download-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 16px 24px;
+            color: #e5e7eb;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            min-width: 180px;
+            justify-content: center;
+        }
+
+        .download-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .download-btn i {
+            font-size: 1.5rem;
+            color: #10b981;
+        }
+
+        .download-btn .text {
+            text-align: left;
+        }
+
+        .download-btn .text .label {
+            font-size: 0.8rem;
+            color: #9ca3af;
+            display: block;
+        }
+
+        .download-btn .text .store {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #e5e7eb;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 100px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #e5e7eb;
+        }
+
+        .section-header p {
+            font-size: 1.2rem;
+            color: #9ca3af;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 2rem;
             margin-top: 3rem;
         }
 
         .feature-card {
-            background: #f8f9fa;
-            padding: 2rem;
-            border-radius: 15px;
-            text-align: center;
-            transition: transform 0.3s ease;
+            background: rgba(17, 24, 39, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 2.5rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
         }
 
         .feature-card:hover {
             transform: translateY(-5px);
+            border-color: rgba(16, 185, 129, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
 
         .feature-icon {
             font-size: 3rem;
-            margin-bottom: 1rem;
-            color: #667eea;
+            margin-bottom: 1.5rem;
+            color: #10b981;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .feature-icon i {
+            background: rgba(16, 185, 129, 0.1);
+            padding: 16px;
+            border-radius: 12px;
         }
 
         .feature-card h3 {
             font-size: 1.5rem;
             margin-bottom: 1rem;
-            color: #333;
+            color: #e5e7eb;
         }
 
         .feature-card p {
-            color: #666;
-            line-height: 1.6;
+            color: #9ca3af;
+            line-height: 1.7;
+            font-size: 1rem;
         }
 
-        .footer {
-            background: #333;
-            color: white;
+        /* Stats Section */
+        .stats {
+            padding: 80px 0;
+            background: rgba(17, 24, 39, 0.3);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
             text-align: center;
-            padding: 2rem 0;
         }
 
+        .stat-item {
+            padding: 2rem;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #10b981;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: #9ca3af;
+            font-weight: 500;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(17, 24, 39, 0.8);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 3rem 0 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            color: #e5e7eb;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-section p, .footer-section a {
+            color: #9ca3af;
+            text-decoration: none;
+            line-height: 1.8;
+        }
+
+        .footer-section a:hover {
+            color: #10b981;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 2rem;
+            color: #6b7280;
+        }
+
+        /* Responsive Design */
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 2.5rem;
@@ -172,7 +374,43 @@
                 display: none;
             }
             
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .download-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
             .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 16px;
+            }
+            
+            .hero {
+                padding: 120px 0 60px;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .stats-grid {
                 grid-template-columns: 1fr;
             }
         }
@@ -181,7 +419,10 @@
 <body>
     <header>
         <nav class="container">
-            <a href="/" class="logo">OnTimely</a>
+            <a href="/" class="logo">
+                <i class="fas fa-clock"></i>
+                OnTimely
+            </a>
             <ul class="nav-links">
                 <li><a href="#features">Features</a></li>
                 <li><a href="#about">About</a></li>
@@ -193,45 +434,134 @@
     <main>
         <section class="hero">
             <div class="container">
-                <h1>Event Management Made Simple</h1>
-                <p>Create beautiful forms, manage guest responses, and organize events effortlessly with OnTimely's powerful platform.</p>
-                <a href="#features" class="cta-button">Learn More</a>
+                <div class="hero-content">
+                    <h1>Professional Event Management</h1>
+                    <p>Transform your events with OnTimely's powerful platform. Create stunning forms, manage guests seamlessly, and organize events of any scale with enterprise-grade tools.</p>
+                    
+                    <div class="hero-buttons">
+                        <a href="#features" class="cta-button">
+                            <i class="fas fa-rocket"></i>
+                            Get Started
+                        </a>
+                        <a href="#demo" class="cta-button secondary">
+                            <i class="fas fa-play"></i>
+                            Watch Demo
+                        </a>
+                    </div>
+
+                    <div class="app-downloads">
+                        <h3>Download Our Apps</h3>
+                        <div class="download-buttons">
+                            <a href="#" class="download-btn">
+                                <i class="fab fa-apple"></i>
+                                <div class="text">
+                                    <span class="label">Download on the</span>
+                                    <span class="store">App Store</span>
+                                </div>
+                            </a>
+                            <a href="#" class="download-btn">
+                                <i class="fab fa-google-play"></i>
+                                <div class="text">
+                                    <span class="label">Get it on</span>
+                                    <span class="store">Google Play</span>
+                                </div>
+                            </a>
+                            <a href="#" class="download-btn">
+                                <i class="fas fa-desktop"></i>
+                                <div class="text">
+                                    <span class="label">Download for</span>
+                                    <span class="store">Desktop</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
         <section class="features" id="features">
             <div class="container">
-                <h2>Why Choose OnTimely?</h2>
+                <div class="section-header">
+                    <h2>Why Choose OnTimely?</h2>
+                    <p>Built for professionals who demand excellence in event management and guest experience.</p>
+                </div>
+                
                 <div class="features-grid">
                     <div class="feature-card">
-                        <div class="feature-icon">📝</div>
-                        <h3>Smart Forms</h3>
-                        <p>Create custom forms with drag-and-drop ease. Collect exactly the information you need from your guests.</p>
+                        <div class="feature-icon">
+                            <i class="fas fa-edit"></i>
+                            <span>Smart Forms</span>
+                        </div>
+                        <h3>Professional Form Builder</h3>
+                        <p>Create custom forms with drag-and-drop ease. Collect exactly the information you need with professional templates and branding options.</p>
                     </div>
+                    
                     <div class="feature-card">
-                        <div class="feature-icon">📧</div>
-                        <h3>Automated Emails</h3>
-                        <p>Send personalized invitations automatically. Track responses and follow up with ease.</p>
+                        <div class="feature-icon">
+                            <i class="fas fa-envelope"></i>
+                            <span>Automated Communication</span>
+                        </div>
+                        <h3>Seamless Guest Communication</h3>
+                        <p>Send personalized invitations automatically. Track responses, send reminders, and maintain professional communication throughout the event lifecycle.</p>
                     </div>
+                    
                     <div class="feature-card">
-                        <div class="feature-icon">📊</div>
-                        <h3>Real-time Analytics</h3>
-                        <p>Monitor form submissions, track engagement, and get insights into your event planning process.</p>
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Real-time Analytics</span>
+                        </div>
+                        <h3>Comprehensive Insights</h3>
+                        <p>Monitor form submissions, track engagement metrics, and get actionable insights to optimize your event planning process.</p>
                     </div>
+                    
                     <div class="feature-card">
-                        <div class="feature-icon">🔒</div>
-                        <h3>Secure & Private</h3>
-                        <p>Your data is protected with enterprise-grade security. Guest information stays private and secure.</p>
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Enterprise Security</span>
+                        </div>
+                        <h3>Bank-Level Security</h3>
+                        <p>Your data is protected with enterprise-grade security and compliance. Guest information stays private and secure with SOC 2 compliance.</p>
                     </div>
+                    
                     <div class="feature-card">
-                        <div class="feature-icon">📱</div>
-                        <h3>Mobile First</h3>
-                        <p>Forms work perfectly on all devices. Your guests can respond from anywhere, anytime.</p>
+                        <div class="feature-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                            <span>Cross-Platform</span>
+                        </div>
+                        <h3>Works Everywhere</h3>
+                        <p>Native mobile apps for iOS and Android, plus a powerful desktop application. Your team can work from anywhere, anytime.</p>
                     </div>
+                    
                     <div class="feature-card">
-                        <div class="feature-icon">⚡</div>
-                        <h3>Lightning Fast</h3>
-                        <p>Built for speed and reliability. Your forms load instantly and work seamlessly.</p>
+                        <div class="feature-icon">
+                            <i class="fas fa-bolt"></i>
+                            <span>Lightning Fast</span>
+                        </div>
+                        <h3>Built for Performance</h3>
+                        <p>Optimized for speed and reliability. Your forms load instantly, work seamlessly, and scale to handle events of any size.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="stats">
+            <div class="container">
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number">10K+</div>
+                        <div class="stat-label">Events Managed</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">500K+</div>
+                        <div class="stat-label">Guests Served</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">99.9%</div>
+                        <div class="stat-label">Uptime</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-label">Support</div>
                     </div>
                 </div>
             </div>
@@ -240,7 +570,33 @@
 
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2025 OnTimely. All rights reserved.</p>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>OnTimely</h4>
+                    <p>Professional event management platform designed for teams who demand excellence.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Product</h4>
+                    <p><a href="#features">Features</a></p>
+                    <p><a href="#pricing">Pricing</a></p>
+                    <p><a href="#integrations">Integrations</a></p>
+                </div>
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <p><a href="#about">About</a></p>
+                    <p><a href="#careers">Careers</a></p>
+                    <p><a href="#contact">Contact</a></p>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <p><a href="#help">Help Center</a></p>
+                    <p><a href="#docs">Documentation</a></p>
+                    <p><a href="#status">System Status</a></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 OnTimely. All rights reserved. | Privacy Policy | Terms of Service</p>
+            </div>
         </div>
     </footer>
 </body>
