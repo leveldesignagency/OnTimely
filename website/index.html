@@ -21,12 +21,13 @@
                         radial-gradient(1000px 700px at 120% 10%, rgba(34,197,94,0.08), transparent 45%),
                         #0f1115;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 100%;
             margin: 0 auto;
-            padding: 0 24px;
+            padding: 0 40px;
         }
 
         /* Header & Navigation */
@@ -46,6 +47,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
         }
 
         .logo {
@@ -64,7 +68,7 @@
 
         .nav-links {
             display: flex;
-            gap: 2.5rem;
+            gap: 3rem;
             list-style: none;
         }
 
@@ -75,6 +79,7 @@
             transition: all 0.3s ease;
             padding: 8px 16px;
             border-radius: 8px;
+            font-size: 1.1rem;
         }
 
         .nav-links a:hover {
@@ -82,43 +87,52 @@
             background: rgba(16, 185, 129, 0.1);
         }
 
-        /* Hero Section */
+        /* Hero Section - Wide Layout */
         .hero {
             padding: 140px 0 100px;
-            text-align: center;
             position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
         }
 
         .hero-content {
-            max-width: 800px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            max-width: 1400px;
             margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .hero-left {
+            max-width: 600px;
         }
 
         .hero h1 {
-            font-size: 4rem;
+            font-size: 4.5rem;
             font-weight: 800;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
             background: linear-gradient(135deg, #e5e7eb 0%, #10b981 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             line-height: 1.1;
+            text-align: left;
         }
 
         .hero p {
-            font-size: 1.4rem;
-            margin-bottom: 2.5rem;
+            font-size: 1.5rem;
+            margin-bottom: 3rem;
             color: #9ca3af;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
             line-height: 1.7;
+            text-align: left;
         }
 
         .hero-buttons {
             display: flex;
-            gap: 20px;
-            justify-content: center;
+            gap: 24px;
             flex-wrap: wrap;
             margin-bottom: 3rem;
         }
@@ -129,15 +143,17 @@
             gap: 12px;
             background: linear-gradient(135deg, #10b981 0%, #059669 100%);
             color: white;
-            padding: 16px 32px;
+            padding: 18px 36px;
             border-radius: 12px;
             text-decoration: none;
             font-weight: 600;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             transition: all 0.3s ease;
             box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
             border: none;
             cursor: pointer;
+            min-width: 180px;
+            justify-content: center;
         }
 
         .cta-button:hover {
@@ -157,44 +173,51 @@
             border-color: rgba(255, 255, 255, 0.3);
         }
 
-        /* App Download Section */
+        /* App Download Section - Right Side */
+        .hero-right {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
         .app-downloads {
             background: rgba(17, 24, 39, 0.4);
-            border-radius: 20px;
+            border-radius: 24px;
             border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 40px;
-            margin: 0 auto;
-            max-width: 600px;
+            padding: 50px;
             backdrop-filter: blur(10px);
+            max-width: 500px;
+            width: 100%;
         }
 
         .app-downloads h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
             color: #e5e7eb;
             text-align: center;
         }
 
         .download-buttons {
             display: flex;
+            flex-direction: column;
             gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
+            width: 100%;
         }
 
         .download-btn {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 16px;
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 16px 24px;
+            border-radius: 16px;
+            padding: 20px 24px;
             color: #e5e7eb;
             text-decoration: none;
             transition: all 0.3s ease;
-            min-width: 180px;
-            justify-content: center;
+            width: 100%;
+            justify-content: flex-start;
         }
 
         .download-btn:hover {
@@ -204,8 +227,9 @@
         }
 
         .download-btn i {
-            font-size: 1.5rem;
+            font-size: 2rem;
             color: #10b981;
+            min-width: 40px;
         }
 
         .download-btn .text {
@@ -213,101 +237,112 @@
         }
 
         .download-btn .text .label {
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             color: #9ca3af;
             display: block;
+            margin-bottom: 4px;
         }
 
         .download-btn .text .store {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             font-weight: 600;
             color: #e5e7eb;
         }
 
-        /* Features Section */
+        /* Features Section - Wide Grid */
         .features {
-            padding: 100px 0;
+            padding: 120px 0;
         }
 
         .section-header {
             text-align: center;
-            margin-bottom: 4rem;
+            margin-bottom: 5rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .section-header h2 {
-            font-size: 3rem;
+            font-size: 3.5rem;
             font-weight: 700;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             color: #e5e7eb;
         }
 
         .section-header p {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             color: #9ca3af;
-            max-width: 600px;
-            margin: 0 auto;
+            line-height: 1.7;
         }
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2.5rem;
+            margin-top: 4rem;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 0 40px;
         }
 
         .feature-card {
             background: rgba(17, 24, 39, 0.4);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 16px;
-            padding: 2.5rem;
+            border-radius: 20px;
+            padding: 3rem;
             transition: all 0.3s ease;
             backdrop-filter: blur(10px);
+            height: 100%;
         }
 
         .feature-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px);
             border-color: rgba(16, 185, 129, 0.3);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
         }
 
         .feature-icon {
-            font-size: 3rem;
-            margin-bottom: 1.5rem;
+            font-size: 3.5rem;
+            margin-bottom: 2rem;
             color: #10b981;
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 20px;
         }
 
         .feature-icon i {
             background: rgba(16, 185, 129, 0.1);
-            padding: 16px;
-            border-radius: 12px;
+            padding: 20px;
+            border-radius: 16px;
         }
 
         .feature-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
             color: #e5e7eb;
         }
 
         .feature-card p {
             color: #9ca3af;
-            line-height: 1.7;
-            font-size: 1rem;
+            line-height: 1.8;
+            font-size: 1.1rem;
         }
 
-        /* Stats Section */
+        /* Stats Section - Wide Layout */
         .stats {
-            padding: 80px 0;
+            padding: 100px 0;
             background: rgba(17, 24, 39, 0.3);
         }
 
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(4, 1fr);
             gap: 3rem;
             text-align: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
         }
 
         .stat-item {
@@ -315,43 +350,47 @@
         }
 
         .stat-number {
-            font-size: 3rem;
+            font-size: 3.5rem;
             font-weight: 800;
             color: #10b981;
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
         }
 
         .stat-label {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             color: #9ca3af;
             font-weight: 500;
         }
 
-        /* Footer */
+        /* Footer - Wide Layout */
         .footer {
             background: rgba(17, 24, 39, 0.8);
             border-top: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 3rem 0 2rem;
-            text-align: center;
+            padding: 4rem 0 2rem;
         }
 
         .footer-content {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 3rem;
+            margin-bottom: 3rem;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 0 40px;
         }
 
         .footer-section h4 {
             color: #e5e7eb;
-            margin-bottom: 1rem;
-            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
         }
 
         .footer-section p, .footer-section a {
             color: #9ca3af;
             text-decoration: none;
-            line-height: 1.8;
+            line-height: 2;
+            font-size: 1rem;
         }
 
         .footer-section a:hover {
@@ -362,12 +401,70 @@
             border-top: 1px solid rgba(255, 255, 255, 0.08);
             padding-top: 2rem;
             color: #6b7280;
+            text-align: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-left: 40px;
+            padding-right: 40px;
         }
 
         /* Responsive Design */
+        @media (max-width: 1200px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 60px;
+                text-align: center;
+            }
+            
+            .hero-left {
+                max-width: 100%;
+            }
+            
+            .hero h1 {
+                text-align: center;
+                font-size: 3.5rem;
+            }
+            
+            .hero p {
+                text-align: center;
+            }
+            
+            .hero-buttons {
+                justify-content: center;
+            }
+            
+            .features-grid {
+                grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
         @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+            
+            nav {
+                padding: 0 20px;
+            }
+            
+            .hero-content {
+                padding: 0 20px;
+            }
+            
             .hero h1 {
                 font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
             }
             
             .nav-links {
@@ -379,25 +476,33 @@
                 align-items: center;
             }
             
-            .download-buttons {
-                flex-direction: column;
-                align-items: center;
+            .cta-button {
+                width: 100%;
+                max-width: 300px;
             }
             
             .features-grid {
                 grid-template-columns: 1fr;
+                padding: 0 20px;
             }
             
             .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: 1fr;
+                padding: 0 20px;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                padding: 0 20px;
+            }
+            
+            .footer-bottom {
+                padding-left: 20px;
+                padding-right: 20px;
             }
         }
 
         @media (max-width: 480px) {
-            .container {
-                padding: 0 16px;
-            }
-            
             .hero {
                 padding: 120px 0 60px;
             }
@@ -410,15 +515,19 @@
                 font-size: 1.1rem;
             }
             
-            .stats-grid {
-                grid-template-columns: 1fr;
+            .app-downloads {
+                padding: 30px;
+            }
+            
+            .download-btn {
+                padding: 16px 20px;
             }
         }
     </style>
 </head>
 <body>
     <header>
-        <nav class="container">
+        <nav>
             <a href="/" class="logo">
                 <i class="fas fa-clock"></i>
                 OnTimely
@@ -433,8 +542,8 @@
 
     <main>
         <section class="hero">
-            <div class="container">
-                <div class="hero-content">
+            <div class="hero-content">
+                <div class="hero-left">
                     <h1>Professional Event Management</h1>
                     <p>Transform your events with OnTimely's powerful platform. Create stunning forms, manage guests seamlessly, and organize events of any scale with enterprise-grade tools.</p>
                     
@@ -448,7 +557,9 @@
                             Watch Demo
                         </a>
                     </div>
+                </div>
 
+                <div class="hero-right">
                     <div class="app-downloads">
                         <h3>Download Our Apps</h3>
                         <div class="download-buttons">
