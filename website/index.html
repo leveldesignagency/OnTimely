@@ -820,7 +820,7 @@
             const button = document.createElement('a');
             button.href = filename;
             button.className = `download-btn ${isPrimary ? 'primary' : ''}`;
-            button.download = filename;
+            
             
             button.innerHTML = `
                 <i class="${icon}"></i>
@@ -850,9 +850,9 @@
                     container.appendChild(createDownloadButton(
                         'mac', 
                         'fab fa-apple', 
-                        'Download for Apple Silicon', 
+                        'Download for Apple Silicon (Recommended)', 
                         'macOS (ARM64)', 
-                        'Timely-1.0.1-arm64.dmg',
+                        'https://github.com/leveldesignagency/OnTimely/releases/download/v1.0.1/OnTimely.Desktop.App.v1.0.1.Apple.Silicon.dmg',
                         true
                     ));
                     
@@ -860,18 +860,18 @@
                     container.appendChild(createDownloadButton(
                         'mac', 
                         'fab fa-apple', 
-                        'Download for Intel', 
+                        'Download for Intel (Universal)', 
                         'macOS (Intel)', 
-                        'Timely-1.0.1.dmg'
+                        'https://github.com/leveldesignagency/OnTimely/releases/download/v1.0.1/OnTimely.Desktop.App.v1.0.1.dmg'
                     ));
                 } else {
                     // Primary button for Intel
                     container.appendChild(createDownloadButton(
                         'mac', 
                         'fab fa-apple', 
-                        'Download for Intel', 
+                        'Download for Intel (Universal)', 
                         'macOS (Intel)', 
-                        'Timely-1.0.1.dmg',
+                        'https://github.com/leveldesignagency/OnTimely/releases/download/v1.0.1/OnTimely.Desktop.App.v1.0.1.dmg',
                         true
                     ));
                     
@@ -879,9 +879,9 @@
                     container.appendChild(createDownloadButton(
                         'mac', 
                         'fab fa-apple', 
-                        'Download for Apple Silicon', 
+                        'Download for Apple Silicon (Recommended)', 
                         'macOS (ARM64)', 
-                        'Timely-1.0.1-arm64.dmg'
+                        'https://github.com/leveldesignagency/OnTimely/releases/download/v1.0.1/OnTimely.Desktop.App.v1.0.1.Apple.Silicon.dmg'
                     ));
                 }
             } else if (platform === 'windows') {
@@ -891,7 +891,7 @@
                     'fab fa-windows', 
                     'Download for Windows', 
                     'Windows 10/11', 
-                    'Timely Setup 1.0.1.exe',
+                    'https://github.com/leveldesignagency/OnTimely/releases/download/v1.0.1/OnTimely.Desktop.App.v1.0.1.exe',
                     true
                 ));
             } else {
@@ -901,15 +901,15 @@
                     'fab fa-apple', 
                     'Download for macOS', 
                     'macOS (Intel)', 
-                    'Timely-1.0.1.dmg'
+                    'https://github.com/leveldesignagency/OnTimely/releases/download/v1.0.1/OnTimely.Desktop.App.v1.0.1.dmg'
                 ));
                 
                 container.appendChild(createDownloadButton(
                     'mac', 
                     'fab fa-apple', 
-                    'Download for Apple Silicon', 
+                    'Download for Apple Silicon (Recommended)', 
                     'macOS (ARM64)', 
-                    'Timely-1.0.1-arm64.dmg'
+                    'https://github.com/leveldesignagency/OnTimely/releases/download/v1.0.1/OnTimely.Desktop.App.v1.0.1.Apple.Silicon.dmg'
                 ));
                 
                 container.appendChild(createDownloadButton(
@@ -917,7 +917,7 @@
                     'fab fa-windows', 
                     'Download for Windows', 
                     'Windows 10/11', 
-                    'Timely Setup 1.0.1.exe'
+                    'https://github.com/leveldesignagency/OnTimely/releases/download/v1.0.1/OnTimely.Desktop.App.v1.0.1.exe'
                 ));
             }
         }
