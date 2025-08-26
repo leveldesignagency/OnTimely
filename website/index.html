@@ -244,6 +244,18 @@
             transform: translateY(-2px);
         }
 
+        .download-btn.primary {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: rgba(16, 185, 129, 0.3);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.2);
+        }
+
+        .download-btn.primary:hover {
+            background: rgba(16, 185, 129, 0.15);
+            border-color: rgba(16, 185, 129, 0.4);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
+        }
+
         .download-btn i {
             font-size: 2rem;
             color: #10b981;
@@ -637,29 +649,9 @@
 
                 <div class="hero-right">
                     <div class="app-downloads">
-                        <h3>Download Our Apps</h3>
-                        <div class="download-buttons">
-                            <a href="#" class="download-btn">
-                                <i class="fab fa-apple"></i>
-                                <div class="text">
-                                    <span class="label">Download on the</span>
-                                    <span class="store">App Store</span>
-                                </div>
-                            </a>
-                            <a href="#" class="download-btn">
-                                <i class="fab fa-google-play"></i>
-                                <div class="text">
-                                    <span class="label">Get it on</span>
-                                    <span class="store">Google Play</span>
-                                </div>
-                            </a>
-                            <a href="#" class="download-btn">
-                                <i class="fas fa-desktop"></i>
-                                <div class="text">
-                                    <span class="label">Download for</span>
-                                    <span class="store">Desktop</span>
-                                </div>
-                            </a>
+                        <h3>Download Our Desktop App</h3>
+                        <div class="download-buttons" id="download-buttons">
+                            <!-- Buttons will be populated by JavaScript -->
                         </div>
                     </div>
                 </div>
@@ -800,5 +792,138 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        // Device detection and dynamic download button generation
+        function detectPlatform() {
+            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+            
+            // Check if it's macOS
+            if (/Mac|iPod|iPhone|iPad/.test(userAgent)) {
+                return 'mac';
+            }
+            // Check if it's Windows
+            else if (/Win/.test(userAgent)) {
+                return 'windows';
+            }
+            // Check if it's Linux
+            else if (/Linux/.test(userAgent)) {
+                return 'linux';
+            }
+            // Default to showing all options
+            else {
+                return 'unknown';
+            }
+        }
+
+        function createDownloadButton(platform, icon, label, sublabel, filename, isPrimary = false) {
+            const button = document.createElement('a');
+            button.href = filename;
+            button.className = `download-btn ${isPrimary ? 'primary' : ''}`;
+            button.download = filename;
+            
+            button.innerHTML = `
+                <i class="${icon}"></i>
+                <div class="text">
+                    <span class="label">${label}</span>
+                    <span class="store">${sublabel}</span>
+                </div>
+            `;
+            
+            return button;
+        }
+
+        function populateDownloadButtons() {
+            const container = document.getElementById('download-buttons');
+            const platform = detectPlatform();
+            
+            // Clear existing buttons
+            container.innerHTML = '';
+            
+            if (platform === 'mac') {
+                // Check if it's Apple Silicon or Intel
+                const isAppleSilicon = navigator.platform.includes('ARM') || 
+                                     (navigator.userAgent.includes('Mac') && navigator.userAgent.includes('ARM'));
+                
+                if (isAppleSilicon) {
+                    // Primary button for Apple Silicon
+                    container.appendChild(createDownloadButton(
+                        'mac', 
+                        'fab fa-apple', 
+                        'Download for Apple Silicon', 
+                        'macOS (ARM64)', 
+                        'Timely-1.0.1-arm64.dmg',
+                        true
+                    ));
+                    
+                    // Secondary button for Intel (universal compatibility)
+                    container.appendChild(createDownloadButton(
+                        'mac', 
+                        'fab fa-apple', 
+                        'Download for Intel', 
+                        'macOS (Intel)', 
+                        'Timely-1.0.1.dmg'
+                    ));
+                } else {
+                    // Primary button for Intel
+                    container.appendChild(createDownloadButton(
+                        'mac', 
+                        'fab fa-apple', 
+                        'Download for Intel', 
+                        'macOS (Intel)', 
+                        'Timely-1.0.1.dmg',
+                        true
+                    ));
+                    
+                    // Secondary button for Apple Silicon
+                    container.appendChild(createDownloadButton(
+                        'mac', 
+                        'fab fa-apple', 
+                        'Download for Apple Silicon', 
+                        'macOS (ARM64)', 
+                        'Timely-1.0.1-arm64.dmg'
+                    ));
+                }
+            } else if (platform === 'windows') {
+                // Windows primary button
+                container.appendChild(createDownloadButton(
+                    'windows', 
+                    'fab fa-windows', 
+                    'Download for Windows', 
+                    'Windows 10/11', 
+                    'Timely Setup 1.0.1.exe',
+                    true
+                ));
+            } else {
+                // Show all options for unknown platforms or cross-platform users
+                container.appendChild(createDownloadButton(
+                    'mac', 
+                    'fab fa-apple', 
+                    'Download for macOS', 
+                    'macOS (Intel)', 
+                    'Timely-1.0.1.dmg'
+                ));
+                
+                container.appendChild(createDownloadButton(
+                    'mac', 
+                    'fab fa-apple', 
+                    'Download for Apple Silicon', 
+                    'macOS (ARM64)', 
+                    'Timely-1.0.1-arm64.dmg'
+                ));
+                
+                container.appendChild(createDownloadButton(
+                    'windows', 
+                    'fab fa-windows', 
+                    'Download for Windows', 
+                    'Windows 10/11', 
+                    'Timely Setup 1.0.1.exe'
+                ));
+            }
+        }
+
+        // Initialize download buttons when page loads
+        document.addEventListener('DOMContentLoaded', populateDownloadButtons);
+    </script>
 </body>
 </html> 
