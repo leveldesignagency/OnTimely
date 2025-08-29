@@ -3,6 +3,8 @@
     { "src": "/", "dest": "/website/index.html" },
     { "src": "/forms(?:/.*)?", "dest": "/website/forms.html" },
     { "src": "/reset-password", "dest": "/website/reset-password.html" },
+    { "src": "/confirm-account", "dest": "/website/confirm-account.html" },
+    { "src": "/set-initial-password", "dest": "/website/set-initial-password.html" },
     { "src": "/config.js", "dest": "/website/config.js" }
   ]
 } 
