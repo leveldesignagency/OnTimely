@@ -5,6 +5,7 @@
     { "src": "/reset-password", "dest": "/website/reset-password.html" },
     { "src": "/confirm-account", "dest": "/website/confirm-account.html" },
     { "src": "/set-initial-password", "dest": "/website/set-initial-password.html" },
+    { "src": "/guest-success-email-confirmed", "dest": "/guest-success-email-confirmed.html" },
     { "src": "/config.js", "dest": "/website/config.js" }
   ]
 } 
