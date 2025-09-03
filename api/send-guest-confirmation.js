@@ -1,0 +1,141 @@
+const { Resend } = require('resend');
+
+// Use your verified domain now that DNS is configured
+const FROM_EMAIL = 'noreply@ontimely.co.uk';
+
+module.exports = async (req, res) => {
+  if (req.method !== 'POST') {
+    res.setHeader('Allow', 'POST');
+    return res.status(405).end('Method Not Allowed');
+  }
+
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    console.error('RESEND_API_KEY not configured');
+    return res.status(500).json({ error: 'RESEND_API_KEY not configured' });
+  }
+  
+  const resend = new Resend(apiKey);
+
+  try {
+    const { email, password, eventName, guestName, confirmationToken } = req.body || {};
+    console.log('Received guest confirmation request:', { email, eventName, guestName });
+    
+    if (!email || !password || !eventName || !guestName) {
+      return res.status(400).json({ error: 'Missing required fields: email, password, eventName, guestName' });
+    }
+    
+    // Use email as confirmation token if not provided (temporary fallback)
+    const token = confirmationToken || encodeURIComponent(email);
+    const confirmationUrl = `https://guest.ontimely.co.uk/guest-success-email-confirmed?token=${token}`;
+    
+    const emailPayload = {
+      from: `Timely <${FROM_EMAIL}>`,
+      to: [email],
+      subject: `Welcome to ${eventName} • Your Guest Access`,
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 24px; background-color: #f8f9fa;">
+          <div style="background-color: white; padding: 32px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+            
+            <!-- Header -->
+            <div style="text-align: center; margin-bottom: 32px;">
+              <h1 style="color: #2563eb; margin: 0 0 8px; font-size: 28px;">Welcome to Timely</h1>
+              <h2 style="color: #374151; margin: 0; font-size: 20px; font-weight: normal;">${eventName}</h2>
+            </div>
+            
+            <!-- Greeting -->
+            <p style="color: #374151; font-size: 16px; line-height: 1.6; margin: 0 0 24px;">
+              Hi ${guestName},
+            </p>
+            
+            <p style="color: #374151; font-size: 16px; line-height: 1.6; margin: 0 0 24px;">
+              You've been invited to join <strong>${eventName}</strong> as a guest. 
+              Please confirm your email and download the Timely mobile app to get started.
+            </p>
+            
+            <!-- Confirmation Button -->
+            <div style="text-align: center; margin: 32px 0;">
+              <a href="${confirmationUrl}" 
+                 style="display: inline-block; background-color: #2563eb; color: white; 
+                        padding: 16px 32px; text-decoration: none; border-radius: 8px; 
+                        font-weight: bold; font-size: 16px;">
+                Confirm Email & Download App
+              </a>
+            </div>
+            
+            <!-- Login Details -->
+            <div style="background-color: #f3f4f6; padding: 24px; border-radius: 8px; margin: 24px 0;">
+              <h3 style="color: #374151; margin: 0 0 16px; font-size: 18px;">Your Login Details</h3>
+              <div style="margin-bottom: 12px;">
+                <strong style="color: #374151;">Email:</strong> 
+                <span style="color: #6b7280; font-family: monospace;">${email}</span>
+              </div>
+              <div style="margin-bottom: 12px;">
+                <strong style="color: #374151;">Password:</strong> 
+                <span style="color: #6b7280; font-family: monospace; background-color: #e5e7eb; padding: 4px 8px; border-radius: 4px;">${password}</span>
+              </div>
+              <p style="color: #6b7280; font-size: 14px; margin: 16px 0 0;">
+                Use these credentials to log into the Timely mobile app after confirming your email.
+              </p>
+            </div>
+            
+            <!-- App Download Links -->
+            <div style="text-align: center; margin: 32px 0;">
+              <h3 style="color: #374151; margin: 0 0 16px; font-size: 18px;">Download the App</h3>
+              <div style="display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;">
+                <a href="https://apps.apple.com/app/timely" 
+                   style="display: inline-block; background-color: #000; color: white; 
+                          padding: 12px 24px; text-decoration: none; border-radius: 8px; 
+                          font-weight: bold;">
+                  📱 iOS App
+                </a>
+                <a href="https://play.google.com/store/apps/details?id=com.ontimely.app" 
+                   style="display: inline-block; background-color: #01875f; color: white; 
+                          padding: 12px 24px; text-decoration: none; border-radius: 8px; 
+                          font-weight: bold;">
+                  🤖 Android App
+                </a>
+              </div>
+            </div>
+            
+            <!-- Instructions -->
+            <div style="background-color: #fef3c7; border-left: 4px solid #f59e0b; padding: 16px; margin: 24px 0;">
+              <h4 style="color: #92400e; margin: 0 0 8px; font-size: 16px;">Next Steps:</h4>
+              <ol style="color: #92400e; margin: 0; padding-left: 20px;">
+                <li>Click "Confirm Email & Download App" above</li>
+                <li>Download the Timely mobile app</li>
+                <li>Open the app and log in with your credentials</li>
+                <li>Enjoy your event experience!</li>
+              </ol>
+            </div>
+            
+            <!-- Footer -->
+            <div style="text-align: center; margin-top: 32px; padding-top: 24px; border-top: 1px solid #e5e7eb;">
+              <p style="color: #6b7280; font-size: 14px; margin: 0;">
+                If you have any questions, please contact your event organizer.
+              </p>
+              <p style="color: #9ca3af; font-size: 12px; margin: 8px 0 0;">
+                This email was sent by Timely Event Management System
+              </p>
+            </div>
+            
+          </div>
+        </div>
+      `,
+    };
+
+    console.log('Sending guest confirmation email with payload:', { ...emailPayload, html: 'HTML_CONTENT_HIDDEN' });
+    const { data, error } = await resend.emails.send(emailPayload);
+
+    if (error) {
+      console.error('Resend error:', error);
+      return res.status(400).json(error);
+    }
+
+    console.log('Guest confirmation email sent successfully:', data);
+    return res.status(200).json(data);
+  } catch (e) {
+    console.error('Guest confirmation email error:', e);
+    return res.status(500).json({ error: 'Failed to send guest confirmation email', details: e.message });
+  }
+};
