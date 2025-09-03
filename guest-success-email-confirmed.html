@@ -349,8 +349,7 @@
         
         if (!token) {
             showError('No confirmation token provided.');
-            return;
-        }
+        } else {
         
         // Show loading state
         document.getElementById('loading').classList.add('show');
@@ -380,6 +379,7 @@
             showError('Network error. Please try again.');
             console.error('Error:', error);
         });
+        }
         
         function showError(message) {
             document.getElementById('error-message').textContent = message;
