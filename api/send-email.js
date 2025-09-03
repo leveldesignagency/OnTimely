@@ -25,9 +25,8 @@ module.exports = async function handler(req, res) {
         return res.status(400).json({ error: 'Missing required fields for login email: email, password, eventName, guestName' });
       }
       
-      // Use email as confirmation token if not provided (temporary fallback)
-      const token = confirmationToken || encodeURIComponent(email);
-      const confirmationUrl = `https://guest.ontimely.co.uk/guest-success-email-confirmed?token=${token}`;
+      // No confirmation needed - guests are auto-confirmed
+      const appDownloadUrl = 'https://guest.ontimely.co.uk/app-download';
       
       const loginEmailHtml = `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 24px; background-color: #f8f9fa;">
@@ -46,16 +45,16 @@ module.exports = async function handler(req, res) {
             
             <p style="color: #374151; font-size: 16px; line-height: 1.6; margin: 0 0 24px;">
               You've been invited to join <strong>${eventName}</strong> as a guest. 
-              Please confirm your email and download the Timely mobile app to get started.
+              Your account is ready! Download the Timely mobile app and log in with your credentials below.
             </p>
             
-            <!-- Confirmation Button -->
+            <!-- Download App Button -->
             <div style="text-align: center; margin: 32px 0;">
-              <a href="${confirmationUrl}" 
+              <a href="${appDownloadUrl}" 
                  style="display: inline-block; background-color: #2563eb; color: white; 
                         padding: 16px 32px; text-decoration: none; border-radius: 8px; 
                         font-weight: bold; font-size: 16px;">
-                Confirm Email & Download App
+                Download App & Get Started
               </a>
             </div>
             
@@ -71,7 +70,7 @@ module.exports = async function handler(req, res) {
                 <span style="color: #6b7280; font-family: monospace; background-color: #e5e7eb; padding: 4px 8px; border-radius: 4px;">${password}</span>
               </div>
               <p style="color: #6b7280; font-size: 14px; margin: 16px 0 0;">
-                Use these credentials to log into the Timely mobile app after confirming your email.
+                Use these credentials to log into the Timely mobile app. Your account is ready to use!
               </p>
             </div>
             
@@ -98,8 +97,7 @@ module.exports = async function handler(req, res) {
             <div style="background-color: #fef3c7; border-left: 4px solid #f59e0b; padding: 16px; margin: 24px 0;">
               <h4 style="color: #92400e; margin: 0 0 8px; font-size: 16px;">Next Steps:</h4>
               <ol style="color: #92400e; margin: 0; padding-left: 20px;">
-                <li>Click "Confirm Email & Download App" above</li>
-                <li>Download the Timely mobile app</li>
+                <li>Download the Timely mobile app using the links above</li>
                 <li>Open the app and log in with your credentials</li>
                 <li>Enjoy your event experience!</li>
               </ol>
