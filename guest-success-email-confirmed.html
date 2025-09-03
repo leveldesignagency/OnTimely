@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Confirmed - OnTimely</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #e5e7eb;
+            background: radial-gradient(1200px 800px at 20% -10%, rgba(34,197,94,0.12), transparent 40%),
+                        radial-gradient(1000px 700px at 120% 10%, rgba(34,197,94,0.08), transparent 45%),
+                        #0f1115;
+            min-height: 100vh;
+            padding: 24px;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(17, 24, 39, 0.55);
+            border-radius: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.04), 0 8px 30px rgba(0,0,0,0.45);
+            backdrop-filter: blur(8px);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+            color: #e5e7eb;
+            padding: 36px 40px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            border-radius: 20px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #e5e7eb 0%, #10b981 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            color: #9ca3af;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .status-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .icon-large {
+            font-size: 48px;
+            color: #10b981;
+            margin-bottom: 20px;
+        }
+        
+        .success-icon {
+            color: #10b981;
+        }
+        
+        .error-icon {
+            color: #ef4444;
+        }
+        
+        .loading-icon {
+            color: #3b82f6;
+        }
+        
+        .status-card h3 {
+            color: #cbd5e1;
+            margin-bottom: 15px;
+            font-size: 20px;
+            font-weight: 600;
+        }
+        
+        .status-card p {
+            color: #9ca3af;
+            margin: 0;
+            line-height: 1.6;
+        }
+        
+        .download-section {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+        }
+        
+        .download-title {
+            color: #cbd5e1;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .download-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        
+        .download-btn {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 16px 20px;
+            color: #e5e7eb;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            width: 100%;
+            justify-content: flex-start;
+        }
+        
+        .download-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .download-btn.ios {
+            background: rgba(0, 0, 0, 0.1);
+            border-color: rgba(0, 0, 0, 0.3);
+        }
+        
+        .download-btn.ios:hover {
+            background: rgba(0, 0, 0, 0.15);
+            border-color: rgba(0, 0, 0, 0.4);
+        }
+        
+        .download-btn.android {
+            background: rgba(1, 135, 95, 0.1);
+            border-color: rgba(1, 135, 95, 0.3);
+        }
+        
+        .download-btn.android:hover {
+            background: rgba(1, 135, 95, 0.15);
+            border-color: rgba(1, 135, 95, 0.4);
+        }
+        
+        .download-btn i {
+            font-size: 24px;
+            color: #10b981;
+            min-width: 30px;
+        }
+        
+        .download-btn .text {
+            text-align: left;
+        }
+        
+        .download-btn .text .label {
+            font-size: 16px;
+            font-weight: 600;
+            color: #e5e7eb;
+            display: block;
+        }
+        
+        .download-btn .text .store {
+            font-size: 14px;
+            color: #9ca3af;
+            display: block;
+            margin-top: 2px;
+        }
+        
+        .message {
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-size: 14px;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        
+        .message.success {
+            background: rgba(16, 185, 129, 0.1);
+            color: #10b981;
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+        
+        .message.error {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            color: #6b7280;
+            font-size: 14px;
+        }
+        
+        .loading {
+            display: none;
+        }
+        
+        .loading.show {
+            display: block;
+        }
+        
+        .success {
+            display: none;
+        }
+        
+        .success.show {
+            display: block;
+        }
+        
+        .error {
+            display: none;
+        }
+        
+        .error.show {
+            display: block;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                margin: 0 10px;
+            }
+            
+            .header {
+                padding: 24px 20px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">OT</div>
+            <h1 id="pageTitle">Email Confirmed!</h1>
+            <p id="pageSubtitle">Welcome to OnTimely</p>
+        </div>
+        
+        <div class="content">
+            <div class="loading" id="loading">
+                <div class="status-card">
+                    <div class="icon-large loading-icon">
+                        <i class="fas fa-spinner fa-spin"></i>
+                    </div>
+                    <h3>Confirming Your Email...</h3>
+                    <p>Please wait while we confirm your email address.</p>
+                </div>
+            </div>
+            
+            <div class="success" id="success">
+                <div class="status-card">
+                    <div class="icon-large success-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3>Email Confirmed Successfully!</h3>
+                    <p>
+                        Your email has been successfully confirmed. You can now log into the OnTimely mobile app 
+                        using the credentials that were sent to you.
+                    </p>
+                </div>
+                
+                <div class="download-section">
+                    <div class="download-title">Download the OnTimely App</div>
+                    <div class="download-buttons">
+                        <a href="https://apps.apple.com/app/timely" class="download-btn ios" target="_blank">
+                            <i class="fab fa-apple"></i>
+                            <div class="text">
+                                <span class="label">Download for iOS</span>
+                                <span class="store">App Store</span>
+                            </div>
+                        </a>
+                        <a href="https://play.google.com/store/apps/details?id=com.ontimely.app" class="download-btn android" target="_blank">
+                            <i class="fab fa-google-play"></i>
+                            <div class="text">
+                                <span class="label">Download for Android</span>
+                                <span class="store">Google Play</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="error" id="error">
+                <div class="status-card">
+                    <div class="icon-large error-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <h3>Confirmation Failed</h3>
+                    <p id="error-message">Invalid or expired confirmation link.</p>
+                </div>
+            </div>
+            
+            <div class="footer">
+                <p>This page was generated by OnTimely Event Management System</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Get the confirmation token from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token');
+        
+        if (!token) {
+            showError('No confirmation token provided.');
+            return;
+        }
+        
+        // Show loading state
+        document.getElementById('loading').classList.add('show');
+        
+        // Confirm the email
+        fetch('/api/confirm-guest-email', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                confirmation_token: token
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('loading').classList.remove('show');
+            
+            if (data.success) {
+                document.getElementById('success').classList.add('show');
+            } else {
+                showError(data.message || 'Failed to confirm email.');
+            }
+        })
+        .catch(error => {
+            document.getElementById('loading').classList.remove('show');
+            showError('Network error. Please try again.');
+            console.error('Error:', error);
+        });
+        
+        function showError(message) {
+            document.getElementById('error-message').textContent = message;
+            document.getElementById('error').classList.add('show');
+        }
+    </script>
+</body>
+</html>
