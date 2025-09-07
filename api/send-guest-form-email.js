@@ -3,7 +3,7 @@ const { Resend } = require('resend');
 // Use your verified domain now that DNS is configured
 const FROM_EMAIL = 'noreply@ontimely.co.uk';
 
-module.exports = async (req, res) => {
+export default async function handler(req, res) {
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
     return res.status(405).end('Method Not Allowed');
@@ -219,4 +219,4 @@ module.exports = async (req, res) => {
     console.error('Edge Function error:', e);
     return res.status(500).json({ error: 'Failed to send email', details: e.message });
   }
-};
+}

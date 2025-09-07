@@ -3,7 +3,7 @@ const { Resend } = require('resend');
 // Use your verified domain now that DNS is configured
 const FROM_EMAIL = 'noreply@ontimely.co.uk';
 
-module.exports = async (req, res) => {
+export default async function handler(req, res) {
   console.log('🚀 send-guest-confirmation API called - v2');
   console.log('📥 Method:', req.method);
   console.log('📥 Headers:', req.headers);
@@ -155,4 +155,4 @@ module.exports = async (req, res) => {
     console.error('Guest confirmation email error:', e);
     return res.status(500).json({ error: 'Failed to send guest confirmation email', details: e.message });
   }
-};
+}
