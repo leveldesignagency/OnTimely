@@ -70,14 +70,60 @@
             align-items: center;
             position: relative;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            overflow: hidden;
+            overflow: visible;
+        }
+
+        .logo-container {
+            position: relative;
+            display: inline-block;
         }
 
         .logo-img {
             height: 60px;
             width: auto;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            filter: brightness(0) invert(1);
+        }
+
+        .logo-base {
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo-animated {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 2;
+            opacity: 0;
+            transform: translateX(-100%) scale(0.8);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Logo animation keyframes */
+        @keyframes slideOutFromUnder {
+            0% {
+                transform: translateX(-100%) scale(0.8);
+                opacity: 0;
+            }
+            50% {
+                transform: translateX(-30%) scale(0.9);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateX(0) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .logo:hover .logo-animated {
+            opacity: 1;
+            transform: translateX(0) scale(1);
+            animation: slideOutFromUnder 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .logo:hover .logo-base {
+            opacity: 0.3;
+            transform: scale(0.95);
         }
 
         .logo::before {
@@ -102,7 +148,7 @@
 
         .logo:hover .logo-img {
             transform: scale(1.1);
-            filter: brightness(0) invert(1) drop-shadow(0 0 10px rgba(16, 185, 129, 0.6));
+            filter: drop-shadow(0 0 10px rgba(16, 185, 129, 0.6));
         }
 
         .nav-links {
@@ -922,7 +968,10 @@
     <header>
         <nav>
             <a href="/" class="logo">
-                <img src="../on timely official logo.svg" alt="OnTimely Logo" class="logo-img">
+                <div class="logo-container">
+                    <img src="../on timely official logo.svg" alt="OnTimely Logo" class="logo-img logo-base">
+                    <img src="../on timely official logo.svg" alt="OnTimely Logo" class="logo-img logo-animated">
+                </div>
             </a>
             <ul class="nav-links">
                 <li><a href="#features">Features</a></li>
