@@ -41,6 +41,12 @@
             right: 0;
             z-index: 1000;
             padding: 20px 0;
+            transform: translateY(-100%);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        header.visible {
+            transform: translateY(0);
         }
 
         nav {
@@ -60,10 +66,40 @@
             display: flex;
             align-items: center;
             gap: 12px;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+        }
+
+        .logo::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.3), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .logo:hover::before {
+            left: 100%;
+        }
+
+        .logo:hover {
+            transform: scale(1.05) rotate(2deg);
+            text-shadow: 0 0 20px rgba(16, 185, 129, 0.6);
+            filter: drop-shadow(0 0 15px rgba(16, 185, 129, 0.4));
         }
 
         .logo i {
             font-size: 2.2rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .logo:hover i {
+            transform: rotate(360deg) scale(1.1);
+            color: #22c55e;
         }
 
         .nav-links {
@@ -76,15 +112,57 @@
             text-decoration: none;
             color: #e5e7eb;
             font-weight: 500;
-            transition: all 0.3s ease;
-            padding: 8px 16px;
-            border-radius: 8px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 12px 20px;
+            border-radius: 12px;
             font-size: 1.1rem;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(34, 197, 94, 0.1));
+            opacity: 0;
+            transition: all 0.4s ease;
+            border-radius: 12px;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.6s ease;
         }
 
         .nav-links a:hover {
             color: #10b981;
-            background: rgba(16, 185, 129, 0.1);
+            background: rgba(16, 185, 129, 0.15);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.2);
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+
+        .nav-links a:hover::before {
+            opacity: 1;
+        }
+
+        .nav-links a:hover::after {
+            width: 100px;
+            height: 100px;
         }
 
         /* Sign In Button Styling */
@@ -112,6 +190,31 @@
             min-height: 100vh;
             display: flex;
             align-items: center;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(15, 17, 21, 0.7);
+            z-index: 1;
+        }
+
+        .hero video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            object-fit: cover;
         }
 
         .hero-content {
@@ -122,6 +225,8 @@
             max-width: 1400px;
             margin: 0 auto;
             padding: 0 40px;
+            position: relative;
+            z-index: 2;
         }
 
         .hero-left {
@@ -166,17 +271,35 @@
             text-decoration: none;
             font-weight: 600;
             font-size: 1.2rem;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
             border: none;
             cursor: pointer;
             min-width: 180px;
             justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
         }
 
         .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 35px rgba(16, 185, 129, 0.4);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(16, 185, 129, 0.5);
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
         }
 
         .cta-button.secondary {
@@ -184,11 +307,14 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
             color: #e5e7eb;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
         }
 
         .cta-button.secondary:hover {
-            background: rgba(255, 255, 255, 0.15);
-            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(255, 255, 255, 0.1);
         }
 
         /* App Download Section - Right Side */
@@ -378,15 +504,34 @@
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 20px;
             padding: 3rem;
-            transition: all 0.3s ease;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             backdrop-filter: blur(10px);
             height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.05), rgba(34, 197, 94, 0.05));
+            opacity: 0;
+            transition: all 0.5s ease;
+            border-radius: 20px;
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
         }
 
         .feature-card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(16, 185, 129, 0.3);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            transform: translateY(-12px) scale(1.02);
+            border-color: rgba(16, 185, 129, 0.4);
+            box-shadow: 0 30px 60px rgba(16, 185, 129, 0.2), 0 0 40px rgba(16, 185, 129, 0.1);
         }
 
         .feature-icon {
@@ -396,12 +541,39 @@
             display: flex;
             align-items: center;
             gap: 20px;
+            position: relative;
         }
 
         .feature-icon i {
             background: rgba(16, 185, 129, 0.1);
             padding: 20px;
             border-radius: 16px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-icon i::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(34, 197, 94, 0.2));
+            opacity: 0;
+            transition: all 0.4s ease;
+            border-radius: 16px;
+        }
+
+        .feature-card:hover .feature-icon i {
+            transform: scale(1.1) rotate(5deg);
+            background: rgba(16, 185, 129, 0.2);
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
+        }
+
+        .feature-card:hover .feature-icon i::before {
+            opacity: 1;
         }
 
         .feature-card h3 {
@@ -434,6 +606,30 @@
 
         .stat-item {
             padding: 2rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.05), rgba(34, 197, 94, 0.05));
+            opacity: 0;
+            transition: all 0.4s ease;
+            border-radius: 16px;
+        }
+
+        .stat-item:hover::before {
+            opacity: 1;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-8px) scale(1.05);
         }
 
         .stat-number {
@@ -441,12 +637,27 @@
             font-weight: 800;
             color: #10b981;
             margin-bottom: 1rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-item:hover .stat-number {
+            transform: scale(1.1);
+            text-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
         }
 
         .stat-label {
             font-size: 1.2rem;
             color: #9ca3af;
             font-weight: 500;
+            position: relative;
+            z-index: 1;
+            transition: all 0.4s ease;
+        }
+
+        .stat-item:hover .stat-label {
+            color: #e5e7eb;
         }
 
         /* Footer - Wide Layout */
@@ -493,6 +704,51 @@
             margin: 0 auto;
             padding-left: 40px;
             padding-right: 40px;
+        }
+
+        /* Scroll-triggered animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .animate-on-scroll.animated {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* Responsive Design */
@@ -616,7 +872,7 @@
     <header>
         <nav>
             <a href="/" class="logo">
-                <i class="fas fa-clock"></i>
+                <img src="../on timely official logo.svg" alt="OnTimely Logo" style="height: 40px; width: auto;">
                 OnTimely
             </a>
             <ul class="nav-links">
@@ -630,6 +886,9 @@
 
     <main>
         <section class="hero">
+            <video autoplay muted loop playsinline>
+                <source src="../0_Technology_Circuit_Board_3840x2160.mp4" type="video/mp4">
+            </video>
             <div class="hero-content">
                 <div class="hero-left">
                     <h1>Professional Event Management</h1>
@@ -674,13 +933,13 @@
 
         <section class="features" id="features">
             <div class="container">
-                <div class="section-header">
+                <div class="section-header animate-on-scroll">
                     <h2>Why Choose OnTimely?</h2>
                     <p>Built for professionals who demand excellence in event management and guest experience.</p>
                 </div>
                 
                 <div class="features-grid">
-                    <div class="feature-card">
+                    <div class="feature-card animate-on-scroll">
                         <div class="feature-icon">
                             <i class="fas fa-edit"></i>
                             <span>Smart Forms</span>
@@ -689,7 +948,7 @@
                         <p>Create custom forms with drag-and-drop ease. Collect exactly the information you need with professional templates and branding options.</p>
                     </div>
                     
-                    <div class="feature-card">
+                    <div class="feature-card animate-on-scroll">
                         <div class="feature-icon">
                             <i class="fas fa-envelope"></i>
                             <span>Automated Communication</span>
@@ -698,7 +957,7 @@
                         <p>Send personalized invitations automatically. Track responses, send reminders, and maintain professional communication throughout the event lifecycle.</p>
                     </div>
                     
-                    <div class="feature-card">
+                    <div class="feature-card animate-on-scroll">
                         <div class="feature-icon">
                             <i class="fas fa-chart-line"></i>
                             <span>Real-time Analytics</span>
@@ -707,7 +966,7 @@
                         <p>Monitor form submissions, track engagement metrics, and get actionable insights to optimize your event planning process.</p>
                     </div>
                     
-                    <div class="feature-card">
+                    <div class="feature-card animate-on-scroll">
                         <div class="feature-icon">
                             <i class="fas fa-shield-alt"></i>
                             <span>Enterprise Security</span>
@@ -716,7 +975,7 @@
                         <p>Your data is protected with enterprise-grade security and compliance. Guest information stays private and secure with SOC 2 compliance.</p>
                     </div>
                     
-                    <div class="feature-card">
+                    <div class="feature-card animate-on-scroll">
                         <div class="feature-icon">
                             <i class="fas fa-mobile-alt"></i>
                             <span>Cross-Platform</span>
@@ -725,7 +984,7 @@
                         <p>Native mobile apps for iOS and Android, plus a powerful desktop application. Your team can work from anywhere, anytime.</p>
                     </div>
                     
-                    <div class="feature-card">
+                    <div class="feature-card animate-on-scroll">
                         <div class="feature-icon">
                             <i class="fas fa-bolt"></i>
                             <span>Lightning Fast</span>
@@ -740,19 +999,19 @@
         <section class="stats">
             <div class="container">
                 <div class="stats-grid">
-                    <div class="stat-item">
+                    <div class="stat-item animate-on-scroll">
                         <div class="stat-number">10K+</div>
                         <div class="stat-label">Events Managed</div>
                     </div>
-                    <div class="stat-item">
+                    <div class="stat-item animate-on-scroll">
                         <div class="stat-number">500K+</div>
                         <div class="stat-label">Guests Served</div>
                     </div>
-                    <div class="stat-item">
+                    <div class="stat-item animate-on-scroll">
                         <div class="stat-number">99.9%</div>
                         <div class="stat-label">Uptime</div>
                     </div>
-                    <div class="stat-item">
+                    <div class="stat-item animate-on-scroll">
                         <div class="stat-number">24/7</div>
                         <div class="stat-label">Support</div>
                     </div>
@@ -923,7 +1182,50 @@
         }
 
         // Initialize download buttons when page loads
-        document.addEventListener('DOMContentLoaded', populateDownloadButtons);
+        document.addEventListener('DOMContentLoaded', function() {
+            populateDownloadButtons();
+            initScrollAnimations();
+            initMenuFadeEffect();
+        });
+
+        // Scroll-triggered animations
+        function initScrollAnimations() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animated');
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all elements with animate-on-scroll class
+            document.querySelectorAll('.animate-on-scroll').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        // Menu fade effect on scroll
+        function initMenuFadeEffect() {
+            let lastScrollY = window.scrollY;
+            const header = document.querySelector('header');
+            
+            window.addEventListener('scroll', () => {
+                const currentScrollY = window.scrollY;
+                
+                if (currentScrollY > 100) {
+                    header.classList.add('visible');
+                } else {
+                    header.classList.remove('visible');
+                }
+                
+                lastScrollY = currentScrollY;
+            });
+        }
     </script>
 </body>
 </html> 
