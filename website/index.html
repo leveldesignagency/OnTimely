@@ -65,16 +65,19 @@
         }
 
         .logo {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #10b981;
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 12px;
             position: relative;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             overflow: hidden;
+        }
+
+        .logo-img {
+            height: 60px;
+            width: auto;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            filter: brightness(0) invert(1);
         }
 
         .logo::before {
@@ -93,19 +96,13 @@
         }
 
         .logo:hover {
-            transform: scale(1.05) rotate(2deg);
-            text-shadow: 0 0 20px rgba(16, 185, 129, 0.6);
+            transform: scale(1.05);
             filter: drop-shadow(0 0 15px rgba(16, 185, 129, 0.4));
         }
 
-        .logo i {
-            font-size: 2.2rem;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .logo:hover i {
-            transform: rotate(360deg) scale(1.1);
-            color: #22c55e;
+        .logo:hover .logo-img {
+            transform: scale(1.1);
+            filter: brightness(0) invert(1) drop-shadow(0 0 10px rgba(16, 185, 129, 0.6));
         }
 
         .nav-links {
@@ -243,10 +240,7 @@
             font-size: 4.5rem;
             font-weight: 800;
             margin-bottom: 2rem;
-            background: linear-gradient(135deg, #e5e7eb 0%, #10b981 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: #e5e7eb;
             line-height: 1.1;
             text-align: left;
         }
@@ -303,8 +297,8 @@
         }
 
         .cta-button:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 15px 40px rgba(16, 185, 129, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(16, 185, 129, 0.4);
             background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
         }
 
@@ -319,8 +313,8 @@
         .cta-button.secondary:hover {
             background: rgba(255, 255, 255, 0.2);
             border-color: rgba(255, 255, 255, 0.4);
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 15px 40px rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(255, 255, 255, 0.1);
         }
 
         /* App Download Section - Right Side */
@@ -450,11 +444,28 @@
             text-decoration: none;
             font-weight: 700;
             font-size: 1.2rem;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 0 8px 25px rgba(34, 197, 94, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.1);
             min-width: 200px;
             justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dashboard-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .dashboard-btn:hover::before {
+            left: 100%;
         }
 
         .dashboard-btn:hover {
@@ -509,12 +520,13 @@
             background: rgba(17, 24, 39, 0.4);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 20px;
-            padding: 3rem;
+            padding: 2rem;
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             backdrop-filter: blur(10px);
             height: 100%;
             position: relative;
             overflow: hidden;
+            cursor: pointer;
         }
 
         .feature-card::before {
@@ -535,18 +547,19 @@
         }
 
         .feature-card:hover {
-            transform: translateY(-12px) scale(1.02);
+            transform: translateY(-8px);
             border-color: rgba(16, 185, 129, 0.4);
-            box-shadow: 0 30px 60px rgba(16, 185, 129, 0.2), 0 0 40px rgba(16, 185, 129, 0.1);
+            box-shadow: 0 25px 50px rgba(16, 185, 129, 0.2), 0 0 30px rgba(16, 185, 129, 0.1);
+            padding: 3rem;
         }
 
         .feature-icon {
             font-size: 3.5rem;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             color: #10b981;
             display: flex;
             align-items: center;
-            gap: 20px;
+            justify-content: center;
             position: relative;
         }
 
@@ -584,14 +597,37 @@
 
         .feature-card h3 {
             font-size: 1.8rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
             color: #e5e7eb;
+            text-align: center;
+            transition: all 0.3s ease;
         }
 
-        .feature-card p {
+        .feature-card .feature-subtitle {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #10b981;
+            margin-bottom: 1rem;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .feature-card .feature-description {
             color: #9ca3af;
             line-height: 1.8;
             font-size: 1.1rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition-delay: 0.1s;
+        }
+
+        .feature-card:hover .feature-subtitle,
+        .feature-card:hover .feature-description {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* Stats Section - Wide Layout */
@@ -886,8 +922,7 @@
     <header>
         <nav>
             <a href="/" class="logo">
-                <img src="../on timely official logo.svg" alt="OnTimely Logo" style="height: 40px; width: auto;">
-                OnTimely
+                <img src="../on timely official logo.svg" alt="OnTimely Logo" class="logo-img">
             </a>
             <ul class="nav-links">
                 <li><a href="#features">Features</a></li>
@@ -955,56 +990,56 @@
                 <div class="features-grid">
                     <div class="feature-card animate-on-scroll">
                         <div class="feature-icon">
-                            <i class="fas fa-edit"></i>
-                            <span>Smart Forms</span>
-                        </div>
-                        <h3>Professional Form Builder</h3>
-                        <p>Create custom forms with drag-and-drop ease. Collect exactly the information you need with professional templates and branding options.</p>
-                    </div>
-                    
-                    <div class="feature-card animate-on-scroll">
-                        <div class="feature-icon">
-                            <i class="fas fa-envelope"></i>
-                            <span>Automated Communication</span>
-                        </div>
-                        <h3>Seamless Guest Communication</h3>
-                        <p>Send personalized invitations automatically. Track responses, send reminders, and maintain professional communication throughout the event lifecycle.</p>
-                    </div>
-                    
-                    <div class="feature-card animate-on-scroll">
-                        <div class="feature-icon">
-                            <i class="fas fa-chart-line"></i>
-                            <span>Real-time Analytics</span>
-                        </div>
-                        <h3>Comprehensive Insights</h3>
-                        <p>Monitor form submissions, track engagement metrics, and get actionable insights to optimize your event planning process.</p>
-                    </div>
-                    
-                    <div class="feature-card animate-on-scroll">
-                        <div class="feature-icon">
-                            <i class="fas fa-shield-alt"></i>
-                            <span>Enterprise Security</span>
-                        </div>
-                        <h3>Bank-Level Security</h3>
-                        <p>Your data is protected with enterprise-grade security and compliance. Guest information stays private and secure with SOC 2 compliance.</p>
-                    </div>
-                    
-                    <div class="feature-card animate-on-scroll">
-                        <div class="feature-icon">
                             <i class="fas fa-mobile-alt"></i>
-                            <span>Cross-Platform</span>
                         </div>
-                        <h3>Works Everywhere</h3>
-                        <p>Native mobile apps for iOS and Android, plus a powerful desktop application. Your team can work from anywhere, anytime.</p>
+                        <h3>Custom Guest Apps</h3>
+                        <div class="feature-subtitle">App Inside an App</div>
+                        <div class="feature-description">Create tailored mobile apps for your guests with real-time communication, custom homepages, and personalized event timelines.</div>
                     </div>
                     
                     <div class="feature-card animate-on-scroll">
                         <div class="feature-icon">
-                            <i class="fas fa-bolt"></i>
-                            <span>Lightning Fast</span>
+                            <i class="fas fa-comments"></i>
                         </div>
-                        <h3>Built for Performance</h3>
-                        <p>Optimized for speed and reliability. Your forms load instantly, work seamlessly, and scale to handle events of any size.</p>
+                        <h3>Real-time Communication</h3>
+                        <div class="feature-subtitle">Instant Messaging & Updates</div>
+                        <div class="feature-description">Enable guests to communicate instantly with organizers and other attendees through built-in chat, announcements, and live updates.</div>
+                    </div>
+                    
+                    <div class="feature-card animate-on-scroll">
+                        <div class="feature-icon">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        <h3>Custom Homepages</h3>
+                        <div class="feature-subtitle">Branded Event Portals</div>
+                        <div class="feature-description">Design beautiful, branded homepages for each event with custom layouts, colors, and content that reflects your company's identity.</div>
+                    </div>
+                    
+                    <div class="feature-card animate-on-scroll">
+                        <div class="feature-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h3>Event Timelines</h3>
+                        <div class="feature-subtitle">Interactive Schedules</div>
+                        <div class="feature-description">Create dynamic timelines that guests can interact with, featuring schedules, reminders, and real-time updates throughout the event.</div>
+                    </div>
+                    
+                    <div class="feature-card animate-on-scroll">
+                        <div class="feature-icon">
+                            <i class="fas fa-puzzle-piece"></i>
+                        </div>
+                        <h3>In-App Applications</h3>
+                        <div class="feature-subtitle">Modular Experience Tools</div>
+                        <div class="feature-description">Build custom applications within the guest app for check-ins, networking, feedback, surveys, and other interactive experiences.</div>
+                    </div>
+                    
+                    <div class="feature-card animate-on-scroll">
+                        <div class="feature-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3>Guest Journey Management</h3>
+                        <div class="feature-subtitle">Complete Experience Control</div>
+                        <div class="feature-description">Track and manage every aspect of your guests' journey from invitation to post-event follow-up with comprehensive analytics.</div>
                     </div>
                 </div>
             </div>
