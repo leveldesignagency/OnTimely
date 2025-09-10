@@ -41,12 +41,18 @@
             right: 0;
             z-index: 1000;
             padding: 20px 0;
-            transform: translateY(-100%);
             transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        header.visible {
-            transform: translateY(0);
+        header.scrolled {
+            background: rgba(17, 24, 39, 0.95);
+            backdrop-filter: blur(30px);
+            border-radius: 20px;
+            margin: 10px 20px;
+            width: calc(100% - 40px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            padding: 15px 0;
         }
 
         nav {
@@ -843,6 +849,14 @@
                 padding-left: 20px;
                 padding-right: 20px;
             }
+            
+            /* Mobile rounded container adjustments */
+            header.scrolled {
+                margin: 5px 10px;
+                width: calc(100% - 20px);
+                border-radius: 15px;
+                padding: 12px 0;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1209,7 +1223,7 @@
             });
         }
 
-        // Menu fade effect on scroll
+        // Menu rounded container effect on scroll
         function initMenuFadeEffect() {
             let lastScrollY = window.scrollY;
             const header = document.querySelector('header');
@@ -1218,9 +1232,9 @@
                 const currentScrollY = window.scrollY;
                 
                 if (currentScrollY > 100) {
-                    header.classList.add('visible');
+                    header.classList.add('scrolled');
                 } else {
-                    header.classList.remove('visible');
+                    header.classList.remove('scrolled');
                 }
                 
                 lastScrollY = currentScrollY;
