@@ -334,16 +334,10 @@
         }
 </style>
 <script>
-  // Auto theme switch (light by day, dark by night) with manual override via ?theme=light|dark
+  // Force dark theme for guest forms
   (function() {
     try {
-      const params = new URLSearchParams(location.search);
-      let theme = params.get('theme');
-      if (!theme) {
-        const hour = new Date().getHours();
-        theme = (hour >= 7 && hour < 19) ? 'light' : 'dark';
-      }
-      document.documentElement.setAttribute('data-theme', theme);
+      document.documentElement.setAttribute('data-theme', 'dark');
     } catch (e) {}
   })();
 </script>
