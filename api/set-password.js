@@ -10,12 +10,15 @@ if (!supabaseUrl || !supabaseServiceKey) {
 const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
 module.exports = async function handler(req, res) {
+  console.log('Set password API called with method:', req.method);
+  
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
   try {
     const { email, password, token } = req.body;
+    console.log('Received request body:', { email, password: password ? '[REDACTED]' : 'missing', token });
 
     if (!email || !password) {
       return res.status(400).json({ error: 'Email and password are required' });
@@ -30,6 +33,7 @@ module.exports = async function handler(req, res) {
     }
 
     // Get user by email
+    console.log('Looking up user with email:', email);
     const { data: users, error: userError } = await supabase
       .from('users')
       .select('id')
@@ -37,10 +41,14 @@ module.exports = async function handler(req, res) {
       .single();
 
     if (userError || !users) {
+      console.error('User lookup error:', userError);
       return res.status(404).json({ error: 'User not found' });
     }
 
+    console.log('Found user with ID:', users.id);
+
     // Update password using Supabase Auth Admin API
+    console.log('Updating password for user:', users.id);
     const { data, error } = await supabase.auth.admin.updateUserById(users.id, {
       password: password
     });
