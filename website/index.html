@@ -6,6 +6,7 @@
     <title>OnTimely - Professional Event Management Platform</title>
     <meta name="description" content="Transform your event management with OnTimely. Professional forms, guest management, and seamless organization for events of any scale.">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -71,6 +72,19 @@
         }
 
         .logo-img {
+            height: 60px;
+            width: auto;
+            display: none; /* Hide current logo as fallback */
+        }
+
+        .animated-logo {
+            height: 60px;
+            width: auto;
+            display: block;
+        }
+
+        .logo-container {
+            position: relative;
             height: 60px;
             width: auto;
         }
@@ -892,7 +906,10 @@
     <header>
         <nav>
             <a href="/" class="logo">
-                <img src="../on timely official logo.svg" alt="OnTimely Logo" class="logo-img">
+                <div class="logo-container">
+                    <div id="animated-logo" class="animated-logo"></div>
+                    <img src="../on timely official logo.svg" alt="OnTimely Logo" class="logo-img">
+                </div>
             </a>
             <ul class="nav-links">
                 <li><a href="#features">Features</a></li>
@@ -1279,6 +1296,68 @@
                 });
             });
         }
+
+        // Initialize animated logo
+        function initAnimatedLogo() {
+            const animationContainer = document.getElementById('animated-logo');
+            const fallbackImg = document.querySelector('.logo-img');
+            
+            if (animationContainer && typeof lottie !== 'undefined') {
+                try {
+                    const animation = lottie.loadAnimation({
+                        container: animationContainer,
+                        renderer: 'svg',
+                        loop: true,
+                        autoplay: true,
+                        path: '../OfficialLogo.json',
+                        rendererSettings: {
+                            preserveAspectRatio: 'xMidYMid meet'
+                        }
+                    });
+
+                    // Set animation to play every 30 seconds
+                    animation.addEventListener('complete', function() {
+                        setTimeout(() => {
+                            animation.goToAndPlay(0, true);
+                        }, 30000); // 30 second delay
+                    });
+
+                    // Hide fallback image on successful load
+                    animation.addEventListener('DOMLoaded', function() {
+                        if (fallbackImg) {
+                            fallbackImg.style.display = 'none';
+                        }
+                    });
+
+                    // Show fallback image on error
+                    animation.addEventListener('error', function() {
+                        console.error('Lottie animation failed to load, showing fallback');
+                        if (fallbackImg) {
+                            fallbackImg.style.display = 'block';
+                        }
+                        animationContainer.style.display = 'none';
+                    });
+
+                } catch (error) {
+                    console.error('Error initializing Lottie animation:', error);
+                    if (fallbackImg) {
+                        fallbackImg.style.display = 'block';
+                    }
+                    animationContainer.style.display = 'none';
+                }
+            } else {
+                console.warn('Lottie library not loaded or container not found, showing fallback');
+                if (fallbackImg) {
+                    fallbackImg.style.display = 'block';
+                }
+                if (animationContainer) {
+                    animationContainer.style.display = 'none';
+                }
+            }
+        }
+
+        // Initialize animated logo when page loads
+        document.addEventListener('DOMContentLoaded', initAnimatedLogo);
     </script>
 </body>
 </html> 
