@@ -47,7 +47,18 @@ module.exports = async function handler(req, res) {
 
     console.log('Found user with ID:', users.id);
 
-    // Update password using Supabase Auth Admin API
+    // First, confirm the email address
+    console.log('Confirming email for user:', users.id);
+    const { error: confirmError } = await supabase.auth.admin.updateUserById(users.id, {
+      email_confirm: true
+    });
+
+    if (confirmError) {
+      console.error('Email confirmation error:', confirmError);
+      return res.status(500).json({ error: 'Failed to confirm email' });
+    }
+
+    // Then update the password
     console.log('Updating password for user:', users.id);
     const { data, error } = await supabase.auth.admin.updateUserById(users.id, {
       password: password
@@ -58,9 +69,10 @@ module.exports = async function handler(req, res) {
       return res.status(500).json({ error: 'Failed to update password' });
     }
 
+    console.log('Email confirmed and password updated successfully');
     return res.status(200).json({ 
       success: true, 
-      message: 'Password updated successfully' 
+      message: 'Email confirmed and password updated successfully' 
     });
 
   } catch (error) {
