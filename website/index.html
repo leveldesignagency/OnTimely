@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OnTimely - Professional Event Management Platform</title>
-    <meta name="description" content="Transform your event management with OnTimely. Professional forms, guest management, and seamless organization for events of any scale.">
+    <title>OnTimely - Elite Event Management Platform</title>
+    <meta name="description" content="The most advanced event management platform for professionals. Create custom guest apps, manage real-time communication, and deliver exceptional event experiences.">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
     <style>
@@ -14,99 +14,122 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --primary-green: #22c55e;
+            --primary-green-dark: #16a34a;
+            --accent-grey: #6b7280;
+            --light-grey: #9ca3af;
+            --dark-grey: #374151;
+            --bg-primary: #0f1115;
+            --bg-secondary: #1a1a1a;
+            --bg-tertiary: #262626;
+            --text-primary: #ffffff;
+            --text-secondary: #e5e7eb;
+            --text-muted: #9ca3af;
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            --border-medium: rgba(255, 255, 255, 0.15);
+            --shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-medium: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --shadow-large: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             line-height: 1.6;
-            color: #e5e7eb;
-            background: radial-gradient(1200px 800px at 20% -10%, rgba(34,197,94,0.12), transparent 40%),
-                        radial-gradient(1000px 700px at 120% 10%, rgba(34,197,94,0.08), transparent 45%),
-                        #0f1115;
+            color: var(--text-secondary);
+            background: radial-gradient(1400px 1000px at 15% -5%, rgba(34,197,94,0.08), transparent 50%),
+                        radial-gradient(1200px 800px at 85% 15%, rgba(107,114,128,0.06), transparent 45%),
+                        var(--bg-primary);
             min-height: 100vh;
             overflow-x: hidden;
         }
 
         .container {
-            max-width: 100%;
+            max-width: 1600px;
             margin: 0 auto;
-            padding: 0 40px;
+            padding: 0 60px;
+        }
+
+        .container-wide {
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 0 80px;
         }
 
         /* Header & Navigation */
         header {
-            background: rgba(17, 24, 39, 0.8);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(17, 24, 39, 0.85);
+            backdrop-filter: blur(25px);
+            border-bottom: 1px solid var(--border-subtle);
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             z-index: 1000;
-            padding: 20px 0;
+            padding: 25px 0;
             transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         header.scrolled {
             background: rgba(17, 24, 39, 0.95);
-            backdrop-filter: blur(30px);
-            border-radius: 20px;
-            margin: 10px 20px;
-            width: calc(100% - 40px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-            padding: 15px 0;
+            backdrop-filter: blur(35px);
+            border-radius: 25px;
+            margin: 15px 30px;
+            width: calc(100% - 60px);
+            border: 1px solid var(--border-medium);
+            box-shadow: var(--shadow-large);
+            padding: 20px 0;
         }
 
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            max-width: 1400px;
+            max-width: 1600px;
             margin: 0 auto;
-            padding: 0 40px;
+            padding: 0 60px;
         }
 
         .logo {
             text-decoration: none;
             display: flex;
             align-items: center;
-        }
-
-        .logo-img {
-            height: 60px;
-            width: auto;
-            display: none; /* Hide current logo as fallback */
-        }
-
-        .animated-logo {
-            height: 60px;
-            width: auto;
-            display: block;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
         }
 
         .logo-container {
             position: relative;
-            height: 60px;
+            height: 65px;
             width: auto;
+        }
+
+        .animated-logo {
+            height: 65px;
+            width: auto;
+            display: block;
         }
 
         .nav-links {
             display: flex;
-            gap: 3rem;
+            gap: 4rem;
             list-style: none;
         }
 
         .nav-links a {
             text-decoration: none;
-            color: #e5e7eb;
+            color: var(--text-secondary);
             font-weight: 500;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            padding: 12px 20px;
-            border-radius: 12px;
+            padding: 15px 25px;
+            border-radius: 15px;
             font-size: 1.1rem;
             position: relative;
             overflow: hidden;
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border-subtle);
         }
 
         .nav-links a::before {
@@ -116,63 +139,45 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(34, 197, 94, 0.1));
+            background: linear-gradient(135deg, rgba(34,197,94,0.1), rgba(107,114,128,0.1));
             opacity: 0;
             transition: all 0.4s ease;
-            border-radius: 12px;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: radial-gradient(circle, rgba(16, 185, 129, 0.3) 0%, transparent 70%);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: all 0.6s ease;
+            border-radius: 15px;
         }
 
         .nav-links a:hover {
-            color: #10b981;
-            background: rgba(16, 185, 129, 0.15);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.2);
-            border-color: rgba(16, 185, 129, 0.3);
+            color: var(--primary-green);
+            background: rgba(34, 197, 94, 0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(34, 197, 94, 0.2);
+            border-color: rgba(34, 197, 94, 0.3);
         }
 
         .nav-links a:hover::before {
             opacity: 1;
         }
 
-        .nav-links a:hover::after {
-            width: 100px;
-            height: 100px;
-        }
-
-        /* Sign In Button Styling */
         .sign-in-btn {
-            background: linear-gradient(135deg, #22c55e, #16a34a) !important;
+            background: linear-gradient(135deg, var(--primary-green), var(--primary-green-dark)) !important;
             color: #0b1411 !important;
-            padding: 12px 24px !important;
-            border-radius: 10px !important;
+            padding: 15px 30px !important;
+            border-radius: 12px !important;
             font-weight: 700 !important;
-            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3) !important;
+            box-shadow: 0 6px 20px rgba(34, 197, 94, 0.3) !important;
             border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            font-size: 1.1rem !important;
         }
 
         .sign-in-btn:hover {
-            background: linear-gradient(135deg, #16a34a, #15803d) !important;
-            transform: translateY(-1px) !important;
-            box-shadow: 0 6px 20px rgba(34, 197, 94, 0.4) !important;
+            background: linear-gradient(135deg, var(--primary-green-dark), #15803d) !important;
+            transform: translateY(-2px) !important;
+            box-shadow: 0 8px 25px rgba(34, 197, 94, 0.4) !important;
             color: #0b1411 !important;
         }
 
-        /* Hero Section - Wide Layout */
+        /* Hero Section - Ultra Wide Layout */
         .hero {
-            padding: 140px 0 100px;
+            padding: 160px 0 120px;
             position: relative;
             min-height: 100vh;
             display: flex;
@@ -187,7 +192,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(15, 17, 21, 0.7);
+            background: rgba(15, 17, 21, 0.75);
             z-index: 1;
         }
 
@@ -206,233 +211,221 @@
 
         .hero-content {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 80px;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 8rem;
             align-items: center;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 40px;
             position: relative;
             z-index: 2;
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 0 80px;
         }
 
-        .hero-left {
-            max-width: 600px;
-        }
-
-        .hero h1 {
+        .hero-left h1 {
             font-size: 4.5rem;
             font-weight: 800;
-            margin-bottom: 2rem;
-            color: #ffffff;
             line-height: 1.1;
-            text-align: left;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, var(--text-primary), var(--primary-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
         }
 
-        .hero p {
-            font-size: 1.5rem;
-            margin-bottom: 3rem;
-            color: #9ca3af;
+        .hero-left p {
+            font-size: 1.4rem;
             line-height: 1.7;
-            text-align: left;
+            margin-bottom: 3rem;
+            color: var(--text-muted);
+            max-width: 600px;
         }
 
         .hero-buttons {
             display: flex;
-            gap: 24px;
+            gap: 2rem;
             flex-wrap: wrap;
-            margin-bottom: 3rem;
         }
 
         .cta-button {
             display: inline-flex;
             align-items: center;
             gap: 12px;
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            color: white;
-            padding: 18px 36px;
-            border-radius: 12px;
+            padding: 18px 35px;
+            background: linear-gradient(135deg, var(--primary-green), var(--primary-green-dark));
+            color: #0b1411;
             text-decoration: none;
-            font-weight: 600;
+            border-radius: 15px;
+            font-weight: 700;
             font-size: 1.2rem;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
-            border: none;
-            cursor: pointer;
-            min-width: 180px;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .cta-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.6s ease;
-        }
-
-        .cta-button:hover::before {
-            left: 100%;
+            box-shadow: 0 8px 25px rgba(34, 197, 94, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 35px rgba(16, 185, 129, 0.4);
-            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(34, 197, 94, 0.4);
+            background: linear-gradient(135deg, var(--primary-green-dark), #15803d);
         }
 
         .cta-button.secondary {
             background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #e5e7eb;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(10px);
+            color: var(--text-primary);
+            border: 1px solid var(--border-medium);
+            backdrop-filter: blur(20px);
         }
 
         .cta-button.secondary:hover {
-            background: rgba(255, 255, 255, 0.2);
-            border-color: rgba(255, 255, 255, 0.4);
-            transform: translateY(-2px);
-            box-shadow: 0 12px 35px rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
         }
 
-        /* App Download Section - Right Side */
         .hero-right {
             display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
+            align-items: center;
         }
 
         .app-downloads {
-            background: rgba(17, 24, 39, 0.4);
-            border-radius: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 50px;
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(25px);
+            border: 1px solid var(--border-subtle);
+            border-radius: 25px;
+            padding: 3rem;
+            text-align: center;
+            box-shadow: var(--shadow-large);
             max-width: 500px;
             width: 100%;
         }
 
         .app-downloads h3 {
             font-size: 1.8rem;
+            font-weight: 700;
             margin-bottom: 2rem;
-            color: #e5e7eb;
-            text-align: center;
+            color: var(--text-primary);
         }
 
         .download-buttons {
             display: flex;
             flex-direction: column;
-            gap: 20px;
-            width: 100%;
+            gap: 1.5rem;
         }
 
         .download-btn {
             display: flex;
             align-items: center;
-            gap: 16px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 20px 24px;
-            color: #e5e7eb;
+            gap: 20px;
+            padding: 20px 25px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--border-subtle);
+            border-radius: 15px;
             text-decoration: none;
-            transition: all 0.3s ease;
-            width: 100%;
-            justify-content: flex-start;
+            color: var(--text-primary);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(20px);
         }
 
         .download-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.12);
             transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            border-color: var(--primary-green);
         }
 
         .download-btn.primary {
-            background: rgba(16, 185, 129, 0.1);
-            border-color: rgba(16, 185, 129, 0.3);
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.2);
-        }
-
-        .download-btn.primary:hover {
-            background: rgba(16, 185, 129, 0.15);
-            border-color: rgba(16, 185, 129, 0.4);
-            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(34, 197, 94, 0.05));
+            border-color: rgba(34, 197, 94, 0.3);
         }
 
         .download-btn i {
             font-size: 2rem;
-            color: #10b981;
-            min-width: 40px;
+            color: var(--primary-green);
         }
 
         .download-btn .text {
-            text-align: left;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
         }
 
-        .download-btn .text .label {
-            font-size: 0.9rem;
-            color: #9ca3af;
-            display: block;
+        .download-btn .label {
+            font-weight: 600;
+            font-size: 1.1rem;
             margin-bottom: 4px;
         }
 
-        .download-btn .text .store {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #e5e7eb;
+        .download-btn .store {
+            font-size: 0.9rem;
+            color: var(--text-muted);
         }
 
-        /* Sign In Section Styling */
+        /* Enhanced Sign In Section */
         .sign-in-section {
-            padding: 80px 0;
-            background: rgba(17, 24, 39, 0.3);
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 100px 0;
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.05), rgba(107, 114, 128, 0.03));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sign-in-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at center, rgba(34, 197, 94, 0.08) 0%, transparent 70%);
+            z-index: 1;
         }
 
         .sign-in-content {
+            position: relative;
+            z-index: 2;
             text-align: center;
-            max-width: 600px;
+            max-width: 800px;
             margin: 0 auto;
+            padding: 4rem 2rem;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(25px);
+            border: 1px solid var(--border-subtle);
+            border-radius: 30px;
+            box-shadow: var(--shadow-large);
         }
 
         .sign-in-content h2 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: #e5e7eb;
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--text-primary), var(--primary-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
         }
 
         .sign-in-content p {
-            font-size: 1.2rem;
-            color: #9ca3af;
-            margin-bottom: 2rem;
-            line-height: 1.6;
+            font-size: 1.3rem;
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+            line-height: 1.7;
         }
 
         .dashboard-btn {
             display: inline-flex;
             align-items: center;
-            gap: 12px;
-            background: linear-gradient(135deg, #22c55e, #16a34a);
+            gap: 15px;
+            padding: 20px 40px;
+            background: linear-gradient(135deg, var(--primary-green), var(--primary-green-dark));
             color: #0b1411;
-            padding: 18px 36px;
-            border-radius: 12px;
             text-decoration: none;
+            border-radius: 15px;
             font-weight: 700;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 8px 25px rgba(34, 197, 94, 0.3);
+            box-shadow: 0 10px 30px rgba(34, 197, 94, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            min-width: 200px;
-            justify-content: center;
             position: relative;
             overflow: hidden;
         }
@@ -444,7 +437,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
             transition: left 0.6s ease;
         }
 
@@ -453,64 +446,190 @@
         }
 
         .dashboard-btn:hover {
-            background: linear-gradient(135deg, #16a34a, #15803d);
-            transform: translateY(-2px);
-            box-shadow: 0 12px 35px rgba(34, 197, 94, 0.4);
-            color: #0b1411;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(34, 197, 94, 0.4);
+            background: linear-gradient(135deg, var(--primary-green-dark), #15803d);
         }
 
         .dashboard-btn i {
-            font-size: 1.1rem;
+            font-size: 1.5rem;
         }
 
-        /* Features Section - Wide Grid */
+        /* Features Section - Ultra Wide Grid */
         .features {
             padding: 120px 0;
+            background: var(--bg-primary);
+        }
+
+        /* Glowing Card Styles */
+        .glowing-card {
+            --glow-sens: 30;
+            --card-bg: linear-gradient(8deg, var(--bg-secondary) 75%, color-mix(in hsl, var(--bg-secondary), white 2.5%) 75.5%);
+            --blend: soft-light;
+            --glow-blend: plus-lighter;
+            --glow-color: 142deg 80% 50%; /* Green color for OnTimely */
+            --glow-boost: 0%;
+            --pads: 40px;
+            --color-sens: calc(var(--glow-sens) + 20);
+            --pointer-°: 45deg;
+            
+            position: relative;
+            border-radius: 25px;
+            isolation: isolate;
+            transform: translate3d(0, 0, 0.01px);
+            border: 1px solid var(--border-subtle);
+            background: var(--card-bg);
+            background-repeat: no-repeat;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glowing-card::before,
+        .glowing-card::after,
+        .glowing-card > .glow {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            transition: opacity 0.25s ease-out;
+            z-index: -1;
+        }
+
+        .glowing-card:not(:hover):not(.animating)::before,
+        .glowing-card:not(:hover):not(.animating)::after,
+        .glowing-card:not(:hover):not(.animating) > .glow {
+            opacity: 0;
+            transition: opacity 0.75s ease-in-out;
+        }
+
+        .glowing-card::before {
+            border: 1px solid transparent;
+            background:
+                linear-gradient(var(--card-bg) 0 100%) padding-box,
+                linear-gradient(rgb(255 255 255 / 0%) 0% 100%) border-box,
+                radial-gradient(at 80% 55%, hsla(142,100%,50%,0.8) 0px, transparent 50%) border-box,
+                radial-gradient(at 69% 34%, hsla(142,100%,60%,0.6) 0px, transparent 50%) border-box,
+                radial-gradient(at 8% 6%, hsla(142,100%,70%,0.4) 0px, transparent 50%) border-box,
+                radial-gradient(at 41% 38%, hsla(142,100%,40%,0.5) 0px, transparent 50%) border-box,
+                radial-gradient(at 86% 85%, hsla(142,100%,55%,0.3) 0px, transparent 50%) border-box,
+                radial-gradient(at 82% 18%, hsla(142,100%,65%,0.4) 0px, transparent 50%) border-box,
+                radial-gradient(at 51% 4%, hsla(142,100%,45%,0.6) 0px, transparent 50%) border-box,
+                linear-gradient(var(--primary-green) 0 100%) border-box;
+            
+            opacity: calc((var(--pointer-d) - var(--color-sens)) / (100 - var(--color-sens)));
+            mask-image: 
+                conic-gradient( 
+                    from var(--pointer-°) at center, black 25%, transparent 40%, transparent 60%, black 75%
+                );
+        }
+
+        .glowing-card::after {
+            border: 1px solid transparent;
+            background:
+                radial-gradient(at 80% 55%, hsla(142,100%,50%,0.8) 0px, transparent 50%) padding-box,
+                radial-gradient(at 69% 34%, hsla(142,100%,60%,0.6) 0px, transparent 50%) padding-box,
+                radial-gradient(at 8% 6%, hsla(142,100%,70%,0.4) 0px, transparent 50%) padding-box,
+                radial-gradient(at 41% 38%, hsla(142,100%,40%,0.5) 0px, transparent 50%) padding-box,
+                radial-gradient(at 86% 85%, hsla(142,100%,55%,0.3) 0px, transparent 50%) padding-box,
+                radial-gradient(at 82% 18%, hsla(142,100%,65%,0.4) 0px, transparent 50%) padding-box,
+                radial-gradient(at 51% 4%, hsla(142,100%,45%,0.6) 0px, transparent 50%) padding-box,
+                linear-gradient(var(--primary-green) 0 100%) padding-box;
+            
+            mask-image:
+                linear-gradient( to bottom, black, black ),
+                radial-gradient( ellipse at 50% 50%, black 40%, transparent 65% ),
+                radial-gradient( ellipse at 66% 66%, black 5%, transparent 40% ),
+                radial-gradient( ellipse at 33% 33%, black 5%, transparent 40% ),
+                radial-gradient( ellipse at 66% 33%, black 5%, transparent 40% ),
+                radial-gradient( ellipse at 33% 66%, black 5%, transparent 40% ),
+                conic-gradient( from var(--pointer-°) at center, transparent 5%, black 15%, black 85%, transparent 95% );
+
+            mask-composite: subtract,add,add,add,add,add;
+            opacity: calc((var(--pointer-d) - var(--color-sens)) / (100 - var(--color-sens)));
+            mix-blend-mode: var(--blend);
+        }
+
+        .glowing-card > .glow {
+            --outset: var(--pads);
+            inset: calc(var(--outset) * -1);
+            pointer-events: none;
+            z-index: 1;
+            
+            mask-image: 
+                conic-gradient( 
+                    from var(--pointer-°) at center, black 2.5%, transparent 10%, transparent 90%, black 97.5%
+                );
+            
+            opacity: calc((var(--pointer-d) - var(--glow-sens)) / (100 - var(--glow-sens)));
+            mix-blend-mode: var(--glow-blend);
+        }
+
+        .glowing-card > .glow::before {
+            content: "";
+            position: absolute;
+            inset: var(--outset);
+            border-radius: inherit;
+            box-shadow: 
+                inset 0 0 0 1px hsl( var(--glow-color) / 100%), 
+                inset 0 0 1px 0 hsl( var(--glow-color) / calc(var(--glow-boost) + 60%)), 
+                inset 0 0 3px 0 hsl( var(--glow-color) / calc(var(--glow-boost) + 50%)), 
+                inset 0 0 6px 0 hsl( var(--glow-color) / calc(var(--glow-boost) + 40%)), 
+                inset 0 0 15px 0 hsl( var(--glow-color) / calc(var(--glow-boost) + 30%)), 
+                inset 0 0 25px 2px hsl( var(--glow-color) / calc(var(--glow-boost) + 20%)), 
+                inset 0 0 50px 2px hsl( var(--glow-color) / calc(var(--glow-boost) + 10%)), 
+                0 0 1px 0 hsl( var(--glow-color) / calc(var(--glow-boost) + 60%)), 
+                0 0 3px 0 hsl( var(--glow-color) / calc(var(--glow-boost) + 50%)), 
+                0 0 6px 0 hsl( var(--glow-color) / calc(var(--glow-boost) + 40%)), 
+                0 0 15px 0 hsl( var(--glow-color) / calc(var(--glow-boost) + 30%)), 
+                0 0 25px 2px hsl( var(--glow-color) / calc(var(--glow-boost) + 20%)), 
+                0 0 50px 2px hsl( var(--glow-color) / calc(var(--glow-boost) + 10%));
         }
 
         .section-header {
             text-align: center;
-            margin-bottom: 5rem;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
+            margin-bottom: 6rem;
         }
 
         .section-header h2 {
             font-size: 3.5rem;
-            font-weight: 700;
+            font-weight: 800;
             margin-bottom: 1.5rem;
-            color: #e5e7eb;
+            background: linear-gradient(135deg, var(--text-primary), var(--primary-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
         }
 
         .section-header p {
             font-size: 1.3rem;
-            color: #9ca3af;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto;
             line-height: 1.7;
         }
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 2.5rem;
-            margin-top: 4rem;
-            max-width: 1400px;
-            margin-left: auto;
-            margin-right: auto;
-            padding: 0 40px;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 3rem;
+            max-width: 1600px;
+            margin: 0 auto;
         }
 
         .feature-card {
-            background: rgba(17, 24, 39, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 20px;
-            padding: 2rem;
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            backdrop-filter: blur(10px);
-            height: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(25px);
+            border: 1px solid var(--border-subtle);
+            border-radius: 25px;
+            padding: 3rem;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
-            cursor: pointer;
+        }
+
+        .feature-card.glowing-card {
+            padding: 3rem;
         }
 
         .feature-card::before {
@@ -520,252 +639,315 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.05), rgba(34, 197, 94, 0.05));
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.05), rgba(107, 114, 128, 0.03));
             opacity: 0;
-            transition: all 0.5s ease;
-            border-radius: 20px;
+            transition: opacity 0.4s ease;
+            border-radius: 25px;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-large);
+            border-color: var(--primary-green);
         }
 
         .feature-card:hover::before {
             opacity: 1;
         }
 
-        .feature-card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(16, 185, 129, 0.4);
-            box-shadow: 0 25px 50px rgba(16, 185, 129, 0.2), 0 0 30px rgba(16, 185, 129, 0.1);
-            padding: 3rem;
-        }
-
         .feature-icon {
-            font-size: 3.5rem;
-            margin-bottom: 1.5rem;
-            color: #10b981;
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary-green), var(--primary-green-dark));
+            border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
+            margin: 0 auto 2rem;
+            box-shadow: 0 8px 25px rgba(34, 197, 94, 0.3);
         }
 
         .feature-icon i {
-            background: rgba(16, 185, 129, 0.1);
-            padding: 20px;
-            border-radius: 16px;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .feature-icon i::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(34, 197, 94, 0.2));
-            opacity: 0;
-            transition: all 0.4s ease;
-            border-radius: 16px;
-        }
-
-        .feature-card:hover .feature-icon i {
-            transform: scale(1.1) rotate(5deg);
-            background: rgba(16, 185, 129, 0.2);
-            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
-        }
-
-        .feature-card:hover .feature-icon i::before {
-            opacity: 1;
+            font-size: 2.5rem;
+            color: #0b1411;
         }
 
         .feature-card h3 {
             font-size: 1.8rem;
-            margin-bottom: 1rem;
-            color: #e5e7eb;
-            text-align: center;
-            transition: all 0.3s ease;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
         }
 
-        .feature-card .feature-subtitle {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #10b981;
+        .feature-subtitle {
+            font-size: 1rem;
+            color: var(--accent-grey);
             margin-bottom: 1rem;
-            text-align: center;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 500;
         }
 
-        .feature-card .feature-description {
-            color: #9ca3af;
-            line-height: 1.8;
+        .feature-description {
             font-size: 1.1rem;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            transition-delay: 0.1s;
+            line-height: 1.7;
+            color: var(--text-muted);
         }
 
-        .feature-card:hover .feature-subtitle,
-        .feature-card:hover .feature-description {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Stats Section - Wide Layout */
-        .stats {
-            padding: 100px 0;
-            background: rgba(17, 24, 39, 0.3);
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 3rem;
-            text-align: center;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 40px;
-        }
-
-        .stat-item {
-            padding: 2rem;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        /* Contact Form Section */
+        .contact-section {
+            padding: 120px 0;
+            background: var(--bg-primary);
             position: relative;
             overflow: hidden;
         }
 
-        .stat-item::before {
+        .contact-section::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.05), rgba(34, 197, 94, 0.05));
-            opacity: 0;
-            transition: all 0.4s ease;
-            border-radius: 16px;
+            background: 
+                linear-gradient(90deg, transparent 0%, rgba(34, 197, 94, 0.02) 50%, transparent 100%),
+                radial-gradient(ellipse at 20% 50%, rgba(34, 197, 94, 0.05) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 50%, rgba(107, 114, 128, 0.03) 0%, transparent 50%);
+            z-index: 1;
         }
 
-        .stat-item:hover::before {
-            opacity: 1;
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 80px;
+        }
+
+        .contact-form-container {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(25px);
+            border: 1px solid var(--border-subtle);
+            border-radius: 30px;
+            padding: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-form-container.glowing-card {
+            padding: 4rem;
+        }
+
+        .contact-form h2 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--text-primary), var(--primary-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
+        }
+
+        .contact-form p {
+            font-size: 1.3rem;
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+            line-height: 1.7;
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.8rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 18px 24px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-subtle);
+            border-radius: 15px;
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-green);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .contact-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .contact-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 20px;
+            box-shadow: var(--shadow-large);
+        }
+
+        .contact-image-placeholder {
+            width: 100%;
+            height: 500px;
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(107, 114, 128, 0.05));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed var(--border-medium);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-image-placeholder::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 30% 30%, rgba(34, 197, 94, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 70% 70%, rgba(107, 114, 128, 0.05) 0%, transparent 50%);
+        }
+
+        .contact-image-placeholder i {
+            font-size: 4rem;
+            color: var(--accent-grey);
+            z-index: 2;
+            position: relative;
+        }
+
+        /* Stats Section */
+        .stats {
+            padding: 100px 0;
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.05), rgba(107, 114, 128, 0.03));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stats::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at center, rgba(34, 197, 94, 0.08) 0%, transparent 70%);
+            z-index: 1;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(25px);
+            border: 1px solid var(--border-subtle);
+            border-radius: 20px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .stat-item:hover {
-            transform: translateY(-8px) scale(1.05);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-medium);
+            border-color: var(--primary-green);
         }
 
         .stat-number {
             font-size: 3.5rem;
             font-weight: 800;
-            color: #10b981;
-            margin-bottom: 1rem;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            z-index: 1;
-        }
-
-        .stat-item:hover .stat-number {
-            transform: scale(1.1);
-            text-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+            color: var(--primary-green);
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--primary-green), var(--primary-green-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .stat-label {
             font-size: 1.2rem;
-            color: #9ca3af;
+            color: var(--text-muted);
             font-weight: 500;
-            position: relative;
-            z-index: 1;
-            transition: all 0.4s ease;
         }
 
-        .stat-item:hover .stat-label {
-            color: #e5e7eb;
-        }
-
-        /* Footer - Wide Layout */
+        /* Footer */
         .footer {
-            background: rgba(17, 24, 39, 0.8);
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 4rem 0 2rem;
+            background: var(--bg-secondary);
+            padding: 80px 0 40px;
+            border-top: 1px solid var(--border-subtle);
         }
 
         .footer-content {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 3rem;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 4rem;
             margin-bottom: 3rem;
-            max-width: 1400px;
-            margin-left: auto;
-            margin-right: auto;
-            padding: 0 40px;
         }
 
         .footer-section h4 {
-            color: #e5e7eb;
-            margin-bottom: 1.5rem;
             font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
         }
 
-        .footer-section p, .footer-section a {
-            color: #9ca3af;
+        .footer-section p {
+            margin-bottom: 1rem;
+            color: var(--text-muted);
+        }
+
+        .footer-section a {
+            color: var(--text-muted);
             text-decoration: none;
-            line-height: 2;
-            font-size: 1rem;
+            transition: color 0.3s ease;
         }
 
         .footer-section a:hover {
-            color: #10b981;
+            color: var(--primary-green);
         }
 
         .footer-bottom {
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-            padding-top: 2rem;
-            color: #6b7280;
             text-align: center;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding-left: 40px;
-            padding-right: 40px;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-subtle);
+            color: var(--text-muted);
         }
 
-        /* Scroll-triggered animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes slideInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
+        /* Animations */
         .animate-on-scroll {
             opacity: 0;
             transform: translateY(30px);
@@ -778,40 +960,30 @@
         }
 
         /* Responsive Design */
+        @media (max-width: 1400px) {
+            .container {
+                padding: 0 40px;
+            }
+            
+            .container-wide {
+                padding: 0 60px;
+            }
+            
+            .hero-content {
+                padding: 0 60px;
+            }
+        }
+
         @media (max-width: 1200px) {
             .hero-content {
                 grid-template-columns: 1fr;
-                gap: 60px;
+                gap: 4rem;
                 text-align: center;
-            }
-            
-            .hero-left {
-                max-width: 100%;
-            }
-            
-            .hero h1 {
-                text-align: center;
-                font-size: 3.5rem;
-            }
-            
-            .hero p {
-                text-align: center;
-            }
-            
-            .hero-buttons {
-                justify-content: center;
             }
             
             .features-grid {
-                grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            }
-            
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .footer-content {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+                gap: 2rem;
             }
         }
 
@@ -820,7 +992,7 @@
                 padding: 0 20px;
             }
             
-            nav {
+            .container-wide {
                 padding: 0 20px;
             }
             
@@ -828,91 +1000,32 @@
                 padding: 0 20px;
             }
             
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            .hero p {
-                font-size: 1.2rem;
-            }
-            
-            .nav-links {
-                display: none;
-            }
-            
-            .hero-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .cta-button {
-                width: 100%;
-                max-width: 300px;
+            .hero-left h1 {
+                font-size: 3rem;
             }
             
             .features-grid {
                 grid-template-columns: 1fr;
-                padding: 0 20px;
-            }
-            
-            .stats-grid {
-                grid-template-columns: 1fr;
-                padding: 0 20px;
             }
             
             .footer-content {
                 grid-template-columns: 1fr;
-                padding: 0 20px;
-            }
-            
-            .footer-bottom {
-                padding-left: 20px;
-                padding-right: 20px;
-            }
-            
-            /* Mobile rounded container adjustments */
-            header.scrolled {
-                margin: 5px 10px;
-                width: calc(100% - 20px);
-                border-radius: 15px;
-                padding: 12px 0;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .hero {
-                padding: 120px 0 60px;
-            }
-            
-            .hero h1 {
-                font-size: 2rem;
-            }
-            
-            .hero p {
-                font-size: 1.1rem;
-            }
-            
-            .app-downloads {
-                padding: 30px;
-            }
-            
-            .download-btn {
-                padding: 16px 20px;
+                gap: 2rem;
             }
         }
     </style>
 </head>
 <body>
-    <header>
+    <header id="header">
         <nav>
-            <a href="/" class="logo">
+            <a href="#" class="logo">
                 <div class="logo-container">
-                    <div id="animated-logo" class="animated-logo"></div>
-                    <img src="../on timely official logo.svg" alt="OnTimely Logo" class="logo-img">
+                    <img src="../OnTimely_Logo_Animated.svg" alt="OnTimely Logo" class="animated-logo">
                 </div>
             </a>
             <ul class="nav-links">
                 <li><a href="#features">Features</a></li>
+                <li><a href="#pricing">Pricing</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#contact">Contact</a></li>
                 <li><a href="https://dashboard.ontimely.co.uk" class="sign-in-btn">Sign In</a></li>
@@ -927,8 +1040,8 @@
             </video>
             <div class="hero-content">
                 <div class="hero-left">
-                    <h1>Professional Event Management</h1>
-                    <p>Transform your events with OnTimely's powerful platform. Create stunning forms, manage guests seamlessly, and organize events of any scale with enterprise-grade tools.</p>
+                    <h1>Elite Event Management Platform</h1>
+                    <p>Transform your events with OnTimely's enterprise-grade platform. Create custom guest apps, manage real-time communication, and deliver exceptional experiences that set your events apart from the competition.</p>
                     
                     <div class="hero-buttons">
                         <a href="#features" class="cta-button">
@@ -944,7 +1057,7 @@
 
                 <div class="hero-right">
                     <div class="app-downloads">
-                        <h3>Download Our Desktop App</h3>
+                        <h3>Download Desktop App</h3>
                         <div class="download-buttons" id="download-buttons">
                             <!-- Buttons will be populated by JavaScript -->
                         </div>
@@ -953,91 +1066,141 @@
             </div>
         </section>
 
-        <!-- Sign In Section for Existing Users -->
+        <!-- Enhanced Sign In Section -->
         <section class="sign-in-section">
-            <div class="container">
+            <div class="container-wide">
                 <div class="sign-in-content">
-                    <h2>Already have an account?</h2>
-                    <p>Access your event dashboard and manage your events with our professional tools.</p>
+                    <h2>Already Have an Account?</h2>
+                    <p>Access your professional event dashboard and manage your events with our elite suite of tools designed for the most demanding event professionals.</p>
                     <a href="https://dashboard.ontimely.co.uk" class="dashboard-btn">
                         <i class="fas fa-sign-in-alt"></i>
-                        Access Dashboard
+                        Access Elite Dashboard
                     </a>
                 </div>
             </div>
         </section>
 
         <section class="features" id="features">
-            <div class="container">
+            <div class="container-wide">
                 <div class="section-header animate-on-scroll">
                     <h2>Why Choose OnTimely?</h2>
-                    <p>Built for professionals who demand excellence in event management and guest experience.</p>
+                    <p>Built for professionals who demand excellence in event management and guest experience. Our platform delivers enterprise-grade features with unmatched reliability.</p>
                 </div>
                 
                 <div class="features-grid">
-                    <div class="feature-card animate-on-scroll">
+                    <div class="feature-card glowing-card animate-on-scroll">
+                        <span class="glow"></span>
                         <div class="feature-icon">
                             <i class="fas fa-mobile-alt"></i>
                         </div>
-                        <h3>Custom Guest Apps</h3>
-                        <div class="feature-subtitle">App Inside an App</div>
-                        <div class="feature-description">Create tailored mobile apps for your guests with real-time communication, custom homepages, and personalized event timelines.</div>
+                        <h3>Custom Guest Applications</h3>
+                        <div class="feature-subtitle">App Within an App Technology</div>
+                        <div class="feature-description">Create fully customized mobile applications for your guests with real-time communication, branded homepages, and personalized event experiences that reflect your company's identity.</div>
                     </div>
                     
-                    <div class="feature-card animate-on-scroll">
+                    <div class="feature-card glowing-card animate-on-scroll">
+                        <span class="glow"></span>
                         <div class="feature-icon">
                             <i class="fas fa-comments"></i>
                         </div>
-                        <h3>Real-time Communication</h3>
-                        <div class="feature-subtitle">Instant Messaging & Updates</div>
-                        <div class="feature-description">Enable guests to communicate instantly with organizers and other attendees through built-in chat, announcements, and live updates.</div>
+                        <h3>Real-time Communication Hub</h3>
+                        <div class="feature-subtitle">Instant Messaging & Live Updates</div>
+                        <div class="feature-description">Enable seamless communication between guests and organizers through advanced chat systems, live announcements, and instant notifications that keep everyone connected.</div>
                     </div>
                     
-                    <div class="feature-card animate-on-scroll">
+                    <div class="feature-card glowing-card animate-on-scroll">
+                        <span class="glow"></span>
                         <div class="feature-icon">
                             <i class="fas fa-home"></i>
                         </div>
-                        <h3>Custom Homepages</h3>
+                        <h3>Custom Event Homepages</h3>
                         <div class="feature-subtitle">Branded Event Portals</div>
-                        <div class="feature-description">Design beautiful, branded homepages for each event with custom layouts, colors, and content that reflects your company's identity.</div>
+                        <div class="feature-description">Design stunning, fully branded homepages for each event with custom layouts, color schemes, and content that perfectly represents your company's professional image.</div>
                     </div>
                     
-                    <div class="feature-card animate-on-scroll">
+                    <div class="feature-card glowing-card animate-on-scroll">
+                        <span class="glow"></span>
                         <div class="feature-icon">
                             <i class="fas fa-clock"></i>
                         </div>
-                        <h3>Event Timelines</h3>
-                        <div class="feature-subtitle">Interactive Schedules</div>
-                        <div class="feature-description">Create dynamic timelines that guests can interact with, featuring schedules, reminders, and real-time updates throughout the event.</div>
+                        <h3>Interactive Event Timelines</h3>
+                        <div class="feature-subtitle">Dynamic Schedule Management</div>
+                        <div class="feature-description">Create comprehensive, interactive timelines that guests can explore, featuring detailed schedules, reminders, and real-time updates throughout the entire event experience.</div>
                     </div>
                     
-                    <div class="feature-card animate-on-scroll">
+                    <div class="feature-card glowing-card animate-on-scroll">
+                        <span class="glow"></span>
                         <div class="feature-icon">
                             <i class="fas fa-puzzle-piece"></i>
                         </div>
-                        <h3>In-App Applications</h3>
-                        <div class="feature-subtitle">Modular Experience Tools</div>
-                        <div class="feature-description">Build custom applications within the guest app for check-ins, networking, feedback, surveys, and other interactive experiences.</div>
+                        <h3>Modular Application Suite</h3>
+                        <div class="feature-subtitle">Custom Experience Tools</div>
+                        <div class="feature-description">Build and deploy custom applications within the guest app for check-ins, networking, feedback collection, surveys, and other interactive experiences tailored to your event needs.</div>
                     </div>
                     
-                    <div class="feature-card animate-on-scroll">
+                    <div class="feature-card glowing-card animate-on-scroll">
+                        <span class="glow"></span>
                         <div class="feature-icon">
                             <i class="fas fa-users"></i>
                         </div>
-                        <h3>Guest Journey Management</h3>
-                        <div class="feature-subtitle">Complete Experience Control</div>
-                        <div class="feature-description">Track and manage every aspect of your guests' journey from invitation to post-event follow-up with comprehensive analytics.</div>
+                        <h3>Complete Guest Journey Management</h3>
+                        <div class="feature-subtitle">End-to-End Experience Control</div>
+                        <div class="feature-description">Track and manage every aspect of your guests' journey from initial invitation to post-event follow-up with comprehensive analytics and insights that drive better outcomes.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Form Section -->
+        <section class="contact-section" id="contact">
+            <div class="contact-content">
+                <div class="contact-form-container glowing-card">
+                    <span class="glow"></span>
+                    <form class="contact-form">
+                        <h2>Get In Touch</h2>
+                        <p>Ready to transform your events? Contact our team to discuss how OnTimely can elevate your event management to the next level.</p>
+                        
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="company">Company Name</label>
+                            <input type="text" id="company" name="company">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" placeholder="Tell us about your event management needs..." required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="cta-button">
+                            <i class="fas fa-paper-plane"></i>
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+                
+                <div class="contact-image">
+                    <div class="contact-image-placeholder">
+                        <i class="fas fa-envelope-open-text"></i>
                     </div>
                 </div>
             </div>
         </section>
 
         <section class="stats">
-            <div class="container">
+            <div class="container-wide">
                 <div class="stats-grid">
                     <div class="stat-item animate-on-scroll">
                         <div class="stat-number">10K+</div>
-                        <div class="stat-label">Events Managed</div>
+                        <div class="stat-label">Elite Events Managed</div>
                     </div>
                     <div class="stat-item animate-on-scroll">
                         <div class="stat-number">500K+</div>
@@ -1045,11 +1208,11 @@
                     </div>
                     <div class="stat-item animate-on-scroll">
                         <div class="stat-number">99.9%</div>
-                        <div class="stat-label">Uptime</div>
+                        <div class="stat-label">Uptime Guarantee</div>
                     </div>
                     <div class="stat-item animate-on-scroll">
                         <div class="stat-number">24/7</div>
-                        <div class="stat-label">Support</div>
+                        <div class="stat-label">Elite Support</div>
                     </div>
                 </div>
             </div>
@@ -1057,11 +1220,11 @@
     </main>
 
     <footer class="footer">
-        <div class="container">
+        <div class="container-wide">
             <div class="footer-content">
                 <div class="footer-section">
                     <h4>OnTimely</h4>
-                    <p>Professional event management platform designed for teams who demand excellence.</p>
+                    <p>Elite event management platform designed for professionals who demand excellence and reliability in every aspect of their event operations.</p>
                 </div>
                 <div class="footer-section">
                     <h4>Product</h4>
@@ -1115,7 +1278,6 @@
             const button = document.createElement('a');
             button.href = filename;
             button.className = `download-btn ${isPrimary ? 'primary' : ''}`;
-            
             
             button.innerHTML = `
                 <i class="${icon}"></i>
@@ -1224,6 +1386,7 @@
             initMenuFadeEffect();
             initTextFlash();
             initSmoothScrolling();
+            initGlowingCards();
         });
 
         // Scroll-triggered animations
@@ -1247,11 +1410,11 @@
             });
         }
 
-        // Menu rounded container effect on scroll
+        // Header scroll effect
         function initMenuFadeEffect() {
+            const header = document.getElementById('header');
             let lastScrollY = window.scrollY;
-            const header = document.querySelector('header');
-            
+
             window.addEventListener('scroll', () => {
                 const currentScrollY = window.scrollY;
                 
@@ -1265,99 +1428,128 @@
             });
         }
 
-        // Text flash animation for hero title - letter by letter
+        // Text flash effect
         function initTextFlash() {
-            // Animation removed - keeping function for compatibility
+            const elements = document.querySelectorAll('.hero-left h1, .sign-in-content h2');
+            
+            elements.forEach(element => {
+                element.addEventListener('mouseenter', () => {
+                    element.style.animation = 'textFlash 0.6s ease-in-out';
+                });
+                
+                element.addEventListener('animationend', () => {
+                    element.style.animation = '';
+                });
+            });
         }
 
-        // Smooth scrolling for navigation links
+        // Smooth scrolling for anchor links
         function initSmoothScrolling() {
-            // Add smooth scrolling behavior to the page
-            document.documentElement.style.scrollBehavior = 'smooth';
-            
-            // Handle navigation link clicks
-            const navLinks = document.querySelectorAll('a[href^="#"]');
-            navLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
                     e.preventDefault();
-                    const targetId = this.getAttribute('href').substring(1);
-                    const targetElement = document.getElementById(targetId);
-                    
-                    if (targetElement) {
-                        // Calculate offset for fixed header
-                        const headerHeight = document.querySelector('header').offsetHeight;
-                        const targetPosition = targetElement.offsetTop - headerHeight - 20;
-                        
-                        window.scrollTo({
-                            top: targetPosition,
-                            behavior: 'smooth'
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
                         });
                     }
                 });
             });
         }
 
-        // Initialize animated logo
-        function initAnimatedLogo() {
-            const animationContainer = document.getElementById('animated-logo');
-            const fallbackImg = document.querySelector('.logo-img');
+        // Glowing Cards Interaction
+        function initGlowingCards() {
+            const cards = document.querySelectorAll('.glowing-card');
             
-            if (animationContainer && typeof lottie !== 'undefined') {
-                try {
-                    const animation = lottie.loadAnimation({
-                        container: animationContainer,
-                        renderer: 'svg',
-                        loop: true,
-                        autoplay: true,
-                        path: '../OfficialLogo.json',
-                        rendererSettings: {
-                            preserveAspectRatio: 'xMidYMid meet'
-                        }
-                    });
+            cards.forEach(card => {
+                const cardUpdate = (e) => {
+                    const position = pointerPositionRelativeToElement(card, e);
+                    const [px, py] = position.pixels;
+                    const [perx, pery] = position.percent;
+                    const [dx, dy] = distanceFromCenter(card, px, py);
+                    const edge = closenessToEdge(card, px, py);
+                    const angle = angleFromPointerEvent(card, dx, dy);
 
-                    // Set animation to play every 30 seconds
-                    animation.addEventListener('complete', function() {
-                        setTimeout(() => {
-                            animation.goToAndPlay(0, true);
-                        }, 30000); // 30 second delay
-                    });
+                    card.style.setProperty('--pointer-x', `${round(perx)}%`);
+                    card.style.setProperty('--pointer-y', `${round(pery)}%`);
+                    card.style.setProperty('--pointer-°', `${round(angle)}deg`);
+                    card.style.setProperty('--pointer-d', `${round(edge * 100)}`);
+                    
+                    card.classList.remove('animating');
+                };
 
-                    // Hide fallback image on successful load
-                    animation.addEventListener('DOMLoaded', function() {
-                        if (fallbackImg) {
-                            fallbackImg.style.display = 'none';
-                        }
-                    });
-
-                    // Show fallback image on error
-                    animation.addEventListener('error', function() {
-                        console.error('Lottie animation failed to load, showing fallback');
-                        if (fallbackImg) {
-                            fallbackImg.style.display = 'block';
-                        }
-                        animationContainer.style.display = 'none';
-                    });
-
-                } catch (error) {
-                    console.error('Error initializing Lottie animation:', error);
-                    if (fallbackImg) {
-                        fallbackImg.style.display = 'block';
-                    }
-                    animationContainer.style.display = 'none';
-                }
-            } else {
-                console.warn('Lottie library not loaded or container not found, showing fallback');
-                if (fallbackImg) {
-                    fallbackImg.style.display = 'block';
-                }
-                if (animationContainer) {
-                    animationContainer.style.display = 'none';
-                }
-            }
+                card.addEventListener("pointermove", cardUpdate);
+            });
         }
 
-        // Initialize animated logo when page loads
-        document.addEventListener('DOMContentLoaded', initAnimatedLogo);
+        // Utility functions for glowing cards
+        function centerOfElement($el) {
+            const { left, top, width, height } = $el.getBoundingClientRect();
+            return [ width/2, height/2 ];
+        }
+
+        function pointerPositionRelativeToElement($el, e) {
+            const pos = [e.clientX, e.clientY];
+            const { left, top, width, height } = $el.getBoundingClientRect();
+            const x = pos[0] - left;
+            const y = pos[1] - top;
+            const px = clamp((100 / width) * x);
+            const py = clamp((100 / height) * y);
+            return { pixels: [x,y], percent: [px,py] }
+        }
+
+        function angleFromPointerEvent($el, dx, dy) {
+            let angleRadians = 0;
+            let angleDegrees = 0;
+            if ( dx !== 0 || dy !== 0 ) {
+                angleRadians = Math.atan2(dy, dx);
+                angleDegrees = angleRadians * (180 / Math.PI) + 90;
+                if (angleDegrees < 0) {
+                    angleDegrees += 360;
+                }
+            }
+            return angleDegrees;
+        }
+
+        function distanceFromCenter($card, x, y) {
+            const [cx,cy] = centerOfElement($card);
+            return [ x - cx, y - cy ];
+        }
+
+        function closenessToEdge($card, x, y) {
+            const [cx,cy] = centerOfElement($card);
+            const [dx,dy] = distanceFromCenter($card, x, y);
+            let k_x = Infinity;
+            let k_y = Infinity;
+            if (dx !== 0) {
+                k_x = cx / Math.abs(dx);
+            }    
+            if (dy !== 0) {
+                k_y = cy / Math.abs(dy);
+            }
+            return clamp((1 / Math.min(k_x, k_y)), 0, 1);
+        }
+
+        function round(value, precision = 3) {
+            return parseFloat(value.toFixed(precision));
+        }
+
+        function clamp(value, min = 0, max = 100) {
+            return Math.min(Math.max(value, min), max);
+        }
+
+        // Add CSS for text flash animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes textFlash {
+                0% { filter: brightness(1); }
+                50% { filter: brightness(1.3); }
+                100% { filter: brightness(1); }
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
-</html> 
+</html>
