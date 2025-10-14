@@ -85,6 +85,11 @@
             max-width: 1600px;
             margin: 0 auto;
             padding: 0 40px;
+            transition: padding 0.6s ease;
+        }
+
+        .navbar.scrolled .nav-container {
+            padding: 0 15px;
         }
 
         .nav-center {
@@ -847,7 +852,7 @@
             backdrop-filter: blur(25px);
             border: 1px solid var(--border-subtle);
             border-radius: 25px;
-            padding: 3rem;
+            padding: 2rem;
             text-align: left;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
@@ -855,7 +860,7 @@
         }
 
         .feature-card.glowing-card {
-            padding: 3rem;
+            padding: 2rem;
         }
 
         .feature-card::before {
@@ -906,24 +911,24 @@
         }
 
         .feature-card h3 {
-            font-size: 1.6rem;
+            font-size: 1.4rem;
             font-weight: 700;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.35rem;
             color: var(--text-primary);
             padding-right: 70px;
         }
 
         .feature-subtitle {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             color: var(--accent-grey);
-            margin-bottom: 1rem;
+            margin-bottom: 0.6rem;
             font-weight: 500;
             padding-right: 70px;
         }
 
         .feature-description {
-            font-size: 1rem;
-            line-height: 1.6;
+            font-size: 0.9rem;
+            line-height: 1.5;
             color: var(--text-muted);
             padding-right: 70px;
         }
