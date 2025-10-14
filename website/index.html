@@ -944,7 +944,7 @@
             align-items: center;
             position: relative;
             z-index: 2;
-            max-width: 600px;
+            max-width: 1000px;
             margin: 0 auto;
             padding: 0 60px;
         }
@@ -954,8 +954,9 @@
             backdrop-filter: blur(8px);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 18px;
-            padding: 40px;
+            padding: 50px 60px;
             width: 100%;
+            max-width: 800px;
             box-shadow: inset 0 1px 0 rgba(255,255,255,0.04), 0 8px 30px rgba(0,0,0,0.45);
         }
 
@@ -1337,7 +1338,7 @@
     <main>
         <section id="home" class="hero">
             <video autoplay muted loop playsinline>
-                <source src="../0_Technology_Circuit_Board_3840x2160.mp4" type="video/mp4">
+                <source src="../Timely/apps/desktop/renderer/public/videos/OnTimelyLoadingScreenDesktop.mp4" type="video/mp4">
             </video>
             <div class="hero-content">
                 <div class="hero-left">
@@ -1369,7 +1370,7 @@
         <div class="video-modal" id="videoModal">
             <div class="video-container">
                 <video id="demoVideo" preload="metadata">
-                    <source src="../0_Technology_Circuit_Board_3840x2160.mp4" type="video/mp4">
+                    <source src="../Timely/apps/desktop/renderer/public/videos/OnTimelyLoadingScreenDesktop.mp4" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
                 <div class="video-overlay">
@@ -1412,7 +1413,7 @@
                         </div>
                         <h3>Custom Guest Applications</h3>
                         <div class="feature-subtitle">App Within an App Technology</div>
-                        <div class="feature-description">Create fully customized mobile applications for your guests with real-time communication, branded homepages, and personalized event experiences that reflect your company's identity.</div>
+                        <div class="feature-description">OnTimely has built in apps such as currency converters, translators, offline maps and more to aid with guests travel and experience whilst they are at the event or getting there.</div>
                     </div>
                     
                     <div class="feature-card glowing-card animate-on-scroll">
@@ -1452,7 +1453,7 @@
                         </div>
                         <h3>Modular Application Suite</h3>
                         <div class="feature-subtitle">Custom Experience Tools</div>
-                        <div class="feature-description">Build and deploy custom applications within the guest app for check-ins, networking, feedback collection, surveys, and other interactive experiences tailored to your event needs.</div>
+                        <div class="feature-description">Create events and share with your team, discuss with the built in chat interface, arrange meetings via your own built in calendar, and create teams, to build and work together on creating the perfect event.</div>
                     </div>
                     
                     <div class="feature-card glowing-card animate-on-scroll">
@@ -1470,37 +1471,39 @@
 
         <!-- Contact Form Section -->
         <section class="contact-section" id="contact">
-            <div class="contact-content">
-                <div class="contact-form-container">
-                    <form class="contact-form">
-                        <h2>Get In Touch</h2>
-                        <p>Ready to transform your events? Contact our team to discuss how OnTimely can elevate your event management to the next level.</p>
-                        
-                        <div class="form-group">
-                            <label for="name">Full Name</label>
-                            <input type="text" id="name" name="name" placeholder="Your full name" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="email">Email Address</label>
-                            <input type="email" id="email" name="email" placeholder="your@email.com" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="company">Company Name</label>
-                            <input type="text" id="company" name="company" placeholder="Your company name">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea id="message" name="message" placeholder="Tell us about your event management needs..." required></textarea>
-                        </div>
-                        
-                        <button type="submit" class="cta-button">
-                            <i class="fas fa-paper-plane"></i>
-                            Send Message
-                        </button>
-                    </form>
+            <div class="container-wide">
+                <div class="contact-content">
+                    <div class="contact-form-container">
+                        <form class="contact-form">
+                            <h2>Get In Touch</h2>
+                            <p>Ready to transform your events? Contact our team to discuss how OnTimely can elevate your event management to the next level.</p>
+                            
+                            <div class="form-group">
+                                <label for="name">Full Name</label>
+                                <input type="text" id="name" name="name" placeholder="Your full name" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <input type="email" id="email" name="email" placeholder="your@email.com" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="company">Company Name</label>
+                                <input type="text" id="company" name="company" placeholder="Your company name">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="message">Message</label>
+                                <textarea id="message" name="message" placeholder="Tell us about your event management needs..." required></textarea>
+                            </div>
+                            
+                            <button type="submit" class="cta-button">
+                                <i class="fas fa-paper-plane"></i>
+                                Send Message
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </section>
