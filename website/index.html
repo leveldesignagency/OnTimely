@@ -240,29 +240,26 @@
         .rotating-container {
             display: flex;
             justify-content: center;
-            max-width: 1400px;
+            align-items: center;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 0 40px;
             width: 100%;
             height: 100vh;
-            align-items: center;
-        }
-
-        .content-left {
             position: relative;
-            height: 100%;
-            display: flex;
-            align-items: center;
         }
 
         .feature-content {
             position: absolute;
             top: 50%;
-            transform: translateY(-50%);
+            left: 50%;
+            transform: translate(-50%, -50%);
             opacity: 0;
             visibility: hidden;
             transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            text-align: center;
             width: 100%;
+            max-width: 800px;
         }
 
         .feature-content.active {
@@ -271,17 +268,17 @@
         }
 
         .feature-content.slide-out-left {
-            transform: translateY(-50%) translateX(-100px);
+            transform: translate(-50%, -50%) translateX(-100px);
             opacity: 0;
         }
 
         .feature-content.slide-in-right {
-            transform: translateY(-50%) translateX(100px);
+            transform: translate(-50%, -50%) translateX(100px);
             opacity: 0;
         }
 
         .feature-title {
-            font-size: 3.5rem;
+            font-size: 5rem;
             font-weight: 800;
             color: #ffffff;
             margin-bottom: 20px;
@@ -290,19 +287,23 @@
         }
 
         .feature-subtitle {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             color: #10b981;
             margin-bottom: 30px;
             font-weight: 600;
         }
 
         .feature-description {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             color: #d1d5db;
             line-height: 1.7;
-            max-width: 600px;
+            margin-bottom: 40px;
         }
 
+        .image-placeholder {
+            font-size: 8rem;
+            opacity: 0.7;
+        }
 
         .feature-indicators {
             position: absolute;
@@ -334,12 +335,26 @@
 
         /* Responsive Design */
         @media (max-width: 1024px) {
-            .rotating-container {
-                text-align: center;
+            .feature-title {
+                font-size: 4rem;
             }
 
+            .feature-subtitle {
+                font-size: 1.5rem;
+            }
+
+            .feature-description {
+                font-size: 1.2rem;
+            }
+
+            .image-placeholder {
+                font-size: 6rem;
+            }
+        }
+
+        @media (max-width: 768px) {
             .feature-title {
-                font-size: 2.8rem;
+                font-size: 3rem;
             }
 
             .feature-subtitle {
@@ -349,19 +364,9 @@
             .feature-description {
                 font-size: 1.1rem;
             }
-        }
 
-        @media (max-width: 768px) {
-            .feature-title {
-                font-size: 2.2rem;
-            }
-
-            .feature-subtitle {
-                font-size: 1.1rem;
-            }
-
-            .feature-description {
-                font-size: 1rem;
+            .image-placeholder {
+                font-size: 5rem;
             }
         }
 
@@ -1590,44 +1595,47 @@
         <!-- Advanced Features Rotating Section -->
         <section class="features-rotating" id="features-rotating">
             <div class="rotating-container">
-                <div class="content-left">
-                    <div class="feature-content active" data-feature="0">
-                        <h1 class="feature-title">Custom Guest Applications</h1>
-                        <h2 class="feature-subtitle">App Within an App Technology</h2>
-                        <p class="feature-description">OnTimely has built in apps such as currency converters, translators, offline maps and more to aid with guests travel and experience whilst they are at the event or getting there.</p>
-                    </div>
-                    
-                    <div class="feature-content" data-feature="1">
-                        <h1 class="feature-title">Real-time Communication Hub</h1>
-                        <h2 class="feature-subtitle">Instant Messaging & Live Updates</h2>
-                        <p class="feature-description">Enable seamless communication between guests and organizers through advanced chat systems, live announcements, and instant notifications that keep everyone connected.</p>
-                    </div>
-                    
-                    <div class="feature-content" data-feature="2">
-                        <h1 class="feature-title">Custom Event Homepages</h1>
-                        <h2 class="feature-subtitle">Branded Event Portals</h2>
-                        <p class="feature-description">Design stunning, fully branded homepages for each event with custom layouts, color schemes, and content that perfectly represents your company's professional image.</p>
-                    </div>
-                    
-                    <div class="feature-content" data-feature="3">
-                        <h1 class="feature-title">Interactive Event Timelines</h1>
-                        <h2 class="feature-subtitle">Dynamic Schedule Management</h2>
-                        <p class="feature-description">Create comprehensive, interactive timelines that guests can explore, featuring detailed schedules, reminders, and real-time updates throughout the entire event experience.</p>
-                    </div>
-                    
-                    <div class="feature-content" data-feature="4">
-                        <h1 class="feature-title">Modular Application Suite</h1>
-                        <h2 class="feature-subtitle">Custom Experience Tools</h2>
-                        <p class="feature-description">Create events and share with your team, discuss with the built in chat interface, arrange meetings via your own built in calendar, and create teams, to build and work together on creating the perfect event.</p>
-                    </div>
-                    
-                    <div class="feature-content" data-feature="5">
-                        <h1 class="feature-title">Complete Guest Journey Management</h1>
-                        <h2 class="feature-subtitle">End-to-End Experience Control</h2>
-                        <p class="feature-description">Track and manage every aspect of your guests' journey from initial invitation to post-event follow-up with comprehensive analytics and insights that drive better outcomes.</p>
-                    </div>
+                <div class="feature-content active" data-feature="0">
+                    <h1 class="feature-title">Custom Guest Applications</h1>
+                    <h2 class="feature-subtitle">App Within an App Technology</h2>
+                    <p class="feature-description">OnTimely has built in apps such as currency converters, translators, offline maps and more to aid with guests travel and experience whilst they are at the event or getting there.</p>
+                    <div class="image-placeholder">📱</div>
                 </div>
                 
+                <div class="feature-content" data-feature="1">
+                    <h1 class="feature-title">Real-time Communication Hub</h1>
+                    <h2 class="feature-subtitle">Instant Messaging & Live Updates</h2>
+                    <p class="feature-description">Enable seamless communication between guests and organizers through advanced chat systems, live announcements, and instant notifications that keep everyone connected.</p>
+                    <div class="image-placeholder">💬</div>
+                </div>
+                
+                <div class="feature-content" data-feature="2">
+                    <h1 class="feature-title">Custom Event Homepages</h1>
+                    <h2 class="feature-subtitle">Branded Event Portals</h2>
+                    <p class="feature-description">Design stunning, fully branded homepages for each event with custom layouts, color schemes, and content that perfectly represents your company's professional image.</p>
+                    <div class="image-placeholder">🏠</div>
+                </div>
+                
+                <div class="feature-content" data-feature="3">
+                    <h1 class="feature-title">Interactive Event Timelines</h1>
+                    <h2 class="feature-subtitle">Dynamic Schedule Management</h2>
+                    <p class="feature-description">Create comprehensive, interactive timelines that guests can explore, featuring detailed schedules, reminders, and real-time updates throughout the entire event experience.</p>
+                    <div class="image-placeholder">📅</div>
+                </div>
+                
+                <div class="feature-content" data-feature="4">
+                    <h1 class="feature-title">Modular Application Suite</h1>
+                    <h2 class="feature-subtitle">Custom Experience Tools</h2>
+                    <p class="feature-description">Create events and share with your team, discuss with the built in chat interface, arrange meetings via your own built in calendar, and create teams, to build and work together on creating the perfect event.</p>
+                    <div class="image-placeholder">🔧</div>
+                </div>
+                
+                <div class="feature-content" data-feature="5">
+                    <h1 class="feature-title">Complete Guest Journey Management</h1>
+                    <h2 class="feature-subtitle">End-to-End Experience Control</h2>
+                    <p class="feature-description">Track and manage every aspect of your guests' journey from initial invitation to post-event follow-up with comprehensive analytics and insights that drive better outcomes.</p>
+                    <div class="image-placeholder">🎯</div>
+                </div>
             </div>
             
             <div class="feature-indicators">
