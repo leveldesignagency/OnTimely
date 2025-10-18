@@ -226,27 +226,348 @@
             overflow: hidden;
         }
 
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(15, 17, 21, 0.75);
-            z-index: 1;
-        }
-
         .hero::after {
             content: '';
             position: absolute;
             bottom: 0;
             left: 0;
             right: 0;
-            height: 100px;
-            background: linear-gradient(to top, rgba(10, 10, 10, 0.8), transparent);
-            z-index: 2;
+            height: 150px;
+            background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 1));
+            z-index: 3;
         }
+
+        /* Secondary Hero - Magical Advanced Features */
+        .secondary-hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            padding: 120px 0;
+        }
+
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .hero-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, rgba(34, 197, 94, 0.3), transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(34, 197, 94, 0.2), transparent),
+                radial-gradient(1px 1px at 90px 40px, rgba(34, 197, 94, 0.4), transparent),
+                radial-gradient(1px 1px at 130px 80px, rgba(34, 197, 94, 0.3), transparent),
+                radial-gradient(2px 2px at 160px 30px, rgba(34, 197, 94, 0.2), transparent);
+            background-repeat: repeat;
+            background-size: 200px 100px;
+            animation: particleFloat 20s linear infinite;
+        }
+
+        @keyframes particleFloat {
+            0% { transform: translateY(0px) translateX(0px); }
+            33% { transform: translateY(-30px) translateX(10px); }
+            66% { transform: translateY(20px) translateX(-5px); }
+            100% { transform: translateY(0px) translateX(0px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .hero-text {
+            opacity: 0;
+            transform: translateX(-100px);
+            animation: slideInLeft 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.5s forwards;
+        }
+
+        @keyframes slideInLeft {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #22c55e, #10b981, #059669);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 24px;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: #e5e7eb;
+            margin-bottom: 48px;
+            line-height: 1.6;
+            font-weight: 300;
+        }
+
+        .feature-explanations {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        .explanation-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            padding: 24px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(34, 197, 94, 0.2);
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+
+        .explanation-item:nth-child(1) { animation-delay: 1s; }
+        .explanation-item:nth-child(2) { animation-delay: 1.2s; }
+        .explanation-item:nth-child(3) { animation-delay: 1.4s; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .explanation-item:hover {
+            transform: translateY(-8px);
+            border-color: rgba(34, 197, 94, 0.4);
+            background: rgba(34, 197, 94, 0.05);
+            box-shadow: 0 20px 40px rgba(34, 197, 94, 0.1);
+        }
+
+        .explanation-icon {
+            font-size: 2rem;
+            flex-shrink: 0;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(16, 185, 129, 0.1));
+            border-radius: 12px;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+
+        .explanation-content h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+
+        .explanation-content p {
+            color: #d1d5db;
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+
+        .hero-image {
+            position: relative;
+            opacity: 0;
+            transform: translateX(100px);
+            animation: slideInRight 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.8s forwards;
+        }
+
+        @keyframes slideInRight {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .image-container {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .floating-card {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 16px;
+            padding: 24px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            opacity: 0;
+            transform: scale(0.8);
+        }
+
+        .floating-card.card-1 {
+            top: 20%;
+            left: 10%;
+            animation: floatIn 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.5s forwards;
+        }
+
+        .floating-card.card-2 {
+            top: 10%;
+            right: 15%;
+            animation: floatIn 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.7s forwards;
+        }
+
+        .floating-card.card-3 {
+            bottom: 30%;
+            left: 5%;
+            animation: floatIn 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.9s forwards;
+        }
+
+        .floating-card.card-4 {
+            bottom: 15%;
+            right: 10%;
+            animation: floatIn 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 2.1s forwards;
+        }
+
+        @keyframes floatIn {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .floating-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            border-color: rgba(34, 197, 94, 0.6);
+            box-shadow: 0 20px 60px rgba(34, 197, 94, 0.2);
+        }
+
+        .card-icon {
+            font-size: 2rem;
+            margin-bottom: 12px;
+        }
+
+        .floating-card h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+
+        .floating-card p {
+            color: #d1d5db;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            color: #9ca3af;
+            font-size: 0.9rem;
+            z-index: 3;
+            opacity: 0;
+            animation: fadeIn 2s ease 3s forwards;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        .scroll-arrow {
+            width: 2px;
+            height: 30px;
+            background: linear-gradient(to bottom, #22c55e, transparent);
+            position: relative;
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-arrow::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: -4px;
+            width: 10px;
+            height: 10px;
+            border-right: 2px solid #22c55e;
+            border-bottom: 2px solid #22c55e;
+            transform: rotate(45deg);
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 60px;
+                text-align: center;
+            }
+
+            .hero-title {
+                font-size: 2.8rem;
+            }
+
+            .floating-card {
+                position: relative;
+                margin: 16px;
+            }
+
+            .image-container {
+                height: auto;
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .explanation-item {
+                padding: 20px;
+            }
+
+            .floating-card {
+                padding: 20px;
+            }
+        }
+
 
         .hero video {
             position: absolute;
@@ -1338,7 +1659,7 @@
     <main>
         <section id="home" class="hero">
             <video autoplay muted loop playsinline>
-                <source src="../Timely/apps/desktop/renderer/public/videos/OnTimelyLoadingScreenDesktop.mp4" type="video/mp4">
+                <source src="OnTimelyLoadingScreenDesktop.mp4" type="video/mp4">
             </video>
             <div class="hero-content">
                 <div class="hero-left">
@@ -1370,7 +1691,7 @@
         <div class="video-modal" id="videoModal">
             <div class="video-container">
                 <video id="demoVideo" preload="metadata">
-                    <source src="../Timely/apps/desktop/renderer/public/videos/OnTimelyLoadingScreenDesktop.mp4" type="video/mp4">
+                    <source src="OnTimelyLoadingScreenDesktop.mp4" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
                 <div class="video-overlay">
@@ -1383,20 +1704,6 @@
                 </button>
             </div>
         </div>
-
-        <!-- Enhanced Sign In Section -->
-        <section class="sign-in-section">
-            <div class="container-wide">
-                <div class="sign-in-content">
-                    <h2>Already Have an Account?</h2>
-                    <p>Access your professional event dashboard and manage your events with our elite suite of tools designed for the most demanding event professionals.</p>
-                    <a href="https://dashboard.ontimely.co.uk" class="dashboard-btn">
-                        <i class="fas fa-sign-in-alt"></i>
-                        Access Elite Dashboard
-                    </a>
-                </div>
-            </div>
-        </section>
 
         <section class="features" id="features">
             <div class="container-wide">
@@ -1466,6 +1773,90 @@
                         <div class="feature-description">Track and manage every aspect of your guests' journey from initial invitation to post-event follow-up with comprehensive analytics and insights that drive better outcomes.</div>
                     </div>
                 </div>
+            </div>
+        </section>
+
+        <!-- Enhanced Sign In Section -->
+        <section class="sign-in-section">
+            <div class="container-wide">
+                <div class="sign-in-content">
+                    <h2>Already Have an Account?</h2>
+                    <p>Access your professional event dashboard and manage your events with our elite suite of tools designed for the most demanding event professionals.</p>
+                    <a href="https://dashboard.ontimely.co.uk" class="dashboard-btn">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Access Elite Dashboard
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Secondary Hero - Advanced Features Comparison -->
+        <section class="secondary-hero" id="secondary-hero">
+            <div class="hero-background">
+                <div class="hero-particles"></div>
+            </div>
+            
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 class="hero-title">The Future of Event Management</h1>
+                    <p class="hero-subtitle">Experience the next generation of event technology with OnTimely's advanced features</p>
+                    
+                    <div class="feature-explanations">
+                        <div class="explanation-item">
+                            <div class="explanation-icon">🚀</div>
+                            <div class="explanation-content">
+                                <h3>AI-Powered Insights</h3>
+                                <p>Get real-time analytics and predictive insights to optimize your events and guest satisfaction</p>
+                            </div>
+                        </div>
+                        
+                        <div class="explanation-item">
+                            <div class="explanation-icon">🌐</div>
+                            <div class="explanation-content">
+                                <h3>Global Reach</h3>
+                                <p>Manage events across multiple time zones with seamless international collaboration tools</p>
+                            </div>
+                        </div>
+                        
+                        <div class="explanation-item">
+                            <div class="explanation-icon">🔒</div>
+                            <div class="explanation-content">
+                                <h3>Enterprise Security</h3>
+                                <p>Bank-level encryption and compliance standards to protect your most sensitive event data</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="hero-image">
+                    <div class="image-container">
+                        <div class="floating-card card-1">
+                            <div class="card-icon">📊</div>
+                            <h4>Analytics Dashboard</h4>
+                            <p>Real-time event metrics</p>
+                        </div>
+                        <div class="floating-card card-2">
+                            <div class="card-icon">💬</div>
+                            <h4>Live Chat</h4>
+                            <p>Instant guest support</p>
+                        </div>
+                        <div class="floating-card card-3">
+                            <div class="card-icon">📅</div>
+                            <h4>Smart Calendar</h4>
+                            <p>Automated scheduling</p>
+                        </div>
+                        <div class="floating-card card-4">
+                            <div class="card-icon">🎯</div>
+                            <h4>Event Tracking</h4>
+                            <p>Live guest monitoring</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="scroll-indicator">
+                <div class="scroll-arrow"></div>
+                <span>Discover More</span>
             </div>
         </section>
 
@@ -2021,6 +2412,71 @@
             }
         `;
         document.head.appendChild(style);
+
+        // Secondary Hero Magical Effects
+        function initSecondaryHero() {
+            const secondaryHero = document.getElementById('secondary-hero');
+            if (!secondaryHero) return;
+
+            // Intersection Observer for scroll-triggered animations
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                        
+                        // Trigger floating cards animation
+                        const cards = entry.target.querySelectorAll('.floating-card');
+                        cards.forEach((card, index) => {
+                            setTimeout(() => {
+                                card.style.animationPlayState = 'running';
+                            }, index * 200);
+                        });
+                    }
+                });
+            }, { threshold: 0.3 });
+
+            observer.observe(secondaryHero);
+
+            // Floating cards hover effects
+            const floatingCards = secondaryHero.querySelectorAll('.floating-card');
+            floatingCards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    card.style.transform = 'translateY(-15px) scale(1.05) rotateY(5deg)';
+                    card.style.boxShadow = '0 25px 80px rgba(34, 197, 94, 0.3)';
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'translateY(0) scale(1) rotateY(0deg)';
+                    card.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.3)';
+                });
+            });
+
+            // Parallax effect for particles
+            window.addEventListener('scroll', () => {
+                const scrolled = window.pageYOffset;
+                const rate = scrolled * -0.5;
+                const particles = secondaryHero.querySelector('.hero-particles');
+                if (particles) {
+                    particles.style.transform = `translateY(${rate}px)`;
+                }
+            });
+
+            // Explanation items stagger animation
+            const explanationItems = secondaryHero.querySelectorAll('.explanation-item');
+            explanationItems.forEach((item, index) => {
+                item.addEventListener('mouseenter', () => {
+                    // Add glow effect
+                    item.style.boxShadow = '0 0 30px rgba(34, 197, 94, 0.4), 0 0 60px rgba(34, 197, 94, 0.2)';
+                });
+
+                item.addEventListener('mouseleave', () => {
+                    item.style.boxShadow = '0 20px 40px rgba(34, 197, 94, 0.1)';
+                });
+            });
+        }
+
+        // Initialize secondary hero when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initSecondaryHero);
     </script>
 </body>
 </html> 
