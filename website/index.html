@@ -37,18 +37,7 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             line-height: 1.6;
             color: var(--text-secondary);
-            background: 
-                linear-gradient(180deg, 
-                    rgba(34,197,94,0.03) 0%, 
-                    rgba(34,197,94,0.01) 25%, 
-                    rgba(34,197,94,0.02) 50%, 
-                    rgba(34,197,94,0.01) 75%, 
-                    rgba(34,197,94,0.02) 100%
-                ),
-                radial-gradient(ellipse at top left, rgba(34,197,94,0.02) 0%, transparent 50%),
-                radial-gradient(ellipse at top right, rgba(34,197,94,0.015) 0%, transparent 50%),
-                radial-gradient(ellipse at bottom center, rgba(34,197,94,0.02) 0%, transparent 60%),
-                        #0f1115;
+            background: #000000;
             min-height: 100vh;
             overflow-x: hidden;
         }
@@ -241,7 +230,7 @@
         .features-rotating {
             min-height: 100vh;
             width: 100%;
-            background: #0f1015;
+            background: #000000;
             display: flex;
             align-items: center;
             position: relative;
@@ -249,9 +238,8 @@
         }
 
         .rotating-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 80px;
+            display: flex;
+            justify-content: center;
             max-width: 1400px;
             margin: 0 auto;
             padding: 0 40px;
@@ -315,43 +303,6 @@
             max-width: 600px;
         }
 
-        .content-right {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-        }
-
-        .image-placeholder {
-            width: 100%;
-            max-width: 500px;
-            height: 400px;
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.05));
-            border: 2px solid rgba(16, 185, 129, 0.3);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(10px);
-            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-
-        .placeholder-content {
-            text-align: center;
-            color: #10b981;
-        }
-
-        .placeholder-icon {
-            font-size: 4rem;
-            margin-bottom: 20px;
-            opacity: 0.7;
-        }
-
-        .placeholder-text {
-            font-size: 1.2rem;
-            font-weight: 600;
-            opacity: 0.8;
-        }
 
         .feature-indicators {
             position: absolute;
@@ -384,8 +335,6 @@
         /* Responsive Design */
         @media (max-width: 1024px) {
             .rotating-container {
-                grid-template-columns: 1fr;
-                gap: 60px;
                 text-align: center;
             }
 
@@ -400,10 +349,6 @@
             .feature-description {
                 font-size: 1.1rem;
             }
-
-            .image-placeholder {
-                height: 300px;
-            }
         }
 
         @media (max-width: 768px) {
@@ -417,14 +362,6 @@
 
             .feature-description {
                 font-size: 1rem;
-            }
-
-            .image-placeholder {
-                height: 250px;
-            }
-
-            .placeholder-icon {
-                font-size: 3rem;
             }
         }
 
@@ -1691,14 +1628,6 @@
                     </div>
                 </div>
                 
-                <div class="content-right">
-                    <div class="image-placeholder">
-                        <div class="placeholder-content">
-                            <div class="placeholder-icon">📱</div>
-                            <div class="placeholder-text">Feature Preview</div>
-                        </div>
-                    </div>
-                </div>
             </div>
             
             <div class="feature-indicators">
@@ -2271,17 +2200,14 @@
 
             const featureContents = featuresSection.querySelectorAll('.feature-content');
             const indicators = featuresSection.querySelectorAll('.indicator');
-            const imagePlaceholder = featuresSection.querySelector('.image-placeholder');
             
             let currentFeature = 0;
             const totalFeatures = featureContents.length;
             let isAnimating = false;
-
-            // Icons for each feature
-            const featureIcons = ['📱', '💬', '🏠', '📅', '🔧', '🎯'];
+            let rotationInterval = null;
 
             function showFeature(index) {
-                if (isAnimating) return;
+                if (isAnimating || index === currentFeature) return;
                 isAnimating = true;
 
                 const currentContent = featureContents[currentFeature];
@@ -2295,14 +2221,6 @@
                 indicators[currentFeature].classList.remove('active');
                 indicators[index].classList.add('active');
 
-                // Update image placeholder
-                const placeholderIcon = imagePlaceholder.querySelector('.placeholder-icon');
-                placeholderIcon.textContent = featureIcons[index];
-
-                // Animate image placeholder
-                imagePlaceholder.style.transform = 'scale(0.9)';
-                imagePlaceholder.style.opacity = '0.7';
-
                 setTimeout(() => {
                     // Show next feature
                     nextContent.classList.add('active');
@@ -2310,10 +2228,6 @@
 
                     // Reset current feature
                     currentContent.classList.remove('slide-out-left');
-
-                    // Animate image placeholder back
-                    imagePlaceholder.style.transform = 'scale(1)';
-                    imagePlaceholder.style.opacity = '1';
 
                     currentFeature = index;
                     isAnimating = false;
@@ -2325,34 +2239,37 @@
                 showFeature(nextIndex);
             }
 
-            // Auto-rotate every 3 seconds
-            const rotationInterval = setInterval(nextFeature, 3000);
+            function startRotation() {
+                if (rotationInterval) clearInterval(rotationInterval);
+                rotationInterval = setInterval(nextFeature, 3000);
+            }
+
+            function stopRotation() {
+                if (rotationInterval) {
+                    clearInterval(rotationInterval);
+                    rotationInterval = null;
+                }
+            }
 
             // Manual navigation via indicators
             indicators.forEach((indicator, index) => {
                 indicator.addEventListener('click', () => {
                     if (index !== currentFeature && !isAnimating) {
-                        clearInterval(rotationInterval);
+                        stopRotation();
                         showFeature(index);
-                        // Restart auto-rotation
-                        setTimeout(() => {
-                            setInterval(nextFeature, 3000);
-                        }, 1000);
+                        // Restart auto-rotation after 2 seconds
+                        setTimeout(startRotation, 2000);
                     }
                 });
             });
 
             // Pause rotation on hover
-            featuresSection.addEventListener('mouseenter', () => {
-                clearInterval(rotationInterval);
-            });
+            featuresSection.addEventListener('mouseenter', stopRotation);
+            featuresSection.addEventListener('mouseleave', startRotation);
 
-            featuresSection.addEventListener('mouseleave', () => {
-                setInterval(nextFeature, 3000);
-            });
-
-            // Initialize first feature
+            // Initialize first feature and start rotation
             showFeature(0);
+            startRotation();
         }
 
         // Initialize features rotating when DOM is loaded
