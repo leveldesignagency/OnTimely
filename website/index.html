@@ -237,334 +237,194 @@
             z-index: 3;
         }
 
-        /* Secondary Hero - Magical Advanced Features */
-        .secondary-hero {
-            position: relative;
+        /* Features Rotating Section */
+        .features-rotating {
             min-height: 100vh;
+            width: 100%;
+            background: #0f1015;
             display: flex;
             align-items: center;
-            overflow: hidden;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
-            padding: 120px 0;
-        }
-
-        .hero-background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-        }
-
-        .hero-particles {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                radial-gradient(2px 2px at 20px 30px, rgba(34, 197, 94, 0.3), transparent),
-                radial-gradient(2px 2px at 40px 70px, rgba(34, 197, 94, 0.2), transparent),
-                radial-gradient(1px 1px at 90px 40px, rgba(34, 197, 94, 0.4), transparent),
-                radial-gradient(1px 1px at 130px 80px, rgba(34, 197, 94, 0.3), transparent),
-                radial-gradient(2px 2px at 160px 30px, rgba(34, 197, 94, 0.2), transparent);
-            background-repeat: repeat;
-            background-size: 200px 100px;
-            animation: particleFloat 20s linear infinite;
-        }
-
-        @keyframes particleFloat {
-            0% { transform: translateY(0px) translateX(0px); }
-            33% { transform: translateY(-30px) translateX(10px); }
-            66% { transform: translateY(20px) translateX(-5px); }
-            100% { transform: translateY(0px) translateX(0px); }
-        }
-
-        .hero-content {
             position: relative;
-            z-index: 2;
+            overflow: hidden;
+        }
+
+        .rotating-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 80px;
-            align-items: center;
             max-width: 1400px;
             margin: 0 auto;
             padding: 0 40px;
+            width: 100%;
+            height: 100vh;
+            align-items: center;
         }
 
-        .hero-text {
+        .content-left {
+            position: relative;
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .feature-content {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
             opacity: 0;
-            transform: translateX(-100px);
-            animation: slideInLeft 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.5s forwards;
+            visibility: hidden;
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            width: 100%;
         }
 
-        @keyframes slideInLeft {
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+        .feature-content.active {
+            opacity: 1;
+            visibility: visible;
         }
 
-        .hero-title {
+        .feature-content.slide-out-left {
+            transform: translateY(-50%) translateX(-100px);
+            opacity: 0;
+        }
+
+        .feature-content.slide-in-right {
+            transform: translateY(-50%) translateX(100px);
+            opacity: 0;
+        }
+
+        .feature-title {
             font-size: 3.5rem;
             font-weight: 800;
-            background: linear-gradient(135deg, #22c55e, #10b981, #059669);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 24px;
+            color: #ffffff;
+            margin-bottom: 20px;
             line-height: 1.1;
             letter-spacing: -0.02em;
         }
 
-        .hero-subtitle {
-            font-size: 1.3rem;
-            color: #e5e7eb;
-            margin-bottom: 48px;
-            line-height: 1.6;
-            font-weight: 300;
+        .feature-subtitle {
+            font-size: 1.5rem;
+            color: #10b981;
+            margin-bottom: 30px;
+            font-weight: 600;
         }
 
-        .feature-explanations {
-            display: flex;
-            flex-direction: column;
-            gap: 32px;
+        .feature-description {
+            font-size: 1.2rem;
+            color: #d1d5db;
+            line-height: 1.7;
+            max-width: 600px;
         }
 
-        .explanation-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 20px;
-            padding: 24px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(34, 197, 94, 0.2);
-            border-radius: 16px;
-            backdrop-filter: blur(10px);
-            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-        }
-
-        .explanation-item:nth-child(1) { animation-delay: 1s; }
-        .explanation-item:nth-child(2) { animation-delay: 1.2s; }
-        .explanation-item:nth-child(3) { animation-delay: 1.4s; }
-
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .explanation-item:hover {
-            transform: translateY(-8px);
-            border-color: rgba(34, 197, 94, 0.4);
-            background: rgba(34, 197, 94, 0.05);
-            box-shadow: 0 20px 40px rgba(34, 197, 94, 0.1);
-        }
-
-        .explanation-icon {
-            font-size: 2rem;
-            flex-shrink: 0;
-            width: 60px;
-            height: 60px;
+        .content-right {
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(16, 185, 129, 0.1));
-            border-radius: 12px;
-            border: 1px solid rgba(34, 197, 94, 0.3);
+            height: 100%;
         }
 
-        .explanation-content h3 {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 8px;
-        }
-
-        .explanation-content p {
-            color: #d1d5db;
-            line-height: 1.6;
-            font-size: 1rem;
-        }
-
-        .hero-image {
-            position: relative;
-            opacity: 0;
-            transform: translateX(100px);
-            animation: slideInRight 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.8s forwards;
-        }
-
-        @keyframes slideInRight {
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .image-container {
-            position: relative;
+        .image-placeholder {
             width: 100%;
-            height: 500px;
+            max-width: 500px;
+            height: 400px;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.05));
+            border: 2px solid rgba(16, 185, 129, 0.3);
+            border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
+            backdrop-filter: blur(10px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
-        .floating-card {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(34, 197, 94, 0.3);
-            border-radius: 16px;
-            padding: 24px;
-            backdrop-filter: blur(20px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            opacity: 0;
-            transform: scale(0.8);
+        .placeholder-content {
+            text-align: center;
+            color: #10b981;
         }
 
-        .floating-card.card-1 {
-            top: 20%;
-            left: 10%;
-            animation: floatIn 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.5s forwards;
+        .placeholder-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.7;
         }
 
-        .floating-card.card-2 {
-            top: 10%;
-            right: 15%;
-            animation: floatIn 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.7s forwards;
+        .placeholder-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            opacity: 0.8;
         }
 
-        .floating-card.card-3 {
-            bottom: 30%;
-            left: 5%;
-            animation: floatIn 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.9s forwards;
-        }
-
-        .floating-card.card-4 {
-            bottom: 15%;
-            right: 10%;
-            animation: floatIn 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 2.1s forwards;
-        }
-
-        @keyframes floatIn {
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        .floating-card:hover {
-            transform: translateY(-10px) scale(1.05);
-            border-color: rgba(34, 197, 94, 0.6);
-            box-shadow: 0 20px 60px rgba(34, 197, 94, 0.2);
-        }
-
-        .card-icon {
-            font-size: 2rem;
-            margin-bottom: 12px;
-        }
-
-        .floating-card h4 {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 8px;
-        }
-
-        .floating-card p {
-            color: #d1d5db;
-            font-size: 0.9rem;
-            line-height: 1.4;
-        }
-
-        .scroll-indicator {
+        .feature-indicators {
             position: absolute;
             bottom: 40px;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
-            flex-direction: column;
-            align-items: center;
             gap: 12px;
-            color: #9ca3af;
-            font-size: 0.9rem;
-            z-index: 3;
-            opacity: 0;
-            animation: fadeIn 2s ease 3s forwards;
+            z-index: 10;
         }
 
-        @keyframes fadeIn {
-            to { opacity: 1; }
+        .indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
 
-        .scroll-arrow {
-            width: 2px;
-            height: 30px;
-            background: linear-gradient(to bottom, #22c55e, transparent);
-            position: relative;
-            animation: bounce 2s infinite;
+        .indicator.active {
+            background: #10b981;
+            transform: scale(1.2);
         }
 
-        .scroll-arrow::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: -4px;
-            width: 10px;
-            height: 10px;
-            border-right: 2px solid #22c55e;
-            border-bottom: 2px solid #22c55e;
-            transform: rotate(45deg);
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-10px); }
-            60% { transform: translateY(-5px); }
+        .indicator:hover {
+            background: rgba(16, 185, 129, 0.7);
         }
 
         /* Responsive Design */
         @media (max-width: 1024px) {
-            .hero-content {
+            .rotating-container {
                 grid-template-columns: 1fr;
                 gap: 60px;
                 text-align: center;
             }
 
-            .hero-title {
+            .feature-title {
                 font-size: 2.8rem;
             }
 
-            .floating-card {
-                position: relative;
-                margin: 16px;
+            .feature-subtitle {
+                font-size: 1.3rem;
             }
 
-            .image-container {
-                height: auto;
-                flex-direction: column;
-                align-items: center;
+            .feature-description {
+                font-size: 1.1rem;
+            }
+
+            .image-placeholder {
+                height: 300px;
             }
         }
 
         @media (max-width: 768px) {
-            .hero-title {
+            .feature-title {
                 font-size: 2.2rem;
             }
 
-            .hero-subtitle {
+            .feature-subtitle {
                 font-size: 1.1rem;
             }
 
-            .explanation-item {
-                padding: 20px;
+            .feature-description {
+                font-size: 1rem;
             }
 
-            .floating-card {
-                padding: 20px;
+            .image-placeholder {
+                height: 250px;
+            }
+
+            .placeholder-icon {
+                font-size: 3rem;
             }
         }
 
@@ -1790,73 +1650,64 @@
             </div>
         </section>
 
-        <!-- Secondary Hero - Advanced Features Comparison -->
-        <section class="secondary-hero" id="secondary-hero">
-            <div class="hero-background">
-                <div class="hero-particles"></div>
-            </div>
-            
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h1 class="hero-title">The Future of Event Management</h1>
-                    <p class="hero-subtitle">Experience the next generation of event technology with OnTimely's advanced features</p>
+        <!-- Advanced Features Rotating Section -->
+        <section class="features-rotating" id="features-rotating">
+            <div class="rotating-container">
+                <div class="content-left">
+                    <div class="feature-content active" data-feature="0">
+                        <h1 class="feature-title">Custom Guest Applications</h1>
+                        <h2 class="feature-subtitle">App Within an App Technology</h2>
+                        <p class="feature-description">OnTimely has built in apps such as currency converters, translators, offline maps and more to aid with guests travel and experience whilst they are at the event or getting there.</p>
+                    </div>
                     
-                    <div class="feature-explanations">
-                        <div class="explanation-item">
-                            <div class="explanation-icon">🚀</div>
-                            <div class="explanation-content">
-                                <h3>AI-Powered Insights</h3>
-                                <p>Get real-time analytics and predictive insights to optimize your events and guest satisfaction</p>
-                            </div>
-                        </div>
-                        
-                        <div class="explanation-item">
-                            <div class="explanation-icon">🌐</div>
-                            <div class="explanation-content">
-                                <h3>Global Reach</h3>
-                                <p>Manage events across multiple time zones with seamless international collaboration tools</p>
-                            </div>
-                        </div>
-                        
-                        <div class="explanation-item">
-                            <div class="explanation-icon">🔒</div>
-                            <div class="explanation-content">
-                                <h3>Enterprise Security</h3>
-                                <p>Bank-level encryption and compliance standards to protect your most sensitive event data</p>
-                            </div>
-                        </div>
+                    <div class="feature-content" data-feature="1">
+                        <h1 class="feature-title">Real-time Communication Hub</h1>
+                        <h2 class="feature-subtitle">Instant Messaging & Live Updates</h2>
+                        <p class="feature-description">Enable seamless communication between guests and organizers through advanced chat systems, live announcements, and instant notifications that keep everyone connected.</p>
+                    </div>
+                    
+                    <div class="feature-content" data-feature="2">
+                        <h1 class="feature-title">Custom Event Homepages</h1>
+                        <h2 class="feature-subtitle">Branded Event Portals</h2>
+                        <p class="feature-description">Design stunning, fully branded homepages for each event with custom layouts, color schemes, and content that perfectly represents your company's professional image.</p>
+                    </div>
+                    
+                    <div class="feature-content" data-feature="3">
+                        <h1 class="feature-title">Interactive Event Timelines</h1>
+                        <h2 class="feature-subtitle">Dynamic Schedule Management</h2>
+                        <p class="feature-description">Create comprehensive, interactive timelines that guests can explore, featuring detailed schedules, reminders, and real-time updates throughout the entire event experience.</p>
+                    </div>
+                    
+                    <div class="feature-content" data-feature="4">
+                        <h1 class="feature-title">Modular Application Suite</h1>
+                        <h2 class="feature-subtitle">Custom Experience Tools</h2>
+                        <p class="feature-description">Create events and share with your team, discuss with the built in chat interface, arrange meetings via your own built in calendar, and create teams, to build and work together on creating the perfect event.</p>
+                    </div>
+                    
+                    <div class="feature-content" data-feature="5">
+                        <h1 class="feature-title">Complete Guest Journey Management</h1>
+                        <h2 class="feature-subtitle">End-to-End Experience Control</h2>
+                        <p class="feature-description">Track and manage every aspect of your guests' journey from initial invitation to post-event follow-up with comprehensive analytics and insights that drive better outcomes.</p>
                     </div>
                 </div>
                 
-                <div class="hero-image">
-                    <div class="image-container">
-                        <div class="floating-card card-1">
-                            <div class="card-icon">📊</div>
-                            <h4>Analytics Dashboard</h4>
-                            <p>Real-time event metrics</p>
-                        </div>
-                        <div class="floating-card card-2">
-                            <div class="card-icon">💬</div>
-                            <h4>Live Chat</h4>
-                            <p>Instant guest support</p>
-                        </div>
-                        <div class="floating-card card-3">
-                            <div class="card-icon">📅</div>
-                            <h4>Smart Calendar</h4>
-                            <p>Automated scheduling</p>
-                        </div>
-                        <div class="floating-card card-4">
-                            <div class="card-icon">🎯</div>
-                            <h4>Event Tracking</h4>
-                            <p>Live guest monitoring</p>
+                <div class="content-right">
+                    <div class="image-placeholder">
+                        <div class="placeholder-content">
+                            <div class="placeholder-icon">📱</div>
+                            <div class="placeholder-text">Feature Preview</div>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <div class="scroll-indicator">
-                <div class="scroll-arrow"></div>
-                <span>Discover More</span>
+            <div class="feature-indicators">
+                <div class="indicator active" data-feature="0"></div>
+                <div class="indicator" data-feature="1"></div>
+                <div class="indicator" data-feature="2"></div>
+                <div class="indicator" data-feature="3"></div>
+                <div class="indicator" data-feature="4"></div>
+                <div class="indicator" data-feature="5"></div>
             </div>
         </section>
 
@@ -2413,70 +2264,99 @@
         `;
         document.head.appendChild(style);
 
-        // Secondary Hero Magical Effects
-        function initSecondaryHero() {
-            const secondaryHero = document.getElementById('secondary-hero');
-            if (!secondaryHero) return;
+        // Features Rotating Animation
+        function initFeaturesRotating() {
+            const featuresSection = document.getElementById('features-rotating');
+            if (!featuresSection) return;
 
-            // Intersection Observer for scroll-triggered animations
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('in-view');
-                        
-                        // Trigger floating cards animation
-                        const cards = entry.target.querySelectorAll('.floating-card');
-                        cards.forEach((card, index) => {
-                            setTimeout(() => {
-                                card.style.animationPlayState = 'running';
-                            }, index * 200);
-                        });
+            const featureContents = featuresSection.querySelectorAll('.feature-content');
+            const indicators = featuresSection.querySelectorAll('.indicator');
+            const imagePlaceholder = featuresSection.querySelector('.image-placeholder');
+            
+            let currentFeature = 0;
+            const totalFeatures = featureContents.length;
+            let isAnimating = false;
+
+            // Icons for each feature
+            const featureIcons = ['📱', '💬', '🏠', '📅', '🔧', '🎯'];
+
+            function showFeature(index) {
+                if (isAnimating) return;
+                isAnimating = true;
+
+                const currentContent = featureContents[currentFeature];
+                const nextContent = featureContents[index];
+
+                // Remove active class from current
+                currentContent.classList.remove('active');
+                currentContent.classList.add('slide-out-left');
+
+                // Update indicators
+                indicators[currentFeature].classList.remove('active');
+                indicators[index].classList.add('active');
+
+                // Update image placeholder
+                const placeholderIcon = imagePlaceholder.querySelector('.placeholder-icon');
+                placeholderIcon.textContent = featureIcons[index];
+
+                // Animate image placeholder
+                imagePlaceholder.style.transform = 'scale(0.9)';
+                imagePlaceholder.style.opacity = '0.7';
+
+                setTimeout(() => {
+                    // Show next feature
+                    nextContent.classList.add('active');
+                    nextContent.classList.remove('slide-in-right');
+
+                    // Reset current feature
+                    currentContent.classList.remove('slide-out-left');
+
+                    // Animate image placeholder back
+                    imagePlaceholder.style.transform = 'scale(1)';
+                    imagePlaceholder.style.opacity = '1';
+
+                    currentFeature = index;
+                    isAnimating = false;
+                }, 400);
+            }
+
+            function nextFeature() {
+                const nextIndex = (currentFeature + 1) % totalFeatures;
+                showFeature(nextIndex);
+            }
+
+            // Auto-rotate every 3 seconds
+            const rotationInterval = setInterval(nextFeature, 3000);
+
+            // Manual navigation via indicators
+            indicators.forEach((indicator, index) => {
+                indicator.addEventListener('click', () => {
+                    if (index !== currentFeature && !isAnimating) {
+                        clearInterval(rotationInterval);
+                        showFeature(index);
+                        // Restart auto-rotation
+                        setTimeout(() => {
+                            setInterval(nextFeature, 3000);
+                        }, 1000);
                     }
                 });
-            }, { threshold: 0.3 });
-
-            observer.observe(secondaryHero);
-
-            // Floating cards hover effects
-            const floatingCards = secondaryHero.querySelectorAll('.floating-card');
-            floatingCards.forEach(card => {
-                card.addEventListener('mouseenter', () => {
-                    card.style.transform = 'translateY(-15px) scale(1.05) rotateY(5deg)';
-                    card.style.boxShadow = '0 25px 80px rgba(34, 197, 94, 0.3)';
-                });
-
-                card.addEventListener('mouseleave', () => {
-                    card.style.transform = 'translateY(0) scale(1) rotateY(0deg)';
-                    card.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.3)';
-                });
             });
 
-            // Parallax effect for particles
-            window.addEventListener('scroll', () => {
-                const scrolled = window.pageYOffset;
-                const rate = scrolled * -0.5;
-                const particles = secondaryHero.querySelector('.hero-particles');
-                if (particles) {
-                    particles.style.transform = `translateY(${rate}px)`;
-                }
+            // Pause rotation on hover
+            featuresSection.addEventListener('mouseenter', () => {
+                clearInterval(rotationInterval);
             });
 
-            // Explanation items stagger animation
-            const explanationItems = secondaryHero.querySelectorAll('.explanation-item');
-            explanationItems.forEach((item, index) => {
-                item.addEventListener('mouseenter', () => {
-                    // Add glow effect
-                    item.style.boxShadow = '0 0 30px rgba(34, 197, 94, 0.4), 0 0 60px rgba(34, 197, 94, 0.2)';
-                });
-
-                item.addEventListener('mouseleave', () => {
-                    item.style.boxShadow = '0 20px 40px rgba(34, 197, 94, 0.1)';
-                });
+            featuresSection.addEventListener('mouseleave', () => {
+                setInterval(nextFeature, 3000);
             });
+
+            // Initialize first feature
+            showFeature(0);
         }
 
-        // Initialize secondary hero when DOM is loaded
-        document.addEventListener('DOMContentLoaded', initSecondaryHero);
+        // Initialize features rotating when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initFeaturesRotating);
     </script>
 </body>
 </html> 
