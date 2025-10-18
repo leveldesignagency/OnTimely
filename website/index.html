@@ -238,71 +238,107 @@
         }
 
         .rotating-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            max-width: 1200px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 0 40px;
             width: 100%;
             height: 100vh;
-            position: relative;
+            align-items: center;
         }
 
-        .feature-content {
+        .text-content {
+            position: relative;
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .feature-text {
             position: absolute;
             top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translateY(-50%);
             opacity: 0;
             visibility: hidden;
-            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            text-align: center;
+            transition: all 0.6s ease;
             width: 100%;
-            max-width: 800px;
         }
 
-        .feature-content.active {
+        .feature-text.active {
             opacity: 1;
             visibility: visible;
         }
 
-        .feature-content.slide-out-left {
-            transform: translate(-50%, -50%) translateX(-100px);
+        .feature-text.fade-out {
             opacity: 0;
+            transform: translateY(-50%) translateX(-30px);
         }
 
-        .feature-content.slide-in-right {
-            transform: translate(-50%, -50%) translateX(100px);
+        .feature-text.fade-in {
             opacity: 0;
+            transform: translateY(-50%) translateX(30px);
         }
 
         .feature-title {
-            font-size: 5rem;
+            font-size: 4.5rem;
             font-weight: 800;
             color: #ffffff;
             margin-bottom: 20px;
             line-height: 1.1;
             letter-spacing: -0.02em;
+            text-align: left;
         }
 
         .feature-subtitle {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             color: #10b981;
             margin-bottom: 30px;
             font-weight: 600;
+            text-align: left;
         }
 
         .feature-description {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             color: #d1d5db;
             line-height: 1.7;
-            margin-bottom: 40px;
+            text-align: left;
+            max-width: 500px;
         }
 
-        .image-placeholder {
+        .image-content {
+            position: relative;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .feature-image {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             font-size: 8rem;
-            opacity: 0.7;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.6s ease;
+        }
+
+        .feature-image.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .feature-image.fade-out {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.8);
+        }
+
+        .feature-image.fade-in {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(1.2);
         }
 
         .feature-indicators {
@@ -335,37 +371,47 @@
 
         /* Responsive Design */
         @media (max-width: 1024px) {
+            .rotating-container {
+                grid-template-columns: 1fr;
+                gap: 60px;
+                text-align: center;
+            }
+
             .feature-title {
-                font-size: 4rem;
+                font-size: 3.5rem;
+                text-align: center;
             }
 
             .feature-subtitle {
-                font-size: 1.5rem;
+                font-size: 1.4rem;
+                text-align: center;
             }
 
             .feature-description {
-                font-size: 1.2rem;
+                font-size: 1.1rem;
+                text-align: center;
+                max-width: 100%;
             }
 
-            .image-placeholder {
+            .feature-image {
                 font-size: 6rem;
             }
         }
 
         @media (max-width: 768px) {
             .feature-title {
-                font-size: 3rem;
+                font-size: 2.8rem;
             }
 
             .feature-subtitle {
-                font-size: 1.3rem;
+                font-size: 1.2rem;
             }
 
             .feature-description {
-                font-size: 1.1rem;
+                font-size: 1rem;
             }
 
-            .image-placeholder {
+            .feature-image {
                 font-size: 5rem;
             }
         }
@@ -1595,46 +1641,51 @@
         <!-- Advanced Features Rotating Section -->
         <section class="features-rotating" id="features-rotating">
             <div class="rotating-container">
-                <div class="feature-content active" data-feature="0">
-                    <h1 class="feature-title">Custom Guest Applications</h1>
-                    <h2 class="feature-subtitle">App Within an App Technology</h2>
-                    <p class="feature-description">OnTimely has built in apps such as currency converters, translators, offline maps and more to aid with guests travel and experience whilst they are at the event or getting there.</p>
-                    <div class="image-placeholder">📱</div>
+                <div class="text-content">
+                    <div class="feature-text active" data-feature="0">
+                        <h1 class="feature-title">Custom Guest Applications</h1>
+                        <h2 class="feature-subtitle">App Within an App Technology</h2>
+                        <p class="feature-description">OnTimely has built in apps such as currency converters, translators, offline maps and more to aid with guests travel and experience whilst they are at the event or getting there.</p>
+                    </div>
+                    
+                    <div class="feature-text" data-feature="1">
+                        <h1 class="feature-title">Real-time Communication Hub</h1>
+                        <h2 class="feature-subtitle">Instant Messaging & Live Updates</h2>
+                        <p class="feature-description">Enable seamless communication between guests and organizers through advanced chat systems, live announcements, and instant notifications that keep everyone connected.</p>
+                    </div>
+                    
+                    <div class="feature-text" data-feature="2">
+                        <h1 class="feature-title">Custom Event Homepages</h1>
+                        <h2 class="feature-subtitle">Branded Event Portals</h2>
+                        <p class="feature-description">Design stunning, fully branded homepages for each event with custom layouts, color schemes, and content that perfectly represents your company's professional image.</p>
+                    </div>
+                    
+                    <div class="feature-text" data-feature="3">
+                        <h1 class="feature-title">Interactive Event Timelines</h1>
+                        <h2 class="feature-subtitle">Dynamic Schedule Management</h2>
+                        <p class="feature-description">Create comprehensive, interactive timelines that guests can explore, featuring detailed schedules, reminders, and real-time updates throughout the entire event experience.</p>
+                    </div>
+                    
+                    <div class="feature-text" data-feature="4">
+                        <h1 class="feature-title">Modular Application Suite</h1>
+                        <h2 class="feature-subtitle">Custom Experience Tools</h2>
+                        <p class="feature-description">Create events and share with your team, discuss with the built in chat interface, arrange meetings via your own built in calendar, and create teams, to build and work together on creating the perfect event.</p>
+                    </div>
+                    
+                    <div class="feature-text" data-feature="5">
+                        <h1 class="feature-title">Complete Guest Journey Management</h1>
+                        <h2 class="feature-subtitle">End-to-End Experience Control</h2>
+                        <p class="feature-description">Track and manage every aspect of your guests' journey from initial invitation to post-event follow-up with comprehensive analytics and insights that drive better outcomes.</p>
+                    </div>
                 </div>
                 
-                <div class="feature-content" data-feature="1">
-                    <h1 class="feature-title">Real-time Communication Hub</h1>
-                    <h2 class="feature-subtitle">Instant Messaging & Live Updates</h2>
-                    <p class="feature-description">Enable seamless communication between guests and organizers through advanced chat systems, live announcements, and instant notifications that keep everyone connected.</p>
-                    <div class="image-placeholder">💬</div>
-                </div>
-                
-                <div class="feature-content" data-feature="2">
-                    <h1 class="feature-title">Custom Event Homepages</h1>
-                    <h2 class="feature-subtitle">Branded Event Portals</h2>
-                    <p class="feature-description">Design stunning, fully branded homepages for each event with custom layouts, color schemes, and content that perfectly represents your company's professional image.</p>
-                    <div class="image-placeholder">🏠</div>
-                </div>
-                
-                <div class="feature-content" data-feature="3">
-                    <h1 class="feature-title">Interactive Event Timelines</h1>
-                    <h2 class="feature-subtitle">Dynamic Schedule Management</h2>
-                    <p class="feature-description">Create comprehensive, interactive timelines that guests can explore, featuring detailed schedules, reminders, and real-time updates throughout the entire event experience.</p>
-                    <div class="image-placeholder">📅</div>
-                </div>
-                
-                <div class="feature-content" data-feature="4">
-                    <h1 class="feature-title">Modular Application Suite</h1>
-                    <h2 class="feature-subtitle">Custom Experience Tools</h2>
-                    <p class="feature-description">Create events and share with your team, discuss with the built in chat interface, arrange meetings via your own built in calendar, and create teams, to build and work together on creating the perfect event.</p>
-                    <div class="image-placeholder">🔧</div>
-                </div>
-                
-                <div class="feature-content" data-feature="5">
-                    <h1 class="feature-title">Complete Guest Journey Management</h1>
-                    <h2 class="feature-subtitle">End-to-End Experience Control</h2>
-                    <p class="feature-description">Track and manage every aspect of your guests' journey from initial invitation to post-event follow-up with comprehensive analytics and insights that drive better outcomes.</p>
-                    <div class="image-placeholder">🎯</div>
+                <div class="image-content">
+                    <div class="feature-image active" data-feature="0">📱</div>
+                    <div class="feature-image" data-feature="1">💬</div>
+                    <div class="feature-image" data-feature="2">🏠</div>
+                    <div class="feature-image" data-feature="3">📅</div>
+                    <div class="feature-image" data-feature="4">🔧</div>
+                    <div class="feature-image" data-feature="5">🎯</div>
                 </div>
             </div>
             
@@ -2206,11 +2257,12 @@
             const featuresSection = document.getElementById('features-rotating');
             if (!featuresSection) return;
 
-            const featureContents = featuresSection.querySelectorAll('.feature-content');
+            const featureTexts = featuresSection.querySelectorAll('.feature-text');
+            const featureImages = featuresSection.querySelectorAll('.feature-image');
             const indicators = featuresSection.querySelectorAll('.indicator');
             
             let currentFeature = 0;
-            const totalFeatures = featureContents.length;
+            const totalFeatures = featureTexts.length;
             let isAnimating = false;
             let rotationInterval = null;
 
@@ -2218,28 +2270,31 @@
                 if (isAnimating || index === currentFeature) return;
                 isAnimating = true;
 
-                const currentContent = featureContents[currentFeature];
-                const nextContent = featureContents[index];
+                const currentText = featureTexts[currentFeature];
+                const currentImage = featureImages[currentFeature];
+                const nextText = featureTexts[index];
+                const nextImage = featureImages[index];
 
-                // Remove active class from current
-                currentContent.classList.remove('active');
-                currentContent.classList.add('slide-out-left');
+                // Fade out current
+                currentText.classList.add('fade-out');
+                currentImage.classList.add('fade-out');
 
                 // Update indicators
                 indicators[currentFeature].classList.remove('active');
                 indicators[index].classList.add('active');
 
                 setTimeout(() => {
-                    // Show next feature
-                    nextContent.classList.add('active');
-                    nextContent.classList.remove('slide-in-right');
+                    // Hide current
+                    currentText.classList.remove('active', 'fade-out');
+                    currentImage.classList.remove('active', 'fade-out');
 
-                    // Reset current feature
-                    currentContent.classList.remove('slide-out-left');
+                    // Show next
+                    nextText.classList.add('active');
+                    nextImage.classList.add('active');
 
                     currentFeature = index;
                     isAnimating = false;
-                }, 400);
+                }, 300);
             }
 
             function nextFeature() {
@@ -2265,7 +2320,6 @@
                     if (index !== currentFeature && !isAnimating) {
                         stopRotation();
                         showFeature(index);
-                        // Restart auto-rotation after 2 seconds
                         setTimeout(startRotation, 2000);
                     }
                 });
