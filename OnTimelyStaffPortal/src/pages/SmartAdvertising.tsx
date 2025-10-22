@@ -25,6 +25,15 @@ interface Campaign {
   id: string;
   title: string;
   company_name: string;
+  description?: string;
+  full_description?: string;
+  cta_text?: string;
+  cta_url?: string;
+  image_url?: string;
+  company_logo_url?: string;
+  discount_code?: string;
+  discount_link?: string;
+  qr_code?: string;
   payment_tier: 'premium' | 'standard' | 'basic';
   monthly_payment_amount: number;
   status: 'active' | 'paused' | 'draft' | 'ended';
@@ -32,7 +41,10 @@ interface Campaign {
   clicks_count: number;
   ctr: number;
   target_cities: string[];
+  target_event_types?: string[];
+  target_locations?: string[];
   created_at: string;
+  updated_at?: string;
 }
 
 interface MarketIntelligence {
@@ -64,6 +76,8 @@ const SmartAdvertising: React.FC = () => {
   const [marketIntel, setMarketIntel] = useState<MarketIntelligence[]>([]);
   const [salesOps, setSalesOps] = useState<SalesOpportunity[]>([]);
   const [loading, setLoading] = useState(true);
+  const [showCampaignForm, setShowCampaignForm] = useState(false);
+  const [editingCampaign, setEditingCampaign] = useState<Campaign | null>(null);
 
   // Stats
   const [stats, setStats] = useState({
@@ -159,6 +173,328 @@ const SmartAdvertising: React.FC = () => {
     }
   };
 
+  const CampaignForm = () => {
+    const [formData, setFormData] = useState<Partial<Campaign>>({
+      title: '',
+      company_name: '',
+      description: '',
+      full_description: '',
+      cta_text: 'Get Info',
+      cta_url: '',
+      image_url: '',
+      company_logo_url: '',
+      discount_code: '',
+      discount_link: '',
+      qr_code: '',
+      payment_tier: 'basic',
+      monthly_payment_amount: 0,
+      status: 'draft',
+      target_cities: [],
+      target_event_types: [],
+      target_locations: []
+    });
+
+    const [newCity, setNewCity] = useState('');
+    const [newEventType, setNewEventType] = useState('');
+    const [newLocation, setNewLocation] = useState('');
+
+    useEffect(() => {
+      if (editingCampaign) {
+        setFormData(editingCampaign);
+      }
+    }, [editingCampaign]);
+
+    const handleSubmit = async (e: React.FormEvent) => {
+      e.preventDefault();
+      try {
+        if (editingCampaign) {
+          const { error } = await supabase
+            .from('campaigns')
+            .update(formData)
+            .eq('id', editingCampaign.id);
+          
+          if (error) throw error;
+        } else {
+          const { error } = await supabase
+            .from('campaigns')
+            .insert([formData]);
+          
+          if (error) throw error;
+        }
+        
+        setShowCampaignForm(false);
+        setEditingCampaign(null);
+        loadDashboardData();
+      } catch (error) {
+        console.error('Error saving campaign:', error);
+        alert('Error saving campaign');
+      }
+    };
+
+    const addToArray = (field: string, value: string, setter: (value: string) => void) => {
+      if (value.trim()) {
+        setFormData(prev => ({
+          ...prev,
+          [field]: [...(prev[field as keyof Campaign] as string[] || []), value.trim()]
+        }));
+        setter('');
+      }
+    };
+
+    const removeFromArray = (field: string, index: number) => {
+      setFormData(prev => ({
+        ...prev,
+        [field]: (prev[field as keyof Campaign] as string[] || []).filter((_, i) => i !== index)
+      }));
+    };
+
+    return (
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div className="bg-white rounded-lg p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+          <h2 className="text-xl font-bold mb-4">
+            {editingCampaign ? 'Edit Campaign' : 'Create New Campaign'}
+          </h2>
+          
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Title</label>
+                <input
+                  type="text"
+                  value={formData.title || ''}
+                  onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
+                  className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Company Name</label>
+                <input
+                  type="text"
+                  value={formData.company_name || ''}
+                  onChange={(e) => setFormData(prev => ({ ...prev, company_name: e.target.value }))}
+                  className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2"
+                  required
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Short Description</label>
+              <textarea
+                value={formData.description || ''}
+                onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
+                className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2"
+                rows={2}
+                maxLength={60}
+              />
+              <p className="text-xs text-gray-500">Max 60 characters (for mobile display)</p>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Full Description</label>
+              <textarea
+                value={formData.full_description || ''}
+                onChange={(e) => setFormData(prev => ({ ...prev, full_description: e.target.value }))}
+                className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2"
+                rows={4}
+              />
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700">CTA Text</label>
+                <input
+                  type="text"
+                  value={formData.cta_text || ''}
+                  onChange={(e) => setFormData(prev => ({ ...prev, cta_text: e.target.value }))}
+                  className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">CTA URL</label>
+                <input
+                  type="url"
+                  value={formData.cta_url || ''}
+                  onChange={(e) => setFormData(prev => ({ ...prev, cta_url: e.target.value }))}
+                  className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Image URL</label>
+                <input
+                  type="url"
+                  value={formData.image_url || ''}
+                  onChange={(e) => setFormData(prev => ({ ...prev, image_url: e.target.value }))}
+                  className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Company Logo URL</label>
+                <input
+                  type="url"
+                  value={formData.company_logo_url || ''}
+                  onChange={(e) => setFormData(prev => ({ ...prev, company_logo_url: e.target.value }))}
+                  className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Discount Code</label>
+                <input
+                  type="text"
+                  value={formData.discount_code || ''}
+                  onChange={(e) => setFormData(prev => ({ ...prev, discount_code: e.target.value }))}
+                  className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Discount Link</label>
+                <input
+                  type="url"
+                  value={formData.discount_link || ''}
+                  onChange={(e) => setFormData(prev => ({ ...prev, discount_link: e.target.value }))}
+                  className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-3 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Payment Tier</label>
+                <select
+                  value={formData.payment_tier || 'basic'}
+                  onChange={(e) => setFormData(prev => ({ ...prev, payment_tier: e.target.value as 'premium' | 'standard' | 'basic' }))}
+                  className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2"
+                >
+                  <option value="basic">Basic</option>
+                  <option value="standard">Standard</option>
+                  <option value="premium">Premium</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Monthly Amount</label>
+                <input
+                  type="number"
+                  value={formData.monthly_payment_amount || 0}
+                  onChange={(e) => setFormData(prev => ({ ...prev, monthly_payment_amount: parseFloat(e.target.value) || 0 }))}
+                  className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Status</label>
+                <select
+                  value={formData.status || 'draft'}
+                  onChange={(e) => setFormData(prev => ({ ...prev, status: e.target.value as 'active' | 'paused' | 'draft' | 'ended' }))}
+                  className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2"
+                >
+                  <option value="draft">Draft</option>
+                  <option value="active">Active</option>
+                  <option value="paused">Paused</option>
+                  <option value="ended">Ended</option>
+                </select>
+              </div>
+            </div>
+
+            {/* Target Cities */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Target Cities</label>
+              <div className="flex gap-2 mt-1">
+                <input
+                  type="text"
+                  value={newCity}
+                  onChange={(e) => setNewCity(e.target.value)}
+                  placeholder="Add city"
+                  className="flex-1 border border-gray-300 rounded-md px-3 py-2"
+                />
+                <button
+                  type="button"
+                  onClick={() => addToArray('target_cities', newCity, setNewCity)}
+                  className="px-3 py-2 bg-indigo-600 text-white rounded-md"
+                >
+                  Add
+                </button>
+              </div>
+              <div className="flex flex-wrap gap-2 mt-2">
+                {(formData.target_cities || []).map((city, index) => (
+                  <span key={index} className="bg-gray-100 px-2 py-1 rounded text-sm flex items-center gap-1">
+                    {city}
+                    <button
+                      type="button"
+                      onClick={() => removeFromArray('target_cities', index)}
+                      className="text-red-500"
+                    >
+                      ×
+                    </button>
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Target Event Types */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Target Event Types</label>
+              <div className="flex gap-2 mt-1">
+                <input
+                  type="text"
+                  value={newEventType}
+                  onChange={(e) => setNewEventType(e.target.value)}
+                  placeholder="Add event type"
+                  className="flex-1 border border-gray-300 rounded-md px-3 py-2"
+                />
+                <button
+                  type="button"
+                  onClick={() => addToArray('target_event_types', newEventType, setNewEventType)}
+                  className="px-3 py-2 bg-indigo-600 text-white rounded-md"
+                >
+                  Add
+                </button>
+              </div>
+              <div className="flex flex-wrap gap-2 mt-2">
+                {(formData.target_event_types || []).map((type, index) => (
+                  <span key={index} className="bg-gray-100 px-2 py-1 rounded text-sm flex items-center gap-1">
+                    {type}
+                    <button
+                      type="button"
+                      onClick={() => removeFromArray('target_event_types', index)}
+                      className="text-red-500"
+                    >
+                      ×
+                    </button>
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div className="flex justify-end gap-2 pt-4">
+              <button
+                type="button"
+                onClick={() => {
+                  setShowCampaignForm(false);
+                  setEditingCampaign(null);
+                }}
+                className="px-4 py-2 border border-gray-300 rounded-md text-gray-700"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="px-4 py-2 bg-indigo-600 text-white rounded-md"
+              >
+                {editingCampaign ? 'Update' : 'Create'} Campaign
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    );
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-96">
@@ -169,13 +505,17 @@ const SmartAdvertising: React.FC = () => {
 
   return (
     <div className="space-y-6">
+      {showCampaignForm && <CampaignForm />}
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Smart Advertising Platform</h1>
           <p className="text-gray-600 mt-2">AI-powered location-based advertising management</p>
         </div>
-        <button className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 flex items-center gap-2">
+        <button 
+          className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 flex items-center gap-2"
+          onClick={() => setShowCampaignForm(true)}
+        >
           <Plus className="w-4 h-4" />
           New Campaign
         </button>
@@ -299,6 +639,7 @@ const SmartAdvertising: React.FC = () => {
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Performance</th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Locations</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
@@ -329,6 +670,38 @@ const SmartAdvertising: React.FC = () => {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                           {campaign.target_cities?.length ? `${campaign.target_cities.length} cities` : 'Global'}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          <button
+                            onClick={() => {
+                              setEditingCampaign(campaign);
+                              setShowCampaignForm(true);
+                            }}
+                            className="text-indigo-600 hover:text-indigo-900 mr-2"
+                          >
+                            Edit
+                          </button>
+                          <button
+                            onClick={async () => {
+                              if (confirm('Are you sure you want to delete this campaign?')) {
+                                try {
+                                  const { error } = await supabase
+                                    .from('campaigns')
+                                    .delete()
+                                    .eq('id', campaign.id);
+                                  
+                                  if (error) throw error;
+                                  loadDashboardData();
+                                } catch (error) {
+                                  console.error('Error deleting campaign:', error);
+                                  alert('Error deleting campaign');
+                                }
+                              }
+                            }}
+                            className="text-red-600 hover:text-red-900"
+                          >
+                            Delete
+                          </button>
                         </td>
                       </tr>
                     ))}
