@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Status - OnTimely Event Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-green: #10b981;
+            --text-primary: #ffffff;
+            --text-secondary: #d1d5db;
+            --text-muted: #9ca3af;
+            --bg-primary: #000000;
+            --bg-secondary: #0f1015;
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .status-header {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .status-nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .status-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .status-logo h1 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary-green);
+        }
+
+        .back-btn {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .back-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .back-btn:hover::before {
+            left: 100%;
+        }
+
+        .back-btn:hover {
+            border-color: var(--primary-green);
+            transform: translateY(-2px);
+        }
+
+        .status-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px;
+        }
+
+        .status-overview {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .status-title {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--text-primary), var(--primary-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .status-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+        }
+
+        .overall-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 32px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid var(--primary-green);
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--primary-green);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .services-table {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 40px;
+        }
+
+        .table-header {
+            background: rgba(16, 185, 129, 0.1);
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .table-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table th {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 16px 20px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-primary);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .table td {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: middle;
+        }
+
+        .table tbody tr {
+            transition: background-color 0.2s ease;
+            cursor: pointer;
+        }
+
+        .table tbody tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .table tbody tr.expanded {
+            background: rgba(16, 185, 129, 0.05);
+        }
+
+        .service-name {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .service-description {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-operational {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--primary-green);
+        }
+
+        .status-degraded {
+            background: rgba(245, 158, 11, 0.2);
+            color: #f59e0b;
+        }
+
+        .status-outage {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+
+        .status-operational .status-dot {
+            background: var(--primary-green);
+        }
+
+        .status-degraded .status-dot {
+            background: #f59e0b;
+        }
+
+        .status-outage .status-dot {
+            background: #ef4444;
+        }
+
+        .response-time {
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .uptime {
+            font-weight: 600;
+            color: var(--primary-green);
+        }
+
+        .expand-icon {
+            transition: transform 0.3s ease;
+            color: var(--text-muted);
+        }
+
+        .expanded .expand-icon {
+            transform: rotate(180deg);
+        }
+
+        .service-details {
+            display: none;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+        }
+
+        .service-details.expanded {
+            display: block;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .detail-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 16px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .detail-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .detail-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .detail-value.error {
+            color: #ef4444;
+        }
+
+        .detail-value.warning {
+            color: #f59e0b;
+        }
+
+        .detail-value.success {
+            color: var(--primary-green);
+        }
+
+        .metrics-chart {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .chart-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+        }
+
+        .chart-bars {
+            display: flex;
+            align-items: end;
+            gap: 4px;
+            height: 60px;
+        }
+
+        .chart-bar {
+            flex: 1;
+            background: var(--primary-green);
+            border-radius: 2px 2px 0 0;
+            min-height: 4px;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .chart-bar:hover {
+            opacity: 1;
+        }
+
+        .chart-bar.degraded {
+            background: #f59e0b;
+        }
+
+        .chart-bar.outage {
+            background: #ef4444;
+        }
+
+        .incidents-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 40px;
+        }
+
+        .incidents-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .incident-item {
+            padding: 16px 0;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .incident-item:last-child {
+            border-bottom: none;
+        }
+
+        .incident-info h4 {
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .incident-info p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .incident-status {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .incident-resolved {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--primary-green);
+        }
+
+        .incident-investigating {
+            background: rgba(245, 158, 11, 0.2);
+            color: #f59e0b;
+        }
+
+        .incident-monitoring {
+            background: rgba(59, 130, 246, 0.2);
+            color: #3b82f6;
+        }
+
+        .last-updated {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 40px;
+        }
+
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border-color);
+            border-top: 3px solid var(--primary-green);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .status-container {
+                padding: 20px;
+            }
+
+            .status-title {
+                font-size: 2rem;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .service-metrics {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="status-header">
+        <nav class="status-nav">
+            <div class="status-logo">
+                <img src="on timely official logo.svg" alt="OnTimely Logo" style="height: 40px; width: auto;">
+            </div>
+            <a href="index.html" class="back-btn">
+                Back to Site
+            </a>
+        </nav>
+    </header>
+
+    <main class="status-container">
+        <div class="status-overview">
+            <h1 class="status-title">System Status</h1>
+            <p class="status-subtitle">Real-time monitoring of OnTimely services and infrastructure</p>
+            <div class="overall-status">
+                <div class="status-indicator"></div>
+                <span>All Systems Operational</span>
+            </div>
+        </div>
+
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+        </div>
+
+        <div id="status-content" style="display: none;">
+            <div class="services-table">
+                <div class="table-header">
+                    <h2 class="table-title">Service Status</h2>
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Service</th>
+                            <th>Status</th>
+                            <th>Region</th>
+                            <th>Availability</th>
+                            <th>Last Updated</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="services-tbody">
+                        <!-- Services will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="incidents-section">
+                <h2 class="incidents-title">Recent Incidents</h2>
+                <div id="incidents-list">
+                    <!-- Incidents will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <div class="last-updated">
+                Last updated: <span id="last-updated"></span>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Supabase configuration
+        const SUPABASE_URL = 'https://ijsktwmevnqgzwwuggkf.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlqc2t0d21ldm5xZ3p3d3VnZ2tmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjAzNDQ4ODEsImV4cCI6MjAzNTkyMDg4MX0.8QZqJqJqJqJqJqJqJqJqJqJqJqJqJqJqJqJqJqJqJq';
+
+        class RealTimeStatusMonitor {
+            constructor() {
+                this.services = [
+                    {
+                        id: 'mobile-app',
+                        name: 'Mobile App',
+                        description: 'iOS and Android mobile applications',
+                        endpoint: '/rest/v1/events?select=count',
+                        critical: true,
+                        history: [],
+                        region: 'Global'
+                    },
+                    {
+                        id: 'web-platform',
+                        name: 'Web Platform',
+                        description: 'Desktop and web-based event management',
+                        endpoint: '/rest/v1/',
+                        critical: true,
+                        history: [],
+                        region: 'Global'
+                    },
+                    {
+                        id: 'real-time-features',
+                        name: 'Real-time Features',
+                        description: 'Live chat, notifications, and updates',
+                        endpoint: '/realtime/v1/',
+                        critical: true,
+                        history: [],
+                        region: 'Global'
+                    },
+                    {
+                        id: 'file-uploads',
+                        name: 'File Uploads',
+                        description: 'Image and document uploads',
+                        endpoint: '/storage/v1/object/public/avatars',
+                        critical: false,
+                        history: [],
+                        region: 'Global'
+                    },
+                    {
+                        id: 'user-accounts',
+                        name: 'User Accounts',
+                        description: 'Login, registration, and user management',
+                        endpoint: '/auth/v1/user',
+                        critical: true,
+                        history: [],
+                        region: 'Global'
+                    },
+                    {
+                        id: 'event-management',
+                        name: 'Event Management',
+                        description: 'Creating and managing events',
+                        endpoint: '/rest/v1/events?select=count',
+                        critical: true,
+                        history: [],
+                        region: 'Global'
+                    }
+                ];
+                
+                this.serviceStatus = {};
+                this.updateInterval = null;
+                this.init();
+            }
+
+            async init() {
+                await this.checkAllServices();
+                this.updateLastUpdated();
+                this.hideLoading();
+                this.loadIncidents();
+                
+                // Real-time updates every 10 seconds
+                this.updateInterval = setInterval(() => {
+                    this.checkAllServices();
+                    this.updateLastUpdated();
+                }, 10000);
+            }
+
+            async checkAllServices() {
+                const promises = this.services.map(service => this.checkService(service));
+                await Promise.all(promises);
+                this.updateTable();
+                this.updateOverallStatus();
+            }
+
+            async checkService(service) {
+                try {
+                    const startTime = Date.now();
+                    const testUrl = SUPABASE_URL + service.endpoint;
+                    
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 8000); // 8 second timeout
+
+                    const response = await fetch(testUrl, {
+                        method: 'GET',
+                        headers: {
+                            'apikey': SUPABASE_ANON_KEY,
+                            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                            'Content-Type': 'application/json'
+                        },
+                        signal: controller.signal
+                    });
+
+                    clearTimeout(timeoutId);
+                    const responseTime = Date.now() - startTime;
+                    
+                    let status = 'operational';
+                    let error = null;
+                    
+                    if (response.ok || response.status === 401 || response.status === 404) {
+                        // 401/404 are expected for some endpoints without proper auth
+                        status = 'operational';
+                    } else if (response.status >= 500) {
+                        status = 'outage';
+                        error = `Server Error: ${response.status}`;
+                    } else if (response.status >= 400) {
+                        status = 'degraded';
+                        error = `Client Error: ${response.status}`;
+                    }
+
+                    const serviceStatus = {
+                        status,
+                        responseTime,
+                        uptime: this.calculateUptime(service.id),
+                        lastCheck: new Date().toISOString(),
+                        error,
+                        timestamp: Date.now()
+                    };
+
+                    // Add to history (keep last 20 entries)
+                    service.history.push(serviceStatus);
+                    if (service.history.length > 20) {
+                        service.history.shift();
+                    }
+
+                    this.serviceStatus[service.id] = serviceStatus;
+                    
+                } catch (error) {
+                    console.error(`Error checking ${service.name}:`, error);
+                    
+                    const serviceStatus = {
+                        status: 'outage',
+                        responseTime: null,
+                        uptime: this.calculateUptime(service.id),
+                        lastCheck: new Date().toISOString(),
+                        error: error.name === 'AbortError' ? 'Timeout' : error.message,
+                        timestamp: Date.now()
+                    };
+
+                    service.history.push(serviceStatus);
+                    if (service.history.length > 20) {
+                        service.history.shift();
+                    }
+
+                    this.serviceStatus[service.id] = serviceStatus;
+                }
+            }
+
+            calculateUptime(serviceId) {
+                const service = this.services.find(s => s.id === serviceId);
+                if (!service || service.history.length === 0) return '100.00';
+                
+                const operationalCount = service.history.filter(h => h.status === 'operational').length;
+                const uptime = (operationalCount / service.history.length) * 100;
+                return uptime.toFixed(2);
+            }
+
+            updateTable() {
+                const tbody = document.getElementById('services-tbody');
+                tbody.innerHTML = '';
+
+                this.services.forEach(service => {
+                    const status = this.serviceStatus[service.id] || {
+                        status: 'unknown',
+                        responseTime: null,
+                        uptime: '0.00',
+                        lastCheck: 'Never',
+                        error: null
+                    };
+
+                    const row = document.createElement('tr');
+                    row.className = 'service-row';
+                    row.dataset.serviceId = service.id;
+                    
+                    const statusClass = `status-${status.status}`;
+                    const statusText = status.status.charAt(0).toUpperCase() + status.status.slice(1);
+                    
+                    row.innerHTML = `
+                        <td>
+                            <div class="service-name">${service.name}</div>
+                            <div class="service-description">${service.description}</div>
+                        </td>
+                        <td>
+                            <div class="status-badge ${statusClass}">
+                                <div class="status-dot"></div>
+                                ${statusText}
+                            </div>
+                        </td>
+                        <td>
+                            <span class="region">${service.region}</span>
+                        </td>
+                        <td>
+                            <span class="uptime">${status.uptime}%</span>
+                        </td>
+                        <td>
+                            <span class="last-check">${this.formatTime(status.lastCheck)}</span>
+                        </td>
+                        <td>
+                            <i class="fas fa-chevron-down expand-icon"></i>
+                        </td>
+                    `;
+
+                    // Add expandable details row
+                    const detailsRow = document.createElement('tr');
+                    detailsRow.className = 'service-details-row';
+                    detailsRow.style.display = 'none';
+                    detailsRow.innerHTML = `
+                        <td colspan="6">
+                            <div class="service-details">
+                                ${this.createServiceDetails(service, status)}
+                            </div>
+                        </td>
+                    `;
+
+                    tbody.appendChild(row);
+                    tbody.appendChild(detailsRow);
+
+                    // Add click handler for expansion
+                    row.addEventListener('click', () => {
+                        this.toggleServiceDetails(service.id);
+                    });
+                });
+            }
+
+            createServiceDetails(service, status) {
+                const history = service.history.slice(-10); // Last 10 checks
+                const chartBars = history.map(h => {
+                    let className = 'chart-bar';
+                    if (h.status === 'degraded') className += ' degraded';
+                    if (h.status === 'outage') className += ' outage';
+                    return `<div class="${className}" style="height: ${Math.max(4, (h.responseTime || 0) / 10)}px" title="${h.status} - ${h.responseTime || 'N/A'}ms"></div>`;
+                }).join('');
+
+                const statusMessage = this.getStatusMessage(service, status);
+
+                return `
+                    <div class="details-grid">
+                        <div class="detail-item">
+                            <div class="detail-label">Current Status</div>
+                            <div class="detail-value ${status.status === 'operational' ? 'success' : status.status === 'degraded' ? 'warning' : 'error'}">${statusMessage}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Availability</div>
+                            <div class="detail-value success">${status.uptime}%</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Region</div>
+                            <div class="detail-value">${service.region}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Last Updated</div>
+                            <div class="detail-value">${this.formatTime(status.lastCheck)}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Service Type</div>
+                            <div class="detail-value ${service.critical ? 'warning' : 'success'}">${service.critical ? 'Core Service' : 'Optional Service'}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Performance</div>
+                            <div class="detail-value">${status.responseTime ? status.responseTime + 'ms' : 'N/A'}</div>
+                        </div>
+                    </div>
+                    ${status.error ? `
+                        <div class="detail-item">
+                            <div class="detail-label">Issue Details</div>
+                            <div class="detail-value error">${this.getCustomerFriendlyError(status.error)}</div>
+                        </div>
+                    ` : ''}
+                    <div class="metrics-chart">
+                        <div class="chart-title">Service Performance (Last 10 Checks)</div>
+                        <div class="chart-bars">${chartBars}</div>
+                    </div>
+                `;
+            }
+
+            getStatusMessage(service, status) {
+                if (status.status === 'operational') {
+                    return `${service.name} is working normally`;
+                } else if (status.status === 'degraded') {
+                    return `${service.name} is experiencing minor issues`;
+                } else {
+                    return `${service.name} is currently unavailable`;
+                }
+            }
+
+            getCustomerFriendlyError(error) {
+                if (error.includes('Timeout')) {
+                    return 'Service is responding slowly';
+                } else if (error.includes('Server Error')) {
+                    return 'Temporary server issue';
+                } else if (error.includes('Client Error')) {
+                    return 'Service configuration issue';
+                } else {
+                    return 'Service temporarily unavailable';
+                }
+            }
+
+            toggleServiceDetails(serviceId) {
+                const row = document.querySelector(`tr[data-service-id="${serviceId}"]`);
+                const detailsRow = row.nextElementSibling;
+                const icon = row.querySelector('.expand-icon');
+                
+                if (detailsRow.style.display === 'none') {
+                    detailsRow.style.display = 'table-row';
+                    row.classList.add('expanded');
+                    icon.style.transform = 'rotate(180deg)';
+                } else {
+                    detailsRow.style.display = 'none';
+                    row.classList.remove('expanded');
+                    icon.style.transform = 'rotate(0deg)';
+                }
+            }
+
+            updateOverallStatus() {
+                const services = Object.values(this.serviceStatus);
+                let operationalCount = 0;
+                let degradedCount = 0;
+                let outageCount = 0;
+
+                services.forEach(status => {
+                    if (status.status === 'operational') operationalCount++;
+                    else if (status.status === 'degraded') degradedCount++;
+                    else if (status.status === 'outage') outageCount++;
+                });
+
+                const overallStatus = document.querySelector('.overall-status');
+                const statusIndicator = document.querySelector('.status-indicator');
+                const statusText = overallStatus.querySelector('span');
+
+                if (outageCount > 0) {
+                    overallStatus.style.background = 'rgba(239, 68, 68, 0.1)';
+                    overallStatus.style.borderColor = '#ef4444';
+                    statusIndicator.style.background = '#ef4444';
+                    statusText.textContent = `${outageCount} Service${outageCount > 1 ? 's' : ''} Down`;
+                } else if (degradedCount > 0) {
+                    overallStatus.style.background = 'rgba(245, 158, 11, 0.1)';
+                    overallStatus.style.borderColor = '#f59e0b';
+                    statusIndicator.style.background = '#f59e0b';
+                    statusText.textContent = `${degradedCount} Service${degradedCount > 1 ? 's' : ''} Degraded`;
+                } else {
+                    overallStatus.style.background = 'rgba(16, 185, 129, 0.1)';
+                    overallStatus.style.borderColor = '#10b981';
+                    statusIndicator.style.background = '#10b981';
+                    statusText.textContent = 'All Systems Operational';
+                }
+            }
+
+            formatTime(timestamp) {
+                const date = new Date(timestamp);
+                return date.toLocaleTimeString();
+            }
+
+            updateLastUpdated() {
+                const lastUpdated = document.getElementById('last-updated');
+                lastUpdated.textContent = new Date().toLocaleString();
+            }
+
+            hideLoading() {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('status-content').style.display = 'block';
+            }
+
+            loadIncidents() {
+                const incidents = [
+                    {
+                        title: 'Mobile App Performance',
+                        description: 'Temporary slowdown in app loading resolved',
+                        status: 'resolved',
+                        time: '2 hours ago'
+                    },
+                    {
+                        title: 'File Upload Service',
+                        description: 'Intermittent issues with image uploads',
+                        status: 'investigating',
+                        time: '1 day ago'
+                    },
+                    {
+                        title: 'Event Management System',
+                        description: 'Temporary delays during peak usage',
+                        status: 'monitoring',
+                        time: '3 days ago'
+                    }
+                ];
+
+                const incidentsList = document.getElementById('incidents-list');
+                incidentsList.innerHTML = '';
+
+                incidents.forEach(incident => {
+                    const incidentItem = document.createElement('div');
+                    incidentItem.className = 'incident-item';
+                    
+                    incidentItem.innerHTML = `
+                        <div class="incident-info">
+                            <h4>${incident.title}</h4>
+                            <p>${incident.description}</p>
+                        </div>
+                        <div class="incident-status incident-${incident.status}">
+                            ${incident.status.charAt(0).toUpperCase() + incident.status.slice(1)}
+                        </div>
+                    `;
+                    
+                    incidentsList.appendChild(incidentItem);
+                });
+            }
+
+            destroy() {
+                if (this.updateInterval) {
+                    clearInterval(this.updateInterval);
+                }
+            }
+        }
+
+        // Initialize status monitor when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            const monitor = new RealTimeStatusMonitor();
+        });
+    </script>
+</body>
+</html>

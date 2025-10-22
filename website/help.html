@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help Center - OnTimely</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-green: #10b981;
+            --primary-green-dark: #059669;
+            --text-primary: #ffffff;
+            --text-secondary: #d1d5db;
+            --text-muted: #9ca3af;
+            --accent-grey: #6b7280;
+            --shadow-large: 0 25px 50px rgba(0, 0, 0, 0.5);
+            --sidebar-width: 300px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #000000;
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            text-decoration: none;
+            background: linear-gradient(135deg, var(--text-primary), var(--primary-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-green);
+        }
+
+        .back-btn {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .back-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .back-btn:hover::before {
+            left: 100%;
+        }
+
+        .back-btn:hover {
+            border-color: var(--primary-green);
+            transform: translateY(-2px);
+        }
+
+        /* Main Layout */
+        .main-layout {
+            display: flex;
+            margin-top: 80px;
+            min-height: calc(100vh - 80px);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: rgba(17, 24, 39, 0.8);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2rem 0;
+            position: fixed;
+            height: calc(100vh - 80px);
+            overflow-y: auto;
+            z-index: 100;
+        }
+
+        .sidebar-header {
+            padding: 0 2rem 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .sidebar-logo img {
+            height: 32px;
+        }
+
+        .sidebar-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .sidebar-search {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+        }
+
+        .sidebar-search::placeholder {
+            color: var(--text-muted);
+        }
+
+        .sidebar-nav {
+            padding: 0 1rem;
+        }
+
+        .nav-section {
+            margin-bottom: 2rem;
+        }
+
+        .nav-section-title {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 1rem;
+            padding: 0 1rem;
+        }
+
+        .nav-item {
+            display: block;
+            padding: 12px 1rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 8px;
+            margin-bottom: 4px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-item:hover {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--primary-green);
+        }
+
+        .nav-item.active {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--primary-green);
+            border-left: 3px solid var(--primary-green);
+        }
+
+        .nav-item i {
+            width: 20px;
+            margin-right: 12px;
+            text-align: center;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 2rem;
+            background: #000000;
+        }
+
+        .content-header {
+            margin-bottom: 2rem;
+        }
+
+        .content-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--text-primary), var(--primary-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .content-description {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 600px;
+        }
+
+        /* FAQ Content */
+        .faq-content {
+            display: none;
+        }
+
+        .faq-content.active {
+            display: block;
+        }
+
+        .faq-grid {
+            display: grid;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .faq-item {
+            background: rgba(17, 24, 39, 0.55);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            border-color: var(--primary-green);
+            transform: translateY(-2px);
+        }
+
+        .faq-question {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .faq-answer {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Support Actions */
+        .support-actions {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            z-index: 200;
+        }
+
+        .support-btn {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-green), var(--primary-green-dark));
+            border: none;
+            border-radius: 12px;
+            color: #000000;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .support-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(16, 185, 129, 0.4);
+        }
+
+        .support-btn.secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .support-btn.secondary:hover {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: var(--primary-green);
+        }
+
+        /* Chat Modal */
+        .chat-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chat-modal.active {
+            display: flex;
+        }
+
+        .chat-container {
+            width: 90%;
+            max-width: 500px;
+            height: 80%;
+            background: rgba(17, 24, 39, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chat-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .chat-close {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .chat-close:hover {
+            color: var(--text-primary);
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .message.user {
+            background: var(--primary-green);
+            color: #000000;
+            align-self: flex-end;
+            margin-left: auto;
+        }
+
+        .message.agent {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            align-self: flex-start;
+        }
+
+        .typing-indicator {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            align-self: flex-start;
+            display: flex;
+            gap: 4px;
+            align-items: center;
+        }
+
+        .typing-indicator i {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--text-muted);
+            animation: typing 1.4s infinite ease-in-out;
+        }
+
+        .typing-indicator i:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-indicator i:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+            30% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+        }
+
+        .chat-input-container {
+            padding: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .chat-input {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            resize: none;
+        }
+
+        .chat-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        /* Screen Sharing Modal */
+        .screen-share-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .screen-share-modal.active {
+            display: flex;
+        }
+
+        .screen-share-container {
+            width: 90%;
+            max-width: 600px;
+            background: rgba(17, 24, 39, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .confirmation-code {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--primary-green);
+            margin: 2rem 0;
+            letter-spacing: 0.5rem;
+            background: rgba(16, 185, 129, 0.1);
+            padding: 1rem;
+            border-radius: 12px;
+            border: 2px solid var(--primary-green);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .sidebar-toggle {
+                display: block;
+                position: fixed;
+                top: 100px;
+                left: 1rem;
+                z-index: 101;
+                background: var(--primary-green);
+                color: #000000;
+                border: none;
+                padding: 12px;
+                border-radius: 8px;
+                cursor: pointer;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 1rem;
+            }
+
+            .content-title {
+                font-size: 2rem;
+            }
+
+            .support-actions {
+                bottom: 1rem;
+                right: 1rem;
+            }
+
+            .support-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 1rem;
+            }
+        }
+
+        /* Scroll animations */
+        .fade-in-text {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .fade-in-text.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .fade-in-text.delay-1 { transition-delay: 0.1s; }
+        .fade-in-text.delay-2 { transition-delay: 0.2s; }
+        .fade-in-text.delay-3 { transition-delay: 0.3s; }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="on-timely-official-logo.png" alt="OnTimely" style="height: 40px;">
+            </a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="index.html#features">Features</a>
+                <a href="about.html">About</a>
+                <a href="index.html#contact">Contact</a>
+                <a href="index.html" class="back-btn">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Site
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Layout -->
+    <div class="main-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <img src="on-timely-official-logo.png" alt="OnTimely">
+                    <span class="sidebar-title">Help Center</span>
+                </div>
+                <input type="text" class="sidebar-search" placeholder="Search help articles..." id="searchInput">
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Getting Started</div>
+                    <a href="#" class="nav-item active" data-section="getting-started">
+                        <i class="fas fa-play-circle"></i>
+                        Quick Start Guide
+                    </a>
+                    <a href="#" class="nav-item" data-section="account-setup">
+                        <i class="fas fa-user-cog"></i>
+                        Account Setup
+                    </a>
+                    <a href="#" class="nav-item" data-section="first-event">
+                        <i class="fas fa-calendar-plus"></i>
+                        Creating Your First Event
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Platform Features</div>
+                    <a href="#" class="nav-item" data-section="desktop-app">
+                        <i class="fas fa-desktop"></i>
+                        Desktop Application
+                    </a>
+                    <a href="#" class="nav-item" data-section="mobile-app">
+                        <i class="fas fa-mobile-alt"></i>
+                        Mobile Application
+                    </a>
+                    <a href="#" class="nav-item" data-section="event-homepages">
+                        <i class="fas fa-home"></i>
+                        Event Homepages
+                    </a>
+                    <a href="#" class="nav-item" data-section="timeline-management">
+                        <i class="fas fa-clock"></i>
+                        Timeline Management
+                    </a>
+                    <a href="#" class="nav-item" data-section="guest-management">
+                        <i class="fas fa-users"></i>
+                        Guest Management
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Communication</div>
+                    <a href="#" class="nav-item" data-section="chat-system">
+                        <i class="fas fa-comments"></i>
+                        Chat System
+                    </a>
+                    <a href="#" class="nav-item" data-section="announcements">
+                        <i class="fas fa-bullhorn"></i>
+                        Announcements
+                    </a>
+                    <a href="#" class="nav-item" data-section="notifications">
+                        <i class="fas fa-bell"></i>
+                        Notifications
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Travel Tools</div>
+                    <a href="#" class="nav-item" data-section="offline-maps">
+                        <i class="fas fa-map"></i>
+                        Offline Maps
+                    </a>
+                    <a href="#" class="nav-item" data-section="translator">
+                        <i class="fas fa-language"></i>
+                        Translator
+                    </a>
+                    <a href="#" class="nav-item" data-section="currency-converter">
+                        <i class="fas fa-exchange-alt"></i>
+                        Currency Converter
+                    </a>
+                    <a href="#" class="nav-item" data-section="flight-tracker">
+                        <i class="fas fa-plane"></i>
+                        Flight Tracker
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Troubleshooting</div>
+                    <a href="#" class="nav-item" data-section="login-issues">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Login Issues
+                    </a>
+                    <a href="#" class="nav-item" data-section="sync-problems">
+                        <i class="fas fa-sync"></i>
+                        Sync Problems
+                    </a>
+                    <a href="#" class="nav-item" data-section="performance">
+                        <i class="fas fa-tachometer-alt"></i>
+                        Performance Issues
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Account & Billing</div>
+                    <a href="#" class="nav-item" data-section="billing">
+                        <i class="fas fa-credit-card"></i>
+                        Billing & Plans
+                    </a>
+                    <a href="#" class="nav-item" data-section="team-management">
+                        <i class="fas fa-user-friends"></i>
+                        Team Management
+                    </a>
+                    <a href="#" class="nav-item" data-section="data-export">
+                        <i class="fas fa-download"></i>
+                        Data Export
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="content-header">
+                <h1 class="content-title fade-in-text">Getting Started</h1>
+                <p class="content-description fade-in-text delay-1">Welcome to OnTimely! Here are the most common questions to help you get started with our platform.</p>
+            </div>
+
+            <!-- FAQ Content Sections -->
+            <div id="getting-started" class="faq-content active">
+                <div class="faq-grid">
+                    <div class="faq-item fade-in-text delay-2">
+                        <div class="faq-question">How do I create my first event?</div>
+                        <div class="faq-answer">Navigate to the Events section in your dashboard and click "Create New Event". Fill in the basic details like event name, date, and location. You can customize the event homepage and add modules later.</div>
+                    </div>
+                    <div class="faq-item fade-in-text delay-3">
+                        <div class="faq-question">What's the difference between the desktop and mobile app?</div>
+                        <div class="faq-answer">The desktop app is for event organizers and provides full administrative control, analytics, and management features. The mobile app is designed for guests to access event information, chat, and travel tools.</div>
+                    </div>
+                    <div class="faq-item fade-in-text delay-2">
+                        <div class="faq-question">How do I invite guests to my event?</div>
+                        <div class="faq-answer">Use the Guest Management section to upload guest lists via CSV or manually add guests. You can send invitations via email with custom messages and track RSVP responses in real-time.</div>
+                    </div>
+                    <div class="faq-item fade-in-text delay-3">
+                        <div class="faq-question">Can I customize the event homepage?</div>
+                        <div class="faq-answer">Yes! Use our Event Homepage Builder to create custom layouts, add your branding, include interactive modules, and personalize the guest experience with your content.</div>
+                    </div>
+                    <div class="faq-item fade-in-text delay-2">
+                        <div class="faq-question">How do I set up team members?</div>
+                        <div class="faq-answer">Go to Team Management and invite team members by email. Assign roles (Admin, Manager, Staff) with different permission levels to control access to various features.</div>
+                    </div>
+                    <div class="faq-item fade-in-text delay-3">
+                        <div class="faq-question">What payment methods do you accept?</div>
+                        <div class="faq-answer">We accept all major credit cards, PayPal, and bank transfers for annual subscriptions. Monthly plans are charged automatically to your preferred payment method.</div>
+                    </div>
+                    <div class="faq-item fade-in-text delay-2">
+                        <div class="faq-question">Is there a free trial available?</div>
+                        <div class="faq-answer">Yes! We offer a 14-day free trial with full access to all features. No credit card required to start your trial.</div>
+                    </div>
+                    <div class="faq-item fade-in-text delay-3">
+                        <div class="faq-question">How do I access my account from multiple devices?</div>
+                        <div class="faq-answer">Simply log in with your credentials on any device. Your data syncs automatically across all platforms, so you can manage events from desktop and check updates on mobile.</div>
+                    </div>
+                    <div class="faq-item fade-in-text delay-2">
+                        <div class="faq-question">What kind of support do you provide?</div>
+                        <div class="faq-answer">We offer 24/7 email support, live chat during business hours, comprehensive documentation, and video tutorials. Enterprise customers get dedicated account managers.</div>
+                    </div>
+                    <div class="faq-item fade-in-text delay-3">
+                        <div class="faq-question">Can I export my event data?</div>
+                        <div class="faq-answer">Yes, you can export guest lists, attendance reports, analytics data, and chat logs in CSV or PDF format from the Data Export section.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional FAQ sections will be populated dynamically -->
+            <div id="account-setup" class="faq-content">
+                <div class="faq-grid">
+                    <div class="faq-item">
+                        <div class="faq-question">How do I create an OnTimely account?</div>
+                        <div class="faq-answer">Visit our website and click "Get Started" or "Sign Up". Enter your email address, create a password, and verify your email to activate your account.</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">What information do I need to provide during signup?</div>
+                        <div class="faq-answer">You'll need your name, email address, company name (if applicable), and a secure password. Additional company details can be added later in your profile settings.</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">How do I verify my email address?</div>
+                        <div class="faq-answer">Check your email inbox for a verification link from OnTimely. Click the link to verify your account. If you don't see the email, check your spam folder.</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">Can I change my account email address?</div>
+                        <div class="faq-answer">Yes, you can update your email address in Account Settings. You'll need to verify the new email address before it becomes active.</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">How do I reset my password?</div>
+                        <div class="faq-answer">Click "Forgot Password" on the login page, enter your email address, and follow the instructions in the password reset email.</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">What are the password requirements?</div>
+                        <div class="faq-answer">Passwords must be at least 8 characters long and include uppercase letters, lowercase letters, and numbers for security.</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">How do I update my profile information?</div>
+                        <div class="faq-answer">Go to Account Settings in your dashboard to update your name, company information, profile picture, and notification preferences.</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">Can I have multiple accounts?</div>
+                        <div class="faq-answer">Each email address can only have one OnTimely account. If you need access to multiple companies, contact support to set up team access.</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">How do I delete my account?</div>
+                        <div class="faq-answer">Contact our support team to request account deletion. We'll help you export your data before permanently removing your account.</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">Is my data secure?</div>
+                        <div class="faq-answer">Yes, we use enterprise-grade security with SSL encryption, secure data centers, and regular security audits to protect your information.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- More sections will be added dynamically -->
+        </main>
+    </div>
+
+    <!-- Support Actions -->
+    <div class="support-actions">
+        <button class="support-btn" id="reportBugBtn" title="Report a Bug">
+            <i class="fas fa-bug"></i>
+        </button>
+        <button class="support-btn secondary" id="speakToAgentBtn" title="Speak to Agent">
+            <i class="fas fa-headset"></i>
+        </button>
+    </div>
+
+    <!-- Chat Modal -->
+    <div class="chat-modal" id="chatModal">
+        <div class="chat-container">
+            <div class="chat-header">
+                <h3 class="chat-title">AI Assistant</h3>
+                <button class="chat-close" id="chatClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="message agent">
+                    Hello! I'm your OnTimely AI assistant. How can I help you today?
+                </div>
+            </div>
+            <div class="chat-input-container">
+                <textarea class="chat-input" id="chatInput" placeholder="Type your message..." rows="3"></textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- Screen Sharing Modal -->
+    <div class="screen-share-modal" id="screenShareModal">
+        <div class="screen-share-container">
+            <h3>Screen Sharing Session</h3>
+            <p>Share this confirmation code with our support agent:</p>
+            <div class="confirmation-code" id="confirmationCode">ABC123</div>
+            <p>Your screen sharing session will begin once the agent enters this code.</p>
+            <button class="support-btn" id="startScreenShare" style="margin-top: 1rem;">
+                <i class="fas fa-share"></i>
+                Start Screen Share
+            </button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // Initialize Supabase
+        const supabaseUrl = 'https://ijsktwmevnqgzwwuggkf.supabase.co'
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlqc2t0d21ldm5xZ3p3d3VnZ2tmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjAzNDQ4ODEsImV4cCI6MjAzNTkyMDg4MX0.8QZqJqJqJqJqJqJqJqJqJqJqJqJqJqJqJqJqJqJqJq'
+        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey)
+
+        // AI Chat Service
+        class AIChatService {
+            constructor() {
+                this.conversationHistory = []
+                this.isTyping = false
+            }
+
+            async sendMessage(userMessage, userId = null) {
+                try {
+                    this.conversationHistory.push({
+                        role: 'user',
+                        content: userMessage,
+                        timestamp: new Date().toISOString()
+                    })
+
+                    const aiResponse = await this.generateAIResponse(userMessage)
+                    
+                    this.conversationHistory.push({
+                        role: 'assistant',
+                        content: aiResponse,
+                        timestamp: new Date().toISOString()
+                    })
+
+                    if (userId) {
+                        await this.saveConversation(userId, userMessage, aiResponse)
+                    }
+
+                    return aiResponse
+                } catch (error) {
+                    console.error('Error in AI chat:', error)
+                    return "I apologize, but I'm experiencing technical difficulties. Please try again or contact our support team directly."
+                }
+            }
+
+            async generateAIResponse(userMessage) {
+                const message = userMessage.toLowerCase()
+                
+                const responses = {
+                    'create event': "To create your first event, go to the Events section in your dashboard and click 'Create New Event'. Fill in the basic details like event name, date, and location. You can customize the homepage and add modules later.",
+                    'invite guests': "You can invite guests by going to Guest Management and uploading a CSV file or manually adding guests. Send invitations via email with custom messages and track RSVP responses in real-time.",
+                    'team members': "To add team members, go to Team Management and invite them by email. Assign roles (Admin, Manager, Staff) with different permission levels to control access to features.",
+                    'login problem': "If you're having trouble logging in, try resetting your password using the 'Forgot Password' link. Make sure you're using the correct email address and check your spam folder for verification emails.",
+                    'sync issue': "If data isn't syncing properly, try logging out and back in. Make sure you have a stable internet connection. If the problem persists, contact our support team.",
+                    'performance': "To improve performance, try closing other applications, clearing your browser cache, or restarting the desktop app. Make sure you're using the latest version.",
+                    'mobile app': "The mobile app is designed for guests to access event information, chat with other attendees, and use travel tools like offline maps and translation. Download it from the App Store or Google Play.",
+                    'offline maps': "Offline maps allow guests to navigate without internet. They can download map areas, add custom pins, and get directions. This is especially useful for international events.",
+                    'translator': "Our translator supports 40+ languages with real-time translation. Guests can translate text, use quick phrases, and access translation history.",
+                    'chat system': "The chat system enables real-time communication between guests and organizers. You can send announcements, create group chats, and monitor conversations.",
+                    'billing': "You can manage your subscription in Account Settings. We accept credit cards, PayPal, and bank transfers. Contact support for billing questions.",
+                    'free trial': "We offer a 14-day free trial with full access to all features. No credit card required to start your trial.",
+                    'help': "I'm here to help! You can ask me about creating events, managing guests, using features, troubleshooting issues, or anything else about OnTimely.",
+                    'contact support': "For direct support, click the 'Speak to Agent' button to chat with our human support team, or email us at support@ontimely.co.uk"
+                }
+
+                for (const [keyword, response] of Object.entries(responses)) {
+                    if (message.includes(keyword)) {
+                        return response
+                    }
+                }
+
+                if (message.includes('thank')) {
+                    return "You're welcome! Is there anything else I can help you with?"
+                }
+                
+                if (message.includes('bye') || message.includes('goodbye')) {
+                    return "Goodbye! Feel free to come back anytime if you need help with OnTimely."
+                }
+
+                return "I understand you're looking for help. Could you be more specific about what you need assistance with? I can help with event creation, guest management, technical issues, or any other OnTimely features."
+            }
+
+            async saveConversation(userId, userMessage, aiResponse) {
+                try {
+                    const { error } = await supabase
+                        .from('help_chat_conversations')
+                        .insert({
+                            user_id: userId,
+                            user_message: userMessage,
+                            ai_response: aiResponse,
+                            created_at: new Date().toISOString()
+                        })
+
+                    if (error) throw error
+                } catch (error) {
+                    console.error('Error saving conversation:', error)
+                }
+            }
+        }
+
+        // Live Agent Service
+        class LiveAgentService {
+            constructor() {
+                this.activeAgents = new Set()
+                this.waitingQueue = []
+            }
+
+            async requestLiveAgent(userId, userMessage, priority = 'medium') {
+                try {
+                    const ticket = await this.createSupportTicket({
+                        user_id: userId,
+                        title: 'Live Chat Request',
+                        description: userMessage,
+                        category: 'live_chat',
+                        priority: priority,
+                        status: 'open'
+                    })
+
+                    this.waitingQueue.push({
+                        ticketId: ticket.id,
+                        userId: userId,
+                        message: userMessage,
+                        timestamp: new Date().toISOString()
+                    })
+
+                    return {
+                        ticketId: ticket.id,
+                        estimatedWaitTime: this.calculateWaitTime(),
+                        positionInQueue: this.waitingQueue.length
+                    }
+                } catch (error) {
+                    console.error('Error requesting live agent:', error)
+                    throw error
+                }
+            }
+
+            async createSupportTicket(ticketData) {
+                try {
+                    const { data, error } = await supabase
+                        .from('support_tickets')
+                        .insert([ticketData])
+                        .select()
+                        .single()
+
+                    if (error) throw error
+                    return data
+                } catch (error) {
+                    console.error('Error creating support ticket:', error)
+                    throw error
+                }
+            }
+
+            calculateWaitTime() {
+                const averageResponseTime = 5
+                const queueLength = this.waitingQueue.length
+                const activeAgents = this.activeAgents.size
+                
+                if (activeAgents === 0) return 15
+                return Math.ceil((queueLength / activeAgents) * averageResponseTime)
+            }
+
+            async createScreenShareSession(userId, confirmationCode) {
+                try {
+                    const { data, error } = await supabase
+                        .from('screen_share_sessions')
+                        .insert({
+                            user_id: userId,
+                            confirmation_code: confirmationCode,
+                            status: 'active',
+                            created_at: new Date().toISOString()
+                        })
+                        .select()
+                        .single()
+
+                    if (error) throw error
+                    return data
+                } catch (error) {
+                    console.error('Error creating screen share session:', error)
+                    throw error
+                }
+            }
+        }
+
+        // Initialize services
+        const aiChatService = new AIChatService()
+        const liveAgentService = new LiveAgentService()
+
+        // FAQ Data
+        const faqData = {
+            'getting-started': [
+                { q: "How do I create my first event?", a: "Navigate to the Events section in your dashboard and click 'Create New Event'. Fill in the basic details like event name, date, and location. You can customize the event homepage and add modules later." },
+                { q: "What's the difference between the desktop and mobile app?", a: "The desktop app is for event organizers and provides full administrative control, analytics, and management features. The mobile app is designed for guests to access event information, chat, and travel tools." },
+                { q: "How do I invite guests to my event?", a: "Use the Guest Management section to upload guest lists via CSV or manually add guests. You can send invitations via email with custom messages and track RSVP responses in real-time." },
+                { q: "Can I customize the event homepage?", a: "Yes! Use our Event Homepage Builder to create custom layouts, add your branding, include interactive modules, and personalize the guest experience with your content." },
+                { q: "How do I set up team members?", a: "Go to Team Management and invite team members by email. Assign roles (Admin, Manager, Staff) with different permission levels to control access to various features." },
+                { q: "What payment methods do you accept?", a: "We accept all major credit cards, PayPal, and bank transfers for annual subscriptions. Monthly plans are charged automatically to your preferred payment method." },
+                { q: "Is there a free trial available?", a: "Yes! We offer a 14-day free trial with full access to all features. No credit card required to start your trial." },
+                { q: "How do I access my account from multiple devices?", a: "Simply log in with your credentials on any device. Your data syncs automatically across all platforms, so you can manage events from desktop and check updates on mobile." },
+                { q: "What kind of support do you provide?", a: "We offer 24/7 email support, live chat during business hours, comprehensive documentation, and video tutorials. Enterprise customers get dedicated account managers." },
+                { q: "Can I export my event data?", a: "Yes, you can export guest lists, attendance reports, analytics data, and chat logs in CSV or PDF format from the Data Export section." }
+            ],
+            'account-setup': [
+                { q: "How do I create an OnTimely account?", a: "Visit our website and click 'Get Started' or 'Sign Up'. Enter your email address, create a password, and verify your email to activate your account." },
+                { q: "What information do I need to provide during signup?", a: "You'll need your name, email address, company name (if applicable), and a secure password. Additional company details can be added later in your profile settings." },
+                { q: "How do I verify my email address?", a: "Check your email inbox for a verification link from OnTimely. Click the link to verify your account. If you don't see the email, check your spam folder." },
+                { q: "Can I change my account email address?", a: "Yes, you can update your email address in Account Settings. You'll need to verify the new email address before it becomes active." },
+                { q: "How do I reset my password?", a: "Click 'Forgot Password' on the login page, enter your email address, and follow the instructions in the password reset email." },
+                { q: "What are the password requirements?", a: "Passwords must be at least 8 characters long and include uppercase letters, lowercase letters, and numbers for security." },
+                { q: "How do I update my profile information?", a: "Go to Account Settings in your dashboard to update your name, company information, profile picture, and notification preferences." },
+                { q: "Can I have multiple accounts?", a: "Each email address can only have one OnTimely account. If you need access to multiple companies, contact support to set up team access." },
+                { q: "How do I delete my account?", a: "Contact our support team to request account deletion. We'll help you export your data before permanently removing your account." },
+                { q: "Is my data secure?", a: "Yes, we use enterprise-grade security with SSL encryption, secure data centers, and regular security audits to protect your information." }
+            ]
+        };
+
+        // Navigation functionality
+        function initNavigation() {
+            const navItems = document.querySelectorAll('.nav-item');
+            const faqContents = document.querySelectorAll('.faq-content');
+
+            navItems.forEach(item => {
+                item.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    
+                    // Remove active class from all nav items
+                    navItems.forEach(nav => nav.classList.remove('active'));
+                    
+                    // Add active class to clicked item
+                    item.classList.add('active');
+                    
+                    // Hide all FAQ contents
+                    faqContents.forEach(content => content.classList.remove('active'));
+                    
+                    // Show selected content
+                    const section = item.dataset.section;
+                    const targetContent = document.getElementById(section);
+                    if (targetContent) {
+                        targetContent.classList.add('active');
+                        
+                        // Update content header
+                        const title = item.textContent.trim();
+                        const description = getSectionDescription(section);
+                        
+                        document.querySelector('.content-title').textContent = title;
+                        document.querySelector('.content-description').textContent = description;
+                    }
+                });
+            });
+        }
+
+        function getSectionDescription(section) {
+            const descriptions = {
+                'getting-started': 'Welcome to OnTimely! Here are the most common questions to help you get started with our platform.',
+                'account-setup': 'Learn how to set up and manage your OnTimely account effectively.',
+                'first-event': 'Step-by-step guide to creating your first event on OnTimely.',
+                'desktop-app': 'Everything you need to know about using the OnTimely desktop application.',
+                'mobile-app': 'Complete guide to the OnTimely mobile app for guests.',
+                'event-homepages': 'Create stunning custom event homepages for your guests.',
+                'timeline-management': 'Manage event timelines and schedules effectively.',
+                'guest-management': 'Tools and features for managing your event guests.',
+                'chat-system': 'Real-time communication features for events.',
+                'announcements': 'Broadcast announcements to your guests.',
+                'notifications': 'Configure and manage notification settings.',
+                'offline-maps': 'Use offline maps and navigation features.',
+                'translator': 'Multi-language translation tools.',
+                'currency-converter': 'Currency conversion for international events.',
+                'flight-tracker': 'Track guest flights and travel.',
+                'login-issues': 'Troubleshoot common login problems.',
+                'sync-problems': 'Resolve data synchronization issues.',
+                'performance': 'Optimize app performance and resolve issues.',
+                'billing': 'Manage your subscription and billing.',
+                'team-management': 'Add and manage team members.',
+                'data-export': 'Export your event data and reports.'
+            };
+            return descriptions[section] || 'Find answers to common questions about this topic.';
+        }
+
+        // Chat functionality
+        function initChat() {
+            const chatModal = document.getElementById('chatModal');
+            const chatClose = document.getElementById('chatClose');
+            const speakToAgentBtn = document.getElementById('speakToAgentBtn');
+            const chatInput = document.getElementById('chatInput');
+            const chatMessages = document.getElementById('chatMessages');
+
+            speakToAgentBtn.addEventListener('click', () => {
+                chatModal.classList.add('active');
+                chatInput.focus();
+            });
+
+            chatClose.addEventListener('click', () => {
+                chatModal.classList.remove('active');
+            });
+
+            chatInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage();
+                }
+            });
+
+            async function sendMessage() {
+                const message = chatInput.value.trim();
+                if (!message) return;
+
+                // Add user message
+                addMessage(message, 'user');
+                chatInput.value = '';
+
+                // Show typing indicator
+                showTypingIndicator();
+
+                try {
+                    // Get AI response
+                    const response = await aiChatService.sendMessage(message);
+                    hideTypingIndicator();
+                    addMessage(response, 'agent');
+                } catch (error) {
+                    hideTypingIndicator();
+                    addMessage("I'm sorry, I'm having trouble responding right now. Please try again or contact our support team.", 'agent');
+                }
+            }
+
+            function showTypingIndicator() {
+                const typingDiv = document.createElement('div');
+                typingDiv.className = 'message agent typing-indicator';
+                typingDiv.innerHTML = '<i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle"></i>';
+                typingDiv.id = 'typing-indicator';
+                chatMessages.appendChild(typingDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
+            function hideTypingIndicator() {
+                const typingIndicator = document.getElementById('typing-indicator');
+                if (typingIndicator) {
+                    typingIndicator.remove();
+                }
+            }
+
+            function addMessage(text, sender) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${sender}`;
+                messageDiv.textContent = text;
+                chatMessages.appendChild(messageDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
+            function generateAIResponse(userMessage) {
+                const responses = [
+                    "I understand your question. Let me help you with that.",
+                    "That's a great question! Here's what I can tell you...",
+                    "I can definitely help you with that. Based on your question...",
+                    "Let me provide you with some guidance on that topic.",
+                    "I'll do my best to assist you with this issue."
+                ];
+                return responses[Math.floor(Math.random() * responses.length)];
+            }
+        }
+
+        // Screen sharing functionality
+        function initScreenSharing() {
+            const screenShareModal = document.getElementById('screenShareModal');
+            const reportBugBtn = document.getElementById('reportBugBtn');
+            const startScreenShare = document.getElementById('startScreenShare');
+            const confirmationCode = document.getElementById('confirmationCode');
+
+            reportBugBtn.addEventListener('click', () => {
+                // Generate random confirmation code
+                const code = Math.random().toString(36).substring(2, 8).toUpperCase();
+                confirmationCode.textContent = code;
+                screenShareModal.classList.add('active');
+            });
+
+            startScreenShare.addEventListener('click', async () => {
+                try {
+                    const stream = await navigator.mediaDevices.getDisplayMedia({
+                        video: true,
+                        audio: true
+                    });
+                    
+                    const code = confirmationCode.textContent;
+                    
+                    // Create screen share session in database
+                    await liveAgentService.createScreenShareSession(null, code);
+                    
+                    console.log('Screen sharing started with code:', code);
+                    
+                    screenShareModal.classList.remove('active');
+                    
+                    // Show success message with code
+                    const successMessage = `Screen sharing session started!\n\nConfirmation Code: ${code}\n\nShare this code with our support agent so they can view your screen.`;
+                    alert(successMessage);
+                    
+                    // Optional: Send notification to staff portal
+                    await notifyStaffPortal(code);
+                    
+                } catch (error) {
+                    console.error('Error starting screen share:', error);
+                    alert('Unable to start screen sharing. Please check your browser permissions.');
+                }
+            });
+
+            async function notifyStaffPortal(confirmationCode) {
+                try {
+                    // This would typically send a notification to your staff portal
+                    // You can implement this based on your staff portal's notification system
+                    console.log(`Notifying staff portal of screen share session: ${confirmationCode}`);
+                    
+                    // Example: Send to staff portal via WebSocket or API
+                    // await fetch('/api/notify-staff', {
+                    //     method: 'POST',
+                    //     headers: { 'Content-Type': 'application/json' },
+                    //     body: JSON.stringify({ 
+                    //         type: 'screen_share_started',
+                    //         confirmationCode: confirmationCode,
+                    //         timestamp: new Date().toISOString()
+                    //     })
+                    // });
+                } catch (error) {
+                    console.error('Error notifying staff portal:', error);
+                }
+            }
+        }
+
+        // Search functionality
+        function initSearch() {
+            const searchInput = document.getElementById('searchInput');
+            
+            searchInput.addEventListener('input', (e) => {
+                const query = e.target.value.toLowerCase();
+                const navItems = document.querySelectorAll('.nav-item');
+                
+                navItems.forEach(item => {
+                    const text = item.textContent.toLowerCase();
+                    if (text.includes(query) || query === '') {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        }
+
+        // Scroll animations
+        function initFadeInAnimations() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.fade-in-text').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', function() {
+            initNavigation();
+            initChat();
+            initScreenSharing();
+            initSearch();
+            initFadeInAnimations();
+        });
+    </script>
+</body>
+</html>
