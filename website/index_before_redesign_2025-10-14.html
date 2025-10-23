@@ -1,0 +1,1734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OnTimely - Elite Event Management Platform</title>
+    <meta name="description" content="The most advanced event management platform for professionals. Create custom guest apps, manage real-time communication, and deliver exceptional event experiences.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-green: #22c55e;
+            --primary-green-dark: #16a34a;
+            --accent-grey: #6b7280;
+            --light-grey: #9ca3af;
+            --dark-grey: #374151;
+            --bg-primary: #0f1115;
+            --bg-secondary: #1a1a1a;
+            --bg-tertiary: #262626;
+            --text-primary: #ffffff;
+            --text-secondary: #e5e7eb;
+            --text-muted: #9ca3af;
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            --border-medium: rgba(255, 255, 255, 0.15);
+            --shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-medium: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --shadow-large: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            background: radial-gradient(1400px 1000px at 15% -5%, rgba(34,197,94,0.08), transparent 50%),
+                        radial-gradient(1200px 800px at 85% 15%, rgba(107,114,128,0.06), transparent 45%),
+                        var(--bg-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 60px;
+        }
+
+        .container-wide {
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 0 80px;
+        }
+
+        /* Floating Navbar */
+        .navbar {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(26, 26, 26, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            padding: 12px 30px;
+            border: 1px solid #333;
+            z-index: 1000;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            border-radius: 50px;
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(15px);
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+        }
+
+        .nav-center {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #ffffff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: #e0e0e0;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #ffffff;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            background: var(--primary-green);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        /* Auth buttons */
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .auth-btn {
+            padding: 8px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-auth-buttons {
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .login-btn {
+            color: #e0e0e0;
+            border: 1px solid #333;
+        }
+
+        .login-btn:hover {
+            color: #ffffff;
+            border-color: #555;
+        }
+
+        .signup-btn {
+            background: var(--primary-green);
+            color: #000000;
+            white-space: nowrap;
+        }
+
+        .signup-btn:hover {
+            background: var(--primary-green-dark);
+            transform: translateY(-1px);
+        }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section - Ultra Wide Layout */
+        .hero {
+            padding: 160px 0 120px;
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(15, 17, 21, 0.75);
+            z-index: 1;
+        }
+
+        .hero video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            object-fit: cover;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 8rem;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 0 80px;
+        }
+
+        .hero-left h1 {
+            font-size: 4.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, var(--text-primary), var(--primary-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-left p {
+            font-size: 1.4rem;
+            line-height: 1.7;
+            margin-bottom: 3rem;
+            color: var(--text-muted);
+            max-width: 600px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 18px 35px;
+            background: linear-gradient(135deg, var(--primary-green), var(--primary-green-dark));
+            color: #0b1411;
+            text-decoration: none;
+            border-radius: 15px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 25px rgba(34, 197, 94, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(34, 197, 94, 0.4);
+            background: linear-gradient(135deg, var(--primary-green-dark), #15803d);
+        }
+
+        .cta-button.secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            border: 1px solid var(--border-medium);
+            backdrop-filter: blur(20px);
+        }
+
+        .cta-button.secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .hero-right {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .app-downloads {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(25px);
+            border: 1px solid var(--border-subtle);
+            border-radius: 25px;
+            padding: 3rem;
+            text-align: center;
+            box-shadow: var(--shadow-large);
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .app-downloads h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: var(--text-primary);
+        }
+
+        .download-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .download-btn {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 20px 25px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--border-subtle);
+            border-radius: 15px;
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(20px);
+        }
+
+        .download-btn:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            border-color: var(--primary-green);
+        }
+
+        .download-btn.primary {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(34, 197, 94, 0.05));
+            border-color: rgba(34, 197, 94, 0.3);
+        }
+
+        .download-btn i {
+            font-size: 2rem;
+            color: var(--primary-green);
+        }
+
+        .download-btn .text {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .download-btn .label {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 4px;
+        }
+
+        .download-btn .store {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* Enhanced Sign In Section */
+        .sign-in-section {
+            padding: 100px 0;
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.05), rgba(107, 114, 128, 0.03));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sign-in-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at center, rgba(34, 197, 94, 0.08) 0%, transparent 70%);
+            z-index: 1;
+        }
+
+        .sign-in-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(25px);
+            border: 1px solid var(--border-subtle);
+            border-radius: 30px;
+            box-shadow: var(--shadow-large);
+        }
+
+        .sign-in-content h2 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--text-primary), var(--primary-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
+        }
+
+        .sign-in-content p {
+            font-size: 1.3rem;
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+            line-height: 1.7;
+        }
+
+        .dashboard-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            padding: 20px 40px;
+            background: linear-gradient(135deg, var(--primary-green), var(--primary-green-dark));
+            color: #0b1411;
+            text-decoration: none;
+            border-radius: 15px;
+            font-weight: 700;
+            font-size: 1.3rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 30px rgba(34, 197, 94, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dashboard-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .dashboard-btn:hover::before {
+            left: 100%;
+        }
+
+        .dashboard-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(34, 197, 94, 0.4);
+            background: linear-gradient(135deg, var(--primary-green-dark), #15803d);
+        }
+
+        .dashboard-btn i {
+            font-size: 1.5rem;
+        }
+
+        /* Features Section - Ultra Wide Grid */
+        .features {
+            padding: 120px 0;
+            background: var(--bg-primary);
+        }
+
+        /* Glowing Card Styles */
+        .glowing-card {
+            --glow-sens: 30;
+            --card-bg: linear-gradient(8deg, var(--bg-secondary) 75%, color-mix(in hsl, var(--bg-secondary), white 2.5%) 75.5%);
+            --blend: soft-light;
+            --glow-blend: plus-lighter;
+            --glow-color: 142deg 80% 50%; /* Green color for OnTimely */
+            --glow-boost: 0%;
+            --pads: 40px;
+            --color-sens: calc(var(--glow-sens) + 20);
+            --pointer-°: 45deg;
+            
+            position: relative;
+            border-radius: 25px;
+            isolation: isolate;
+            transform: translate3d(0, 0, 0.01px);
+            border: 1px solid var(--border-subtle);
+            background: var(--card-bg);
+            background-repeat: no-repeat;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glowing-card::before,
+        .glowing-card::after,
+        .glowing-card > .glow {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            transition: opacity 0.25s ease-out;
+            z-index: -1;
+        }
+
+        .glowing-card:not(:hover):not(.animating)::before,
+        .glowing-card:not(:hover):not(.animating)::after,
+        .glowing-card:not(:hover):not(.animating) > .glow {
+            opacity: 0;
+            transition: opacity 0.75s ease-in-out;
+        }
+
+        .glowing-card::before {
+            border: 1px solid transparent;
+            background:
+                linear-gradient(var(--card-bg) 0 100%) padding-box,
+                linear-gradient(rgb(255 255 255 / 0%) 0% 100%) border-box,
+                radial-gradient(at 80% 55%, hsla(142,100%,50%,0.8) 0px, transparent 50%) border-box,
+                radial-gradient(at 69% 34%, hsla(142,100%,60%,0.6) 0px, transparent 50%) border-box,
+                radial-gradient(at 8% 6%, hsla(142,100%,70%,0.4) 0px, transparent 50%) border-box,
+                radial-gradient(at 41% 38%, hsla(142,100%,40%,0.5) 0px, transparent 50%) border-box,
+                radial-gradient(at 86% 85%, hsla(142,100%,55%,0.3) 0px, transparent 50%) border-box,
+                radial-gradient(at 82% 18%, hsla(142,100%,65%,0.4) 0px, transparent 50%) border-box,
+                radial-gradient(at 51% 4%, hsla(142,100%,45%,0.6) 0px, transparent 50%) border-box,
+                linear-gradient(var(--primary-green) 0 100%) border-box;
+            
+            opacity: calc((var(--pointer-d) - var(--color-sens)) / (100 - var(--color-sens)));
+            mask-image: 
+                conic-gradient( 
+                    from var(--pointer-°) at center, black 25%, transparent 40%, transparent 60%, black 75%
+                );
+        }
+
+        .glowing-card::after {
+            border: 1px solid transparent;
+            background:
+                radial-gradient(at 80% 55%, hsla(142,100%,50%,0.8) 0px, transparent 50%) padding-box,
+                radial-gradient(at 69% 34%, hsla(142,100%,60%,0.6) 0px, transparent 50%) padding-box,
+                radial-gradient(at 8% 6%, hsla(142,100%,70%,0.4) 0px, transparent 50%) padding-box,
+                radial-gradient(at 41% 38%, hsla(142,100%,40%,0.5) 0px, transparent 50%) padding-box,
+                radial-gradient(at 86% 85%, hsla(142,100%,55%,0.3) 0px, transparent 50%) padding-box,
+                radial-gradient(at 82% 18%, hsla(142,100%,65%,0.4) 0px, transparent 50%) padding-box,
+                radial-gradient(at 51% 4%, hsla(142,100%,45%,0.6) 0px, transparent 50%) padding-box,
+                linear-gradient(var(--primary-green) 0 100%) padding-box;
+            
+            mask-image:
+                linear-gradient( to bottom, black, black ),
+                radial-gradient( ellipse at 50% 50%, black 40%, transparent 65% ),
+                radial-gradient( ellipse at 66% 66%, black 5%, transparent 40% ),
+                radial-gradient( ellipse at 33% 33%, black 5%, transparent 40% ),
+                radial-gradient( ellipse at 66% 33%, black 5%, transparent 40% ),
+                radial-gradient( ellipse at 33% 66%, black 5%, transparent 40% ),
+                conic-gradient( from var(--pointer-°) at center, transparent 5%, black 15%, black 85%, transparent 95% );
+
+            mask-composite: subtract,add,add,add,add,add;
+            opacity: calc((var(--pointer-d) - var(--color-sens)) / (100 - var(--color-sens)));
+            mix-blend-mode: var(--blend);
+        }
+
+        .glowing-card > .glow {
+            --outset: var(--pads);
+            inset: calc(var(--outset) * -1);
+            pointer-events: none;
+            z-index: 1;
+            
+            mask-image: 
+                conic-gradient( 
+                    from var(--pointer-°) at center, black 2.5%, transparent 10%, transparent 90%, black 97.5%
+                );
+            
+            opacity: calc((var(--pointer-d) - var(--glow-sens)) / (100 - var(--glow-sens)));
+            mix-blend-mode: var(--glow-blend);
+        }
+
+        .glowing-card > .glow::before {
+            content: "";
+            position: absolute;
+            inset: var(--outset);
+            border-radius: inherit;
+            box-shadow: 
+                inset 0 0 0 1px hsl( var(--glow-color) / 100%), 
+                inset 0 0 1px 0 hsl( var(--glow-color) / calc(var(--glow-boost) + 60%)), 
+                inset 0 0 3px 0 hsl( var(--glow-color) / calc(var(--glow-boost) + 50%)), 
+                inset 0 0 6px 0 hsl( var(--glow-color) / calc(var(--glow-boost) + 40%)), 
+                inset 0 0 15px 0 hsl( var(--glow-color) / calc(var(--glow-boost) + 30%)), 
+                inset 0 0 25px 2px hsl( var(--glow-color) / calc(var(--glow-boost) + 20%)), 
+                inset 0 0 50px 2px hsl( var(--glow-color) / calc(var(--glow-boost) + 10%)), 
+                0 0 1px 0 hsl( var(--glow-color) / calc(var(--glow-boost) + 60%)), 
+                0 0 3px 0 hsl( var(--glow-color) / calc(var(--glow-boost) + 50%)), 
+                0 0 6px 0 hsl( var(--glow-color) / calc(var(--glow-boost) + 40%)), 
+                0 0 15px 0 hsl( var(--glow-color) / calc(var(--glow-boost) + 30%)), 
+                0 0 25px 2px hsl( var(--glow-color) / calc(var(--glow-boost) + 20%)), 
+                0 0 50px 2px hsl( var(--glow-color) / calc(var(--glow-boost) + 10%));
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 6rem;
+        }
+
+        .section-header h2 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--text-primary), var(--primary-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
+        }
+
+        .section-header p {
+            font-size: 1.3rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 3rem;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(25px);
+            border: 1px solid var(--border-subtle);
+            border-radius: 25px;
+            padding: 3rem;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card.glowing-card {
+            padding: 3rem;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.05), rgba(107, 114, 128, 0.03));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            border-radius: 25px;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-large);
+            border-color: var(--primary-green);
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary-green), var(--primary-green-dark));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            box-shadow: 0 8px 25px rgba(34, 197, 94, 0.3);
+        }
+
+        .feature-icon i {
+            font-size: 2.5rem;
+            color: #0b1411;
+        }
+
+        .feature-card h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .feature-subtitle {
+            font-size: 1rem;
+            color: var(--accent-grey);
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .feature-description {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: var(--text-muted);
+        }
+
+        /* Contact Form Section - Clean Minimalist Style */
+        .contact-section {
+            padding: 120px 0;
+            background: #0a0a0a;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                linear-gradient(90deg, transparent 0%, rgba(34, 197, 94, 0.02) 50%, transparent 100%),
+                radial-gradient(ellipse at 20% 50%, rgba(34, 197, 94, 0.03) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 50%, rgba(107, 114, 128, 0.02) 0%, transparent 50%);
+            z-index: 1;
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 60px;
+        }
+
+        .contact-form-container {
+            background: transparent;
+            padding: 0;
+        }
+
+        .contact-form h2 {
+            font-size: 4rem;
+            font-weight: 900;
+            color: #ffffff;
+            margin-bottom: 1.5rem;
+            letter-spacing: -2px;
+            line-height: 1.1;
+        }
+
+        .contact-form p {
+            font-size: 1.2rem;
+            color: #999;
+            margin-bottom: 3rem;
+            line-height: 1.6;
+            font-style: italic;
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #e0e0e0;
+            margin-bottom: 0.8rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px 20px;
+            background: rgba(26, 26, 26, 0.8);
+            border: 1px solid #333;
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-green);
+            background: rgba(26, 26, 26, 0.9);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #666;
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .contact-form .cta-button {
+            background: var(--primary-green);
+            color: #000000;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .contact-form .cta-button:hover {
+            background: var(--primary-green-dark);
+            transform: translateY(-1px);
+        }
+
+        .contact-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .contact-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .contact-image-placeholder {
+            width: 100%;
+            height: 400px;
+            background: rgba(26, 26, 26, 0.8);
+            border: 1px solid #333;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-image-placeholder::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 30% 30%, rgba(34, 197, 94, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 70% 70%, rgba(107, 114, 128, 0.05) 0%, transparent 50%);
+        }
+
+        .contact-image-placeholder i {
+            font-size: 3rem;
+            color: #666;
+            z-index: 2;
+            position: relative;
+        }
+
+        /* Stats Section */
+        .stats {
+            padding: 100px 0;
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.05), rgba(107, 114, 128, 0.03));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stats::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at center, rgba(34, 197, 94, 0.08) 0%, transparent 70%);
+            z-index: 1;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(25px);
+            border: 1px solid var(--border-subtle);
+            border-radius: 20px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-medium);
+            border-color: var(--primary-green);
+        }
+
+        .stat-number {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--primary-green);
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--primary-green), var(--primary-green-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--bg-secondary);
+            padding: 80px 0 40px;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h4 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .footer-section p {
+            margin-bottom: 1rem;
+            color: var(--text-muted);
+        }
+
+        .footer-section a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--primary-green);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-subtle);
+            color: var(--text-muted);
+        }
+
+        /* Animations */
+        .animate-on-scroll {
+                opacity: 0;
+                transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+
+        .animate-on-scroll.animated {
+                opacity: 1;
+                transform: translateY(0);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1400px) {
+            .container {
+                padding: 0 40px;
+            }
+            
+            .container-wide {
+                padding: 0 60px;
+            }
+            
+            .hero-content {
+                padding: 0 60px;
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 4rem;
+                text-align: center;
+            }
+            
+            .features-grid {
+                grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                top: 15px;
+                padding: 10px 20px;
+                width: calc(100% - 30px);
+                max-width: 500px;
+            }
+
+            .nav-container {
+                justify-content: space-between;
+                gap: 0;
+            }
+
+            .nav-center {
+                gap: 20px;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(26, 26, 26, 0.95);
+                flex-direction: column;
+                padding: 20px;
+                border-radius: 15px;
+                margin-top: 10px;
+                gap: 15px;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .auth-buttons {
+                display: none;
+            }
+
+            .mobile-auth-buttons {
+                display: flex !important;
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .mobile-auth-buttons .auth-btn {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .mobile-auth-buttons .auth-btn.signup-btn {
+                background: var(--primary-green);
+                color: #000000;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .container {
+                padding: 0 20px;
+            }
+            
+            .container-wide {
+                padding: 0 20px;
+            }
+            
+            .hero-content {
+                padding: 0 20px;
+            }
+            
+            .hero-left h1 {
+                font-size: 3rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .contact-content {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+                padding: 0 20px;
+            }
+            
+            .contact-form h2 {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar {
+                padding: 8px 15px;
+            }
+            
+            .logo {
+                font-size: 1.3rem;
+            }
+            
+            .logo img {
+                height: 30px;
+            }
+            
+            .hero-left h1 {
+                font-size: 2.5rem;
+            }
+            
+            .contact-form h2 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#home" class="logo">
+                <img src="../OnTimely_Logo_Animated.svg" alt="OnTimely Logo">
+                OnTimely
+            </a>
+            <div class="nav-center">
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+                    <li class="mobile-auth-buttons">
+                        <a href="https://dashboard.ontimely.co.uk" class="auth-btn login-btn">Login</a>
+                        <a href="https://dashboard.ontimely.co.uk" class="auth-btn signup-btn">Sign Up</a>
+                    </li>
+            </ul>
+            </div>
+            <div class="auth-buttons">
+                <a href="https://dashboard.ontimely.co.uk" class="auth-btn login-btn">Login</a>
+                <a href="https://dashboard.ontimely.co.uk" class="auth-btn signup-btn">Sign Up</a>
+            </div>
+            <button class="menu-toggle" id="menuToggle">☰</button>
+        </div>
+        </nav>
+
+    <main>
+        <section id="home" class="hero">
+            <video autoplay muted loop playsinline>
+                <source src="../0_Technology_Circuit_Board_3840x2160.mp4" type="video/mp4">
+            </video>
+            <div class="hero-content">
+                <div class="hero-left">
+                    <h1>Elite Event Management Platform</h1>
+                    <p>Transform your events with OnTimely's enterprise-grade platform. Create custom guest apps, manage real-time communication, and deliver exceptional experiences that set your events apart from the competition.</p>
+                    
+                    <div class="hero-buttons">
+                        <a href="#features" class="cta-button">
+                            <i class="fas fa-rocket"></i>
+                            Get Started
+                        </a>
+                        <a href="#demo" class="cta-button secondary">
+                            <i class="fas fa-play"></i>
+                            Watch Demo
+                        </a>
+                    </div>
+                </div>
+
+                <div class="hero-right">
+                    <div class="app-downloads">
+                        <h3>Download Desktop App</h3>
+                        <div class="download-buttons" id="download-buttons">
+                            <!-- Buttons will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Enhanced Sign In Section -->
+        <section class="sign-in-section">
+            <div class="container-wide">
+                <div class="sign-in-content">
+                    <h2>Already Have an Account?</h2>
+                    <p>Access your professional event dashboard and manage your events with our elite suite of tools designed for the most demanding event professionals.</p>
+                    <a href="https://dashboard.ontimely.co.uk" class="dashboard-btn">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Access Elite Dashboard
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="features" id="features">
+            <div class="container-wide">
+                <div class="section-header animate-on-scroll">
+                    <h2>Why Choose OnTimely?</h2>
+                    <p>Built for professionals who demand excellence in event management and guest experience. Our platform delivers enterprise-grade features with unmatched reliability.</p>
+                </div>
+                
+                <div class="features-grid">
+                    <div class="feature-card glowing-card animate-on-scroll">
+                        <span class="glow"></span>
+                        <div class="feature-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h3>Custom Guest Applications</h3>
+                        <div class="feature-subtitle">App Within an App Technology</div>
+                        <div class="feature-description">Create fully customized mobile applications for your guests with real-time communication, branded homepages, and personalized event experiences that reflect your company's identity.</div>
+                    </div>
+                    
+                    <div class="feature-card glowing-card animate-on-scroll">
+                        <span class="glow"></span>
+                        <div class="feature-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <h3>Real-time Communication Hub</h3>
+                        <div class="feature-subtitle">Instant Messaging & Live Updates</div>
+                        <div class="feature-description">Enable seamless communication between guests and organizers through advanced chat systems, live announcements, and instant notifications that keep everyone connected.</div>
+                    </div>
+                    
+                    <div class="feature-card glowing-card animate-on-scroll">
+                        <span class="glow"></span>
+                        <div class="feature-icon">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        <h3>Custom Event Homepages</h3>
+                        <div class="feature-subtitle">Branded Event Portals</div>
+                        <div class="feature-description">Design stunning, fully branded homepages for each event with custom layouts, color schemes, and content that perfectly represents your company's professional image.</div>
+                    </div>
+                    
+                    <div class="feature-card glowing-card animate-on-scroll">
+                        <span class="glow"></span>
+                        <div class="feature-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h3>Interactive Event Timelines</h3>
+                        <div class="feature-subtitle">Dynamic Schedule Management</div>
+                        <div class="feature-description">Create comprehensive, interactive timelines that guests can explore, featuring detailed schedules, reminders, and real-time updates throughout the entire event experience.</div>
+                    </div>
+                    
+                    <div class="feature-card glowing-card animate-on-scroll">
+                        <span class="glow"></span>
+                        <div class="feature-icon">
+                            <i class="fas fa-puzzle-piece"></i>
+                        </div>
+                        <h3>Modular Application Suite</h3>
+                        <div class="feature-subtitle">Custom Experience Tools</div>
+                        <div class="feature-description">Build and deploy custom applications within the guest app for check-ins, networking, feedback collection, surveys, and other interactive experiences tailored to your event needs.</div>
+                    </div>
+                    
+                    <div class="feature-card glowing-card animate-on-scroll">
+                        <span class="glow"></span>
+                        <div class="feature-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3>Complete Guest Journey Management</h3>
+                        <div class="feature-subtitle">End-to-End Experience Control</div>
+                        <div class="feature-description">Track and manage every aspect of your guests' journey from initial invitation to post-event follow-up with comprehensive analytics and insights that drive better outcomes.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Form Section -->
+        <section class="contact-section" id="contact">
+            <div class="contact-content">
+                <div class="contact-form-container">
+                    <form class="contact-form">
+                        <h2>Get In Touch</h2>
+                        <p>Ready to transform your events? Contact our team to discuss how OnTimely can elevate your event management to the next level.</p>
+                        
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" name="name" placeholder="Your full name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" placeholder="your@email.com" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="company">Company Name</label>
+                            <input type="text" id="company" name="company" placeholder="Your company name">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" placeholder="Tell us about your event management needs..." required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="cta-button">
+                            <i class="fas fa-paper-plane"></i>
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+                
+                <div class="contact-image">
+                    <div class="contact-image-placeholder">
+                        <i class="fas fa-envelope-open-text"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="stats">
+            <div class="container-wide">
+                <div class="stats-grid">
+                    <div class="stat-item animate-on-scroll">
+                        <div class="stat-number">10K+</div>
+                        <div class="stat-label">Elite Events Managed</div>
+                    </div>
+                    <div class="stat-item animate-on-scroll">
+                        <div class="stat-number">500K+</div>
+                        <div class="stat-label">Guests Served</div>
+                    </div>
+                    <div class="stat-item animate-on-scroll">
+                        <div class="stat-number">99.9%</div>
+                        <div class="stat-label">Uptime Guarantee</div>
+                    </div>
+                    <div class="stat-item animate-on-scroll">
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-label">Elite Support</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container-wide">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>OnTimely</h4>
+                    <p>Elite event management platform designed for professionals who demand excellence and reliability in every aspect of their event operations.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Product</h4>
+                    <p><a href="#features">Features</a></p>
+                    <p><a href="#pricing">Pricing</a></p>
+                    <p><a href="#integrations">Integrations</a></p>
+                </div>
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <p><a href="#about">About</a></p>
+                    <p><a href="#careers">Careers</a></p>
+                    <p><a href="#contact">Contact</a></p>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <p><a href="#help">Help Center</a></p>
+                    <p><a href="#docs">Documentation</a></p>
+                    <p><a href="#status">System Status</a></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 OnTimely. All rights reserved. | Privacy Policy | Terms of Service</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Device detection and dynamic download button generation
+        function detectPlatform() {
+            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+            
+            // Check if it's macOS
+            if (/Mac|iPod|iPhone|iPad/.test(userAgent)) {
+                return 'mac';
+            }
+            // Check if it's Windows
+            else if (/Win/.test(userAgent)) {
+                return 'windows';
+            }
+            // Check if it's Linux
+            else if (/Linux/.test(userAgent)) {
+                return 'linux';
+            }
+            // Default to showing all options
+            else {
+                return 'unknown';
+            }
+        }
+
+        function createDownloadButton(platform, icon, label, sublabel, filename, isPrimary = false) {
+            const button = document.createElement('a');
+            button.href = filename;
+            button.className = `download-btn ${isPrimary ? 'primary' : ''}`;
+            
+            button.innerHTML = `
+                <i class="${icon}"></i>
+                <div class="text">
+                    <span class="label">${label}</span>
+                    <span class="store">${sublabel}</span>
+                </div>
+            `;
+            
+            return button;
+        }
+
+        function populateDownloadButtons() {
+            const container = document.getElementById('download-buttons');
+            const platform = detectPlatform();
+            
+            // Clear existing buttons
+            container.innerHTML = '';
+            
+            if (platform === 'mac') {
+                // Check if it's Apple Silicon or Intel
+                const isAppleSilicon = navigator.platform.includes('ARM') || 
+                                     (navigator.userAgent.includes('Mac') && navigator.userAgent.includes('ARM'));
+                
+                if (isAppleSilicon) {
+                    // Primary button for Apple Silicon
+                    container.appendChild(createDownloadButton(
+                        'mac', 
+                        'fab fa-apple', 
+                        'Download for Apple Silicon (Recommended)', 
+                        'macOS (ARM64)', 
+                        'https://github.com/leveldesignagency/OnTimely/releases/download/v1.0.1/OnTimely.Desktop.App.v1.0.1.Apple.Silicon.dmg',
+                        true
+                    ));
+                    
+                    // Secondary button for Intel (universal compatibility)
+                    container.appendChild(createDownloadButton(
+                        'mac', 
+                        'fab fa-apple', 
+                        'Download for Intel (Universal)', 
+                        'macOS (Intel)', 
+                        'https://github.com/leveldesignagency/OnTimely/releases/download/v1.0.1/OnTimely.Desktop.App.v1.0.1.dmg'
+                    ));
+                } else {
+                    // Primary button for Intel
+                    container.appendChild(createDownloadButton(
+                        'mac', 
+                        'fab fa-apple', 
+                        'Download for Intel (Universal)', 
+                        'macOS (Intel)', 
+                        'https://github.com/leveldesignagency/OnTimely/releases/download/v1.0.1/OnTimely.Desktop.App.v1.0.1.dmg',
+                        true
+                    ));
+                    
+                    // Secondary button for Apple Silicon
+                    container.appendChild(createDownloadButton(
+                        'mac', 
+                        'fab fa-apple', 
+                        'Download for Apple Silicon (Recommended)', 
+                        'macOS (ARM64)', 
+                        'https://github.com/leveldesignagency/OnTimely/releases/download/v1.0.1/OnTimely.Desktop.App.v1.0.1.Apple.Silicon.dmg'
+                    ));
+                }
+            } else if (platform === 'windows') {
+                // Windows primary button
+                container.appendChild(createDownloadButton(
+                    'windows', 
+                    'fab fa-windows', 
+                    'Download for Windows', 
+                    'Windows 10/11', 
+                    'https://github.com/leveldesignagency/OnTimely/releases/download/v1.0.1/OnTimely.Desktop.App.v1.0.1.exe',
+                    true
+                ));
+            } else {
+                // Show all options for unknown platforms or cross-platform users
+                container.appendChild(createDownloadButton(
+                    'mac', 
+                    'fab fa-apple', 
+                    'Download for macOS', 
+                    'macOS (Intel)', 
+                    'https://github.com/leveldesignagency/OnTimely/releases/download/v1.0.1/OnTimely.Desktop.App.v1.0.1.dmg'
+                ));
+                
+                container.appendChild(createDownloadButton(
+                    'mac', 
+                    'fab fa-apple', 
+                    'Download for Apple Silicon (Recommended)', 
+                    'macOS (ARM64)', 
+                    'https://github.com/leveldesignagency/OnTimely/releases/download/v1.0.1/OnTimely.Desktop.App.v1.0.1.Apple.Silicon.dmg'
+                ));
+                
+                container.appendChild(createDownloadButton(
+                    'windows', 
+                    'fab fa-windows', 
+                    'Download for Windows', 
+                    'Windows 10/11', 
+                    'https://github.com/leveldesignagency/OnTimely/releases/download/v1.0.1/OnTimely.Desktop.App.v1.0.1.exe'
+                ));
+            }
+        }
+
+        // Initialize download buttons when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            populateDownloadButtons();
+            initScrollAnimations();
+            initFloatingNavbar();
+            initTextFlash();
+            initSmoothScrolling();
+            initGlowingCards();
+        });
+
+        // Scroll-triggered animations
+        function initScrollAnimations() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animated');
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all elements with animate-on-scroll class
+            document.querySelectorAll('.animate-on-scroll').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        // Floating Navbar functionality
+        function initFloatingNavbar() {
+            const navbar = document.getElementById('navbar');
+            const navLinks = document.querySelectorAll('.nav-links a');
+            const sections = document.querySelectorAll('section[id]');
+            const menuToggle = document.getElementById('menuToggle');
+            const navLinksContainer = document.getElementById('navLinks');
+
+            // Navbar scroll effect
+            window.addEventListener('scroll', () => {
+                const currentScrollY = window.scrollY;
+                
+                if (currentScrollY > 100) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+
+            // Active navigation state management
+            function updateActiveNav() {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    if (window.scrollY >= (sectionTop - 200)) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${current}`) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+
+            // Listen for scroll events
+            window.addEventListener('scroll', updateActiveNav);
+
+            // Mobile menu toggle functionality
+            if (menuToggle && navLinksContainer) {
+                menuToggle.addEventListener('click', () => {
+                    navLinksContainer.classList.toggle('active');
+                });
+
+                // Close mobile menu when clicking on a link
+            navLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        navLinksContainer.classList.remove('active');
+                    });
+                });
+
+                // Close mobile menu when clicking outside
+                document.addEventListener('click', (e) => {
+                    if (!menuToggle.contains(e.target) && !navLinksContainer.contains(e.target)) {
+                        navLinksContainer.classList.remove('active');
+                    }
+                });
+            }
+        }
+
+        // Text flash effect
+        function initTextFlash() {
+            const elements = document.querySelectorAll('.hero-left h1, .sign-in-content h2');
+            
+            elements.forEach(element => {
+                element.addEventListener('mouseenter', () => {
+                    element.style.animation = 'textFlash 0.6s ease-in-out';
+                });
+                
+                element.addEventListener('animationend', () => {
+                    element.style.animation = '';
+                });
+            });
+        }
+
+        // Smooth scrolling for anchor links
+        function initSmoothScrolling() {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        }
+
+        // Glowing Cards Interaction
+        function initGlowingCards() {
+            const cards = document.querySelectorAll('.glowing-card');
+            
+            cards.forEach(card => {
+                const cardUpdate = (e) => {
+                    const position = pointerPositionRelativeToElement(card, e);
+                    const [px, py] = position.pixels;
+                    const [perx, pery] = position.percent;
+                    const [dx, dy] = distanceFromCenter(card, px, py);
+                    const edge = closenessToEdge(card, px, py);
+                    const angle = angleFromPointerEvent(card, dx, dy);
+
+                    card.style.setProperty('--pointer-x', `${round(perx)}%`);
+                    card.style.setProperty('--pointer-y', `${round(pery)}%`);
+                    card.style.setProperty('--pointer-°', `${round(angle)}deg`);
+                    card.style.setProperty('--pointer-d', `${round(edge * 100)}`);
+                    
+                    card.classList.remove('animating');
+                };
+
+                card.addEventListener("pointermove", cardUpdate);
+            });
+        }
+
+        // Utility functions for glowing cards
+        function centerOfElement($el) {
+            const { left, top, width, height } = $el.getBoundingClientRect();
+            return [ width/2, height/2 ];
+        }
+
+        function pointerPositionRelativeToElement($el, e) {
+            const pos = [e.clientX, e.clientY];
+            const { left, top, width, height } = $el.getBoundingClientRect();
+            const x = pos[0] - left;
+            const y = pos[1] - top;
+            const px = clamp((100 / width) * x);
+            const py = clamp((100 / height) * y);
+            return { pixels: [x,y], percent: [px,py] }
+        }
+
+        function angleFromPointerEvent($el, dx, dy) {
+            let angleRadians = 0;
+            let angleDegrees = 0;
+            if ( dx !== 0 || dy !== 0 ) {
+                angleRadians = Math.atan2(dy, dx);
+                angleDegrees = angleRadians * (180 / Math.PI) + 90;
+                if (angleDegrees < 0) {
+                    angleDegrees += 360;
+                }
+            }
+            return angleDegrees;
+        }
+
+        function distanceFromCenter($card, x, y) {
+            const [cx,cy] = centerOfElement($card);
+            return [ x - cx, y - cy ];
+        }
+
+        function closenessToEdge($card, x, y) {
+            const [cx,cy] = centerOfElement($card);
+            const [dx,dy] = distanceFromCenter($card, x, y);
+            let k_x = Infinity;
+            let k_y = Infinity;
+            if (dx !== 0) {
+                k_x = cx / Math.abs(dx);
+            }    
+            if (dy !== 0) {
+                k_y = cy / Math.abs(dy);
+            }
+            return clamp((1 / Math.min(k_x, k_y)), 0, 1);
+        }
+
+        function round(value, precision = 3) {
+            return parseFloat(value.toFixed(precision));
+        }
+
+        function clamp(value, min = 0, max = 100) {
+            return Math.min(Math.max(value, min), max);
+        }
+
+        // Add CSS for text flash animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes textFlash {
+                0% { filter: brightness(1); }
+                50% { filter: brightness(1.3); }
+                100% { filter: brightness(1); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html> 

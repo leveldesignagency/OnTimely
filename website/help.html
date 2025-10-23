@@ -35,51 +35,181 @@
         .navbar {
             position: fixed;
             top: 0;
-            left: 0;
-            right: 0;
-            background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            background: rgba(17, 24, 39, 0.55);
+            backdrop-filter: blur(8px);
+            border-radius: 0;
+            padding: 20px 0; /* match index.html */
+            border: 1px solid rgba(255, 255, 255, 0.08);
             z-index: 1000;
-            padding: 1rem 0;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.04), 0 8px 30px rgba(0,0,0,0.45);
+            transition: top 0.4s ease, border-radius 0.4s ease, width 0.4s ease;
         }
 
         .nav-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 2rem;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 40px;
+            transition: padding 0.6s ease;
+        }
+
+        .navbar.scrolled .nav-container {
+            padding: 0 15px;
+        }
+
+        .nav-center {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            flex: 1;
+            justify-content: flex-end;
+            margin-right: 20px;
         }
 
         .logo {
+            font-family: 'Inter', sans-serif;
             font-size: 1.5rem;
             font-weight: 800;
-            color: var(--text-primary);
+            color: #ffffff;
             text-decoration: none;
-            background: linear-gradient(135deg, var(--text-primary), var(--primary-green));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
         }
 
         .nav-links {
             display: flex;
-            gap: 2rem;
-            align-items: center;
+            list-style: none;
+            gap: 30px;
         }
 
         .nav-links a {
-            color: var(--text-secondary);
+            color: #e0e0e0;
             text-decoration: none;
             font-weight: 500;
-            transition: color 0.3s ease;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            position: relative;
         }
 
-        .nav-links a:hover {
-            color: var(--primary-green);
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #ffffff;
         }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            background: var(--primary-green);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        /* Auth buttons */
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .auth-btn {
+            padding: 8px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-auth-buttons {
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .login-btn {
+            color: #e0e0e0;
+            border: 1px solid #333;
+        }
+
+        .login-btn:hover {
+            color: #ffffff;
+            border-color: #555;
+        }
+
+        .signup-btn {
+            background: var(--primary-green);
+            color: #000000;
+            white-space: nowrap;
+        }
+
+        .signup-btn:hover {
+            background: var(--primary-green-dark);
+            transform: translateY(-1px);
+        }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(26, 26, 26, 0.95);
+                flex-direction: column;
+                padding: 20px;
+                border-radius: 15px;
+                margin-top: 10px;
+                gap: 15px;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .mobile-auth-buttons {
+                display: flex !important;
+            }
+
+            .auth-buttons {
+                display: none;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+        }
+
+        /* remove old hover color override to match index */
 
         .back-btn {
             background: rgba(255, 255, 255, 0.05);
@@ -151,11 +281,10 @@
             margin-bottom: 1rem;
         }
 
-        .sidebar-logo img {
-            height: 32px;
-        }
+        .sidebar-logo img { display: none; }
 
         .sidebar-title {
+            font-family: 'Inter', sans-serif;
             font-size: 1.2rem;
             font-weight: 700;
             color: var(--text-primary);
@@ -234,6 +363,7 @@
         }
 
         .content-title {
+            font-family: 'Inter', sans-serif;
             font-size: 2.5rem;
             font-weight: 800;
             margin-bottom: 1rem;
@@ -334,6 +464,28 @@
             border-color: var(--primary-green);
         }
 
+        /* CTA button style (match homepage hero) */
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 18px 35px;
+            background: linear-gradient(135deg, var(--primary-green), var(--primary-green-dark));
+            color: #0b1411;
+            text-decoration: none;
+            border-radius: 15px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            box-shadow: none;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        .cta-button::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent); transition: left 0.5s ease; }
+        .cta-button:hover::before { left: 100%; }
+        .cta-button:hover { background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(34, 197, 94, 0.1)); border-color: var(--primary-green); box-shadow: 0 8px 25px rgba(34, 197, 94, 0.2); }
+
         /* Chat Modal */
         .chat-modal {
             position: fixed;
@@ -375,6 +527,7 @@
         }
 
         .chat-title {
+            font-family: 'Inter', sans-serif;
             font-size: 1.2rem;
             font-weight: 700;
             color: var(--text-primary);
@@ -510,6 +663,7 @@
         }
 
         .confirmation-code {
+            font-family: 'Inter', sans-serif;
             font-size: 3rem;
             font-weight: 800;
             color: var(--primary-green);
@@ -590,24 +744,31 @@
     </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
+    <!-- Floating Navbar -->
+    <nav class="navbar" id="navbar">
         <div class="nav-container">
             <a href="index.html" class="logo">
-                <img src="on-timely-official-logo.png" alt="OnTimely" style="height: 40px;">
+                <img src="on timely official logo.svg" alt="OnTimely Logo">
             </a>
-            <div class="nav-links">
-                <a href="index.html">Home</a>
-                <a href="index.html#features">Features</a>
-                <a href="about.html">About</a>
-                <a href="index.html#contact">Contact</a>
-                <a href="index.html" class="back-btn">
-                    <i class="fas fa-arrow-left"></i>
-                    Back to Site
-                </a>
+            <div class="nav-center">
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#features">Features</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="help.html" class="active">Help</a></li>
+                    <li class="mobile-auth-buttons">
+                        <a href="https://dashboard.ontimely.co.uk" class="auth-btn login-btn">Login</a>
+                        <a href="index.html#contact" class="auth-btn signup-btn">Contact</a>
+                    </li>
+            </ul>
             </div>
+            <div class="auth-buttons">
+                <a href="https://dashboard.ontimely.co.uk" class="auth-btn login-btn">Login</a>
+                <a href="index.html#contact" class="auth-btn signup-btn">Contact</a>
+            </div>
+            <button class="menu-toggle" id="menuToggle">☰</button>
         </div>
-    </nav>
+        </nav>
 
     <!-- Main Layout -->
     <div class="main-layout">
@@ -678,25 +839,7 @@
                     </a>
                 </div>
 
-                <div class="nav-section">
-                    <div class="nav-section-title">Travel Tools</div>
-                    <a href="#" class="nav-item" data-section="offline-maps">
-                        <i class="fas fa-map"></i>
-                        Offline Maps
-                    </a>
-                    <a href="#" class="nav-item" data-section="translator">
-                        <i class="fas fa-language"></i>
-                        Translator
-                    </a>
-                    <a href="#" class="nav-item" data-section="currency-converter">
-                        <i class="fas fa-exchange-alt"></i>
-                        Currency Converter
-                    </a>
-                    <a href="#" class="nav-item" data-section="flight-tracker">
-                        <i class="fas fa-plane"></i>
-                        Flight Tracker
-                    </a>
-                </div>
+                
 
                 <div class="nav-section">
                     <div class="nav-section-title">Troubleshooting</div>
@@ -785,7 +928,7 @@
                 </div>
             </div>
 
-            <!-- Additional FAQ sections will be populated dynamically -->
+            <!-- Additional FAQ sections -->
             <div id="account-setup" class="faq-content">
                 <div class="faq-grid">
                     <div class="faq-item">
@@ -831,6 +974,105 @@
                 </div>
             </div>
 
+            <div id="desktop-app" class="faq-content">
+                <div class="faq-grid">
+                    <div class="faq-item"><div class="faq-question">How do I install the desktop app?</div><div class="faq-answer">Download the installer for macOS or Windows from the homepage. Run the installer and follow the prompts. On macOS you may need to allow the app in System Settings → Privacy & Security.</div></div>
+                    <div class="faq-item"><div class="faq-question">How do I update?</div><div class="faq-answer">Updates are automatic. You can also check for updates from the Help menu in the desktop app.</div></div>
+                    <div class="faq-item"><div class="faq-question">Where are logs stored?</div><div class="faq-answer">From the app, go to Help → Reveal Logs. Attach these when contacting support.</div></div>
+                </div>
+            </div>
+
+            <div id="mobile-app" class="faq-content">
+                <div class="faq-grid">
+                    <div class="faq-item"><div class="faq-question">How do guests sign in?</div><div class="faq-answer">Guests sign in with the invite email sent by organizers. They’ll be automatically routed to their event.</div></div>
+                    <div class="faq-item"><div class="faq-question">Offline support</div><div class="faq-answer">Critical information like itineraries and homepages are cached for offline access. Chat requires connectivity.</div></div>
+                </div>
+            </div>
+
+            <div id="event-homepages" class="faq-content">
+                <div class="faq-grid">
+                    <div class="faq-item"><div class="faq-question">Create a homepage</div><div class="faq-answer">Open the Event Homepage Builder in the desktop app, choose a template, add modules, then publish.</div></div>
+                    <div class="faq-item"><div class="faq-question">Branding</div><div class="faq-answer">Upload your logo and colors in Settings → Branding. These apply automatically to new pages.</div></div>
+                </div>
+            </div>
+
+            <div id="timeline-management" class="faq-content">
+                <div class="faq-grid">
+                    <div class="faq-item"><div class="faq-question">Add an itinerary item</div><div class="faq-answer">Go to Timeline → Add Item. Enter date, times, and assign to groups or individuals. Use notifications for reminders.</div></div>
+                    <div class="faq-item"><div class="faq-question">Duplicate items</div><div class="faq-answer">From the item menu choose Duplicate to create a copy for another day or group.</div></div>
+                </div>
+            </div>
+
+            <div id="guest-management" class="faq-content">
+                <div class="faq-grid">
+                    <div class="faq-item"><div class="faq-question">Import guests via CSV</div><div class="faq-answer">Download the template from Guests → Import. Fill the columns and upload. The system validates emails and required fields.</div></div>
+                    <div class="faq-item"><div class="faq-question">Groups</div><div class="faq-answer">Use groups to manage cohorts. You can assign timelines, messages, and announcements to groups.</div></div>
+                </div>
+            </div>
+
+            <div id="chat-system" class="faq-content">
+                <div class="faq-grid">
+                    <div class="faq-item"><div class="faq-question">Start a chat</div><div class="faq-answer">From the desktop or mobile app, open the event and select Chat. Guests receive messages instantly.</div></div>
+                    <div class="faq-item"><div class="faq-question">Attachments</div><div class="faq-answer">Click the clip icon to attach images or files. Large files are uploaded to secure storage and linked in the chat.</div></div>
+                </div>
+            </div>
+
+            <div id="announcements" class="faq-content">
+                <div class="faq-grid">
+                    <div class="faq-item"><div class="faq-question">Send an announcement</div><div class="faq-answer">Open Announcements → New. Enter title and message, choose audience (all guests or groups), schedule or send now.</div></div>
+                    <div class="faq-item"><div class="faq-question">Scheduling</div><div class="faq-answer">Use scheduled sends for pre-event reminders or day-of instructions. Scheduled items can be edited until they are sent.</div></div>
+                </div>
+            </div>
+
+            <div id="notifications" class="faq-content">
+                <div class="faq-grid">
+                    <div class="faq-item"><div class="faq-question">Push notifications</div><div class="faq-answer">Guests receive pushes for mentions, announcements, and timeline updates. Customize per event in Settings → Notifications.</div></div>
+                    <div class="faq-item"><div class="faq-question">Email fallback</div><div class="faq-answer">If a guest is offline for >12 hours, critical messages are emailed when enabled.</div></div>
+                </div>
+            </div>
+
+            <div id="login-issues" class="faq-content">
+                <div class="faq-grid">
+                    <div class="faq-item"><div class="faq-question">I didn’t receive the verification email</div><div class="faq-answer">Check spam/junk and whitelist ontimely.co.uk. Request a new link from the login page.</div></div>
+                    <div class="faq-item"><div class="faq-question">Two-factor problems</div><div class="faq-answer">Ensure device time is set automatically. If locked out, contact support to reset 2FA.</div></div>
+                </div>
+            </div>
+
+            <div id="sync-problems" class="faq-content">
+                <div class="faq-grid">
+                    <div class="faq-item"><div class="faq-question">Mobile isn’t updating</div><div class="faq-answer">Pull to refresh on the timeline. If problems persist, sign out/in to re-register your device token.</div></div>
+                    <div class="faq-item"><div class="faq-question">Desktop not receiving changes</div><div class="faq-answer">Check network connection and that you are on the latest version (Help → Check for Updates).</div></div>
+                </div>
+            </div>
+
+            <div id="performance" class="faq-content">
+                <div class="faq-grid">
+                    <div class="faq-item"><div class="faq-question">Speed tips</div><div class="faq-answer">Limit extremely large images/videos on homepages, and archive past events to reduce sync load.</div></div>
+                    <div class="faq-item"><div class="faq-question">Mobile cache</div><div class="faq-answer">Clear cached data from the app settings if storage gets high.</div></div>
+                </div>
+            </div>
+
+            <div id="billing" class="faq-content">
+                <div class="faq-grid">
+                    <div class="faq-item"><div class="faq-question">Change plan</div><div class="faq-answer">Go to Billing in the Staff Portal. Prorations are automatic when upgrading.</div></div>
+                    <div class="faq-item"><div class="faq-question">Invoices</div><div class="faq-answer">Invoices are emailed and available in Billing → Invoices.</div></div>
+                </div>
+            </div>
+
+            <div id="team-management" class="faq-content">
+                <div class="faq-grid">
+                    <div class="faq-item"><div class="faq-question">Invite team members</div><div class="faq-answer">From the dashboard, open Team Management → Invite. Assign roles to control access.</div></div>
+                    <div class="faq-item"><div class="faq-question">Roles</div><div class="faq-answer">Admin can manage everything. Managers handle events and guests. Staff have limited permissions.</div></div>
+                </div>
+            </div>
+
+            <div id="data-export" class="faq-content">
+                <div class="faq-grid">
+                    <div class="faq-item"><div class="faq-question">Export reports</div><div class="faq-answer">Use the Export section to download CSV or PDF for guests, messages, and analytics.</div></div>
+                    <div class="faq-item"><div class="faq-question">GDPR</div><div class="faq-answer">You can export or delete a guest’s data upon request from the Guest profile page.</div></div>
+                </div>
+            </div>
+
             <!-- More sections will be added dynamically -->
         </main>
     </div>
@@ -868,12 +1110,17 @@
     <!-- Screen Sharing Modal -->
     <div class="screen-share-modal" id="screenShareModal">
         <div class="screen-share-container">
-            <h3>Screen Sharing Session</h3>
+            <div class="screen-share-header">
+                <h3>Screen Sharing Session</h3>
+                <button class="screen-share-close" id="screenShareClose" aria-label="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
             <p>Share this confirmation code with our support agent:</p>
             <div class="confirmation-code" id="confirmationCode">ABC123</div>
             <p>Your screen sharing session will begin once the agent enters this code.</p>
-            <button class="support-btn" id="startScreenShare" style="margin-top: 1rem;">
-                <i class="fas fa-share"></i>
+            <button class="cta-button" id="startScreenShare" style="margin-top: 1rem;">
+                <i class="fas fa-play" style="font-size: 1rem;"></i>
                 Start Screen Share
             </button>
         </div>
@@ -1240,6 +1487,7 @@
             const reportBugBtn = document.getElementById('reportBugBtn');
             const startScreenShare = document.getElementById('startScreenShare');
             const confirmationCode = document.getElementById('confirmationCode');
+            const screenShareClose = document.getElementById('screenShareClose');
 
             reportBugBtn.addEventListener('click', () => {
                 // Generate random confirmation code
@@ -1247,6 +1495,12 @@
                 confirmationCode.textContent = code;
                 screenShareModal.classList.add('active');
             });
+
+            if (screenShareClose) {
+                screenShareClose.addEventListener('click', () => {
+                    screenShareModal.classList.remove('active');
+                });
+            }
 
             startScreenShare.addEventListener('click', async () => {
                 try {

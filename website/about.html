@@ -28,57 +28,196 @@
             color: var(--text-primary);
             line-height: 1.6;
             overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 20%, rgba(16, 185, 129, 0.15) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
         }
 
         /* Navigation */
         .navbar {
             position: fixed;
             top: 0;
-            left: 0;
-            right: 0;
-            background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            background: rgba(17, 24, 39, 0.55);
+            backdrop-filter: blur(8px);
+            border-radius: 0;
+            padding: 20px 0; /* match index.html */
+            border: 1px solid rgba(255, 255, 255, 0.08);
             z-index: 1000;
-            padding: 1rem 0;
-            transition: all 0.3s ease;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.04), 0 8px 30px rgba(0,0,0,0.45);
+            transition: top 0.4s ease, border-radius 0.4s ease, width 0.4s ease;
         }
 
         .nav-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 2rem;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 40px;
+            transition: padding 0.6s ease;
+        }
+
+        .navbar.scrolled .nav-container {
+            padding: 0 15px;
+        }
+
+        .nav-center {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            flex: 1;
+            justify-content: flex-end;
+            margin-right: 20px;
         }
 
         .logo {
             font-size: 1.5rem;
             font-weight: 800;
-            color: var(--text-primary);
+            color: #ffffff;
             text-decoration: none;
-            background: linear-gradient(135deg, var(--text-primary), var(--primary-green));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
         }
 
         .nav-links {
             display: flex;
-            gap: 2rem;
-            align-items: center;
+            list-style: none;
+            gap: 30px;
         }
 
         .nav-links a {
-            color: var(--text-secondary);
+            color: #e0e0e0;
             text-decoration: none;
             font-weight: 500;
-            transition: color 0.3s ease;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            position: relative;
         }
 
-        .nav-links a:hover {
-            color: var(--primary-green);
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #ffffff;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            background: var(--primary-green);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        /* Auth buttons */
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .auth-btn {
+            padding: 8px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-auth-buttons {
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .login-btn {
+            color: #e0e0e0;
+            border: 1px solid #333;
+        }
+
+        .login-btn:hover {
+            color: #ffffff;
+            border-color: #555;
+        }
+
+        .signup-btn {
+            background: var(--primary-green);
+            color: #000000;
+            white-space: nowrap;
+        }
+
+        .signup-btn:hover {
+            background: var(--primary-green-dark);
+            transform: translateY(-1px);
+        }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(26, 26, 26, 0.95);
+                flex-direction: column;
+                padding: 20px;
+                border-radius: 15px;
+                margin-top: 10px;
+                gap: 15px;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .mobile-auth-buttons {
+                display: flex !important;
+            }
+
+            .auth-buttons {
+                display: none;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
         }
 
         .back-btn {
@@ -127,37 +266,27 @@
         /* Hero Section */
         .about-hero {
             padding: 120px 0;
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(0, 0, 0, 0.9));
+            background: transparent;
             position: relative;
             overflow: hidden;
         }
 
-        .about-hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 30% 20%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
-            pointer-events: none;
-        }
-
         .container {
-            max-width: 1200px;
+            max-width: 1600px;
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 0 60px;
             position: relative;
             z-index: 2;
         }
 
         .hero-content {
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto;
+            text-align: left;
+            max-width: 1000px;
+            margin: 0;
         }
 
         .hero-title {
+            font-family: 'Inter', sans-serif;
             font-size: 4rem;
             font-weight: 800;
             margin-bottom: 2rem;
@@ -167,6 +296,7 @@
             background-clip: text;
             line-height: 1.1;
             letter-spacing: -0.02em;
+            animation: slideInFromLeft 1s ease-out;
         }
 
         .hero-subtitle {
@@ -174,20 +304,22 @@
             color: var(--text-secondary);
             margin-bottom: 3rem;
             line-height: 1.6;
+            animation: slideInFromLeft 1s ease-out 0.2s both;
         }
 
         /* Content Sections */
         .content-section {
             padding: 100px 0;
-            background: #000000;
+            background: transparent;
         }
 
         .section-header {
-            text-align: center;
+            text-align: left;
             margin-bottom: 4rem;
         }
 
         .section-title {
+            font-family: 'Inter', sans-serif;
             font-size: 3rem;
             font-weight: 800;
             margin-bottom: 1.5rem;
@@ -196,14 +328,16 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             letter-spacing: -0.02em;
+            animation: slideInFromLeft 1s ease-out;
         }
 
         .section-description {
             font-size: 1.3rem;
             color: var(--text-muted);
-            max-width: 700px;
-            margin: 0 auto;
+            max-width: 800px;
+            margin: 0;
             line-height: 1.7;
+            animation: slideInFromLeft 1s ease-out 0.2s both;
         }
 
         /* Feature Grid */
@@ -223,7 +357,14 @@
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
+            text-align: left;
+            animation: slideInFromBottom 1s ease-out;
         }
+
+        .feature-card:nth-child(1) { animation-delay: 0.1s; }
+        .feature-card:nth-child(2) { animation-delay: 0.2s; }
+        .feature-card:nth-child(3) { animation-delay: 0.3s; }
+        .feature-card:nth-child(4) { animation-delay: 0.4s; }
 
         .feature-card::before {
             content: '';
@@ -239,7 +380,7 @@
         }
 
         .feature-card:hover {
-            transform: translateY(-8px);
+            transform: translateY(-8px) translateX(10px);
             box-shadow: var(--shadow-large);
             border-color: var(--primary-green);
         }
@@ -258,6 +399,7 @@
             justify-content: center;
             margin-bottom: 1.5rem;
             transition: all 0.3s ease;
+            animation: bounceIn 0.8s ease-out;
         }
 
         .feature-card:hover .feature-icon {
@@ -315,7 +457,7 @@
 
         /* Mission Section */
         .mission-section {
-            background: #000000;
+            background: transparent;
             padding: 100px 0;
         }
 
@@ -389,7 +531,7 @@
             }
             
             .container {
-                padding: 0 1rem;
+                padding: 0 20px;
             }
             
             .feature-card {
@@ -414,27 +556,165 @@
         .fade-in-text.delay-3 { transition-delay: 0.3s; }
         .fade-in-text.delay-4 { transition-delay: 0.4s; }
         .fade-in-text.delay-5 { transition-delay: 0.5s; }
+
+        /* New Animation Keyframes */
+        @keyframes slideInFromLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInFromBottom {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.05);
+            }
+            70% {
+                transform: scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(17, 24, 39, 0.55);
+            backdrop-filter: blur(8px);
+            padding: 80px 0 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.04), 0 -8px 30px rgba(0,0,0,0.45);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h4 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #e5e7eb;
+        }
+
+        .footer-logo {
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        .footer-section p {
+            margin-bottom: 1rem;
+            color: #9ca3af;
+        }
+
+        .footer-section a {
+            color: #9ca3af;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--primary-green);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            color: #9ca3af;
+        }
+
+        .container-wide {
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 0 80px;
+        }
+
+        @media (max-width: 1024px) {
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .container-wide {
+                padding: 0 20px;
+            }
+        }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
+    <!-- Floating Navbar -->
+    <nav class="navbar" id="navbar">
         <div class="nav-container">
             <a href="index.html" class="logo">
-                <img src="on-timely-official-logo.png" alt="OnTimely" style="height: 40px;">
+                <img src="on timely official logo.svg" alt="OnTimely Logo">
             </a>
-            <div class="nav-links">
-                <a href="index.html">Home</a>
-                <a href="index.html#features">Features</a>
-                <a href="index.html#pricing">Pricing</a>
-                <a href="index.html#contact">Contact</a>
-                <a href="index.html" class="back-btn">
-                    <i class="fas fa-arrow-left"></i>
-                    Back to Site
-                </a>
+            <div class="nav-center">
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#features">Features</a></li>
+                <li><a href="about.html" class="active">About</a></li>
+                <li><a href="help.html">Help</a></li>
+                    <li class="mobile-auth-buttons">
+                        <a href="https://dashboard.ontimely.co.uk" class="auth-btn login-btn">Login</a>
+                        <a href="index.html#contact" class="auth-btn signup-btn">Contact</a>
+                    </li>
+            </ul>
             </div>
+            <div class="auth-buttons">
+                <a href="https://dashboard.ontimely.co.uk" class="auth-btn login-btn">Login</a>
+                <a href="index.html#contact" class="auth-btn signup-btn">Contact</a>
+            </div>
+            <button class="menu-toggle" id="menuToggle">☰</button>
         </div>
-    </nav>
+        </nav>
 
     <!-- Main Content -->
     <main class="main-content">
@@ -722,6 +1002,40 @@
             </div>
         </section>
     </main>
+
+    <footer class="footer">
+        <div class="container-wide">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="on timely official logo.svg" alt="OnTimely Logo">
+                    </div>
+                    <p>Elite event management platform designed for professionals who demand excellence and reliability in every aspect of their event operations.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Product</h4>
+                    <p><a href="index.html#features">Features</a></p>
+                    <p><a href="index.html#pricing">Pricing</a></p>
+                    <p><a href="index.html#integrations">Integrations</a></p>
+                </div>
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <p><a href="about.html">About</a></p>
+                    <p><a href="index.html#careers">Careers</a></p>
+                    <p><a href="index.html#contact">Contact</a></p>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <p><a href="help.html">Help Center</a></p>
+                    <p><a href="index.html#docs">Documentation</a></p>
+                    <p><a href="status.html">System Status</a></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 OnTimely. All rights reserved. | Privacy Policy | Terms of Service</p>
+            </div>
+        </div>
+    </footer>
 
     <script>
         // Scroll-triggered fade-in animations

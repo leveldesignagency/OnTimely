@@ -6,6 +6,9 @@
     <title>OnTimely - Elite Event Management Platform</title>
     <meta name="description" content="The most advanced event management platform for professionals. Create custom guest apps, manage real-time communication, and deliver exceptional event experiences.">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800;900&family=Roboto:wght@300;400;500;700;900&family=Oswald:wght@300;400;500;600;700&family=Bebas+Neue&family=Playfair+Display:wght@400;500;600;700;800;900&family=Source+Sans+Pro:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
     <style>
         * {
@@ -40,6 +43,19 @@
             background: #000000;
             min-height: 100vh;
             overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 70% 20%, rgba(16, 185, 129, 0.15) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
         }
 
         .container {
@@ -267,6 +283,7 @@
         }
 
         .hero-left h1 {
+            font-family: 'Inter', sans-serif;
             font-size: 4.5rem;
             font-weight: 800;
             line-height: 1.1;
@@ -668,7 +685,7 @@
         .sign-in-content {
             position: relative;
             z-index: 2;
-            text-align: left;
+            text-align: center; /* center all text */
             max-width: 1000px;
             margin: 0 auto;
             padding: 5rem 4rem;
@@ -680,8 +697,9 @@
         }
 
         .sign-in-content h2 {
+            font-family: 'Inter', sans-serif;
             font-size: 4rem;
-            font-weight: 900;
+            font-weight: 800;
             margin-bottom: 2rem;
             color: #e5e7eb;
             letter-spacing: -0.02em;
@@ -694,6 +712,8 @@
             margin-bottom: 3rem;
             line-height: 1.6;
             font-style: italic;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .dashboard-btn {
@@ -712,6 +732,7 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             position: relative;
             overflow: hidden;
+            margin: 0 auto; /* center the CTA */
         }
 
         .dashboard-btn::before {
@@ -742,7 +763,7 @@
         /* Event Management Section */
         .event-management-section {
             padding: 120px 0;
-            background: #000000;
+            background: transparent;
         }
 
         .event-management-content {
@@ -928,7 +949,7 @@
         /* Create Event Section */
         .create-event-section {
             padding: 120px 0;
-            background: #000000;
+            background: transparent;
         }
 
         .create-event-content {
@@ -970,17 +991,6 @@
             overflow: hidden;
         }
 
-        .create-event-right::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 200px;
-            height: 100%;
-            background: linear-gradient(to left, #000000, transparent);
-            z-index: 10;
-            pointer-events: none;
-        }
 
         .create-event-mobile {
             position: absolute;
@@ -990,7 +1000,9 @@
             height: auto;
             border-radius: 15px;
             z-index: 2;
-            animation: slideInFromRight 0.8s ease-out 0s both;
+            opacity: 0; /* animate on scroll */
+            transform: translateX(-60px);
+            transition: transform 0.7s ease, opacity 0.7s ease;
         }
 
         .create-event-desktop {
@@ -1000,7 +1012,16 @@
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
             position: relative;
             z-index: 1;
-            animation: slideInFromRight 0.8s ease-out 0.8s both;
+            opacity: 0; /* animate on scroll */
+            transform: translateX(60px);
+            transition: transform 0.7s ease, opacity 0.7s ease;
+        }
+
+        /* when section is in view */
+        .create-event-mobile.in-view,
+        .create-event-desktop.in-view {
+            opacity: 1;
+            transform: translateX(0);
         }
 
         @keyframes slideInFromRight {
@@ -1049,6 +1070,118 @@
 
             .create-event-description {
             font-size: 1.1rem;
+            }
+        }
+
+        /* Guest Chat Section */
+        .guest-chat-section {
+            padding: 120px 0;
+            background: transparent;
+        }
+
+        .guest-chat-content {
+            display: flex;
+            align-items: center;
+            gap: 80px;
+        }
+
+        .guest-chat-left {
+            flex: 1;
+        }
+
+        .guest-chat-image {
+            width: 100%;
+            max-width: 700px;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+            position: relative;
+            display: block;
+            mask: linear-gradient(to bottom, black 0%, black 70%, transparent 100%);
+            -webkit-mask: linear-gradient(to bottom, black 0%, black 70%, transparent 100%);
+            opacity: 0;
+            transform: translateY(50px);
+        }
+
+        .guest-chat-image.animate-on-scroll.animated {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .guest-chat-image:hover {
+            transform: translateY(-10px);
+        }
+
+        .guest-chat-right {
+            flex: 1;
+            padding-left: 40px;
+        }
+
+        .guest-chat-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 30px;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, var(--text-primary), var(--primary-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .guest-chat-description {
+            font-size: 1.3rem;
+            line-height: 1.7;
+            margin-bottom: 2rem;
+            color: var(--text-secondary);
+        }
+
+        .guest-chat-features {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .guest-chat-features li {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        .guest-chat-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--primary-green);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 768px) {
+            .guest-chat-section {
+                padding: 80px 0;
+            }
+
+            .guest-chat-content {
+                flex-direction: column;
+                gap: 40px;
+            }
+
+            .guest-chat-right {
+                padding-left: 0;
+            }
+
+            .guest-chat-title {
+                font-size: 2.5rem;
+            }
+
+            .guest-chat-description {
+                font-size: 1.1rem;
             }
         }
 
@@ -1186,6 +1319,7 @@
         }
 
         .section-header h2 {
+            font-family: 'Inter', sans-serif;
             font-size: 3.5rem;
             font-weight: 800;
             margin-bottom: 1.5rem;
@@ -1277,6 +1411,7 @@
         }
 
         .feature-card h3 {
+            font-family: 'Inter', sans-serif;
             font-size: 1.4rem;
             font-weight: 700;
             margin-bottom: 0.35rem;
@@ -1302,7 +1437,7 @@
         /* Pricing Plans Section */
         .pricing {
             padding: 120px 0;
-            background: #000000;
+            background: transparent;
         }
 
         .pricing-grid {
@@ -1311,6 +1446,7 @@
             gap: 2rem;
             max-width: 1400px;
             margin: 0 auto;
+            align-items: stretch; /* ensure equal card heights */
         }
 
         .pricing-card {
@@ -1318,13 +1454,16 @@
             backdrop-filter: blur(8px);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 18px;
-            padding: 2.5rem;
-            padding-top: 3.5rem;
+            padding: 2rem; /* reduced overall padding */
+            padding-top: 1.5rem; /* reduced top padding */
             text-align: center;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: visible;
             box-shadow: inset 0 1px 0 rgba(255,255,255,0.04), 0 8px 30px rgba(0,0,0,0.45);
+            display: flex;
+            flex-direction: column;
+            height: 100%; /* match grid row height */
         }
 
         .pricing-card::before {
@@ -1352,7 +1491,7 @@
 
         .pricing-popular {
             border-color: var(--primary-green);
-            transform: scale(1.05);
+            transform: none; /* keep card height consistent so buttons align */
         }
 
         .pricing-popular::before {
@@ -1412,6 +1551,7 @@
         }
 
         .pricing-card h3 {
+            font-family: 'Inter', sans-serif;
             font-size: 1.8rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
@@ -1441,6 +1581,7 @@
         .pricing-features {
             margin-bottom: 2rem;
             text-align: left;
+            flex: 1; /* push CTA to the bottom for consistent alignment */
         }
 
         .feature-item {
@@ -1472,6 +1613,7 @@
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            margin-top: auto; /* ensure button sits at bottom consistently */
         }
 
         .pricing-cta::before {
@@ -1520,8 +1662,9 @@
         .contact-section {
             padding: 0;
             position: relative;
-            overflow: hidden;
-            height: 100vh;
+            overflow: visible; /* allow content to expand naturally */
+            height: auto;      /* remove hard cap */
+            min-height: 100vh; /* still fill initial viewport */
         }
 
 
@@ -1532,7 +1675,8 @@
             position: relative;
             z-index: 2;
             width: 100%;
-            height: 100vh;
+            height: auto;       /* let it grow with content */
+            min-height: 100vh;  /* baseline height */
             padding: 0 40px;
         }
 
@@ -1544,6 +1688,7 @@
         }
 
         .contact-form h2 {
+            font-family: 'Inter', sans-serif;
             font-size: 3.5rem;
             font-weight: 800;
             margin-bottom: 30px;
@@ -1579,12 +1724,12 @@
         .form-group input,
         .form-group textarea {
             width: 100%;
-            padding: 12px 16px;
+            padding: 12px 16px; /* revert height */
             background: rgba(255,255,255,0.03);
             border: 1px solid rgba(255,255,255,0.08);
             border-radius: 10px;
             color: #e5e7eb;
-            font-size: 16px;
+            font-size: 16px; /* revert size */
             transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
             font-family: inherit;
             outline: none;
@@ -1604,19 +1749,29 @@
         }
 
         .form-group textarea {
-            min-height: 120px;
+            min-height: 120px; /* revert */
+            max-height: 320px; /* prevent dragging too far */
             resize: vertical;
+            overflow-y: auto;
         }
 
         .form-group select {
             width: 100%;
-            padding: 12px 16px;
+            padding: 12px 44px 12px 16px; /* compact + room for arrow */
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 8px;
             background: rgba(255, 255, 255, 0.05);
             color: #ffffff;
-            font-size: 1rem;
+            font-size: 16px; /* compact size */
             transition: all 0.3s ease;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M5 7l5 5 5-5' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            background-size: 16px 16px;
+            cursor: pointer;
         }
 
         .form-group select:focus {
@@ -1627,6 +1782,89 @@
 
         .form-group select option {
             background: #1a1a1a;
+            color: #ffffff;
+            font-size: 16px;
+        }
+
+        /* Force-hide native select (safety) */
+        #companySize { display: none !important; }
+
+        /* Visually hide native select when replaced */
+        .form-group select.native-hidden {
+            display: none !important;
+        }
+
+        /* Custom Select */
+        .custom-select {
+            position: relative;
+            width: 100%;
+        }
+
+        .custom-select-toggle {
+            width: 100%;
+            padding: 12px 44px 12px 16px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 16px;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: border-color 0.25s ease, background-color 0.25s ease;
+        }
+
+        .custom-select-toggle:hover,
+        .custom-select.open .custom-select-toggle {
+            border-color: rgba(34,197,94,0.6);
+            background: rgba(255,255,255,0.08);
+        }
+
+        .custom-select-toggle::after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 6px solid #ffffff;
+            margin-left: 10px;
+        }
+
+        .custom-select-menu {
+            position: absolute;
+            top: calc(100% + 6px);
+            left: 0;
+            right: 0;
+            background: rgba(26, 26, 26, 0.98);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            max-height: 260px;
+            overflow: auto;
+            z-index: 1000;
+            display: none;
+        }
+
+        .custom-select.open .custom-select-menu {
+            display: block;
+        }
+
+        .custom-select-item {
+            padding: 12px 14px;
+            color: #e5e7eb;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .custom-select-item:hover,
+        .custom-select-item.focused {
+            background: rgba(34,197,94,0.12);
+        }
+
+        .custom-select-item.selected {
+            background: rgba(34,197,94,0.2);
             color: #ffffff;
         }
 
@@ -1672,18 +1910,18 @@
 
         .stat-item {
             text-align: center;
-            padding: 2rem;
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(25px);
-            border: 1px solid var(--border-subtle);
-            border-radius: 20px;
+            padding: 0;
+            background: transparent;
+            backdrop-filter: none;
+            border: none;
+            border-radius: 0;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .stat-item:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-medium);
-            border-color: var(--primary-green);
+            transform: none;
+            box-shadow: none;
+            border-color: transparent;
         }
 
         .stat-number {
@@ -1757,6 +1995,7 @@
             color: #9ca3af;
         }
 
+
         /* Animations */
         .animate-on-scroll {
                 opacity: 0;
@@ -1765,6 +2004,27 @@
             }
 
         .animate-on-scroll.animated {
+                opacity: 1;
+                transform: translateY(0);
+        }
+
+        .animate-on-scroll.fade-out {
+                opacity: 0;
+                transform: translateY(30px);
+        }
+
+        .fade-in-text.fade-out {
+                opacity: 0;
+                transform: translateY(20px);
+        }
+
+        .fade-in-text {
+                opacity: 0;
+                transform: translateY(20px);
+                transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .fade-in-text.visible {
                 opacity: 1;
                 transform: translateY(0);
         }
@@ -2038,6 +2298,28 @@
             </div>
         </section>
 
+        <!-- Guest Chat Section -->
+        <section class="guest-chat-section">
+            <div class="container-wide">
+                <div class="guest-chat-content">
+                    <div class="guest-chat-left">
+                        <img src="ChatScreen.png" alt="Guest Chat Interface" class="guest-chat-image animate-on-scroll">
+                    </div>
+                    <div class="guest-chat-right">
+                        <h2 class="guest-chat-title fade-in-text">Real-Time Guest Communication</h2>
+                        <p class="guest-chat-description fade-in-text delay-1">Keep your guests connected and informed with our powerful chat system. Send announcements, answer questions instantly, and provide real-time updates throughout your event. Features include group messaging, private conversations, file sharing, and automated notifications to ensure every guest stays in the loop.</p>
+                        <ul class="guest-chat-features fade-in-text delay-2">
+                            <li>Instant messaging and announcements</li>
+                            <li>File and media sharing capabilities</li>
+                            <li>Group and private chat options</li>
+                            <li>Automated event notifications</li>
+                            <li>Real-time message delivery</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section class="features" id="features">
             <div class="container-wide">
                 <div class="section-header animate-on-scroll">
@@ -2223,7 +2505,7 @@
                     
                     <div class="form-group">
                         <label for="companySize">Company Size</label>
-                        <select id="companySize" name="companySize" required>
+                        <select id="companySize" name="companySize" class="native-hidden" aria-hidden="true" tabindex="-1">
                             <option value="">Select number of employees</option>
                             <option value="1-10">1-10 employees</option>
                             <option value="11-50">11-50 employees</option>
@@ -2232,6 +2514,20 @@
                             <option value="501-1000">501-1000 employees</option>
                             <option value="1000+">1000+ employees</option>
                         </select>
+
+                        <div id="companySizeSelect" class="custom-select" role="listbox" aria-labelledby="companySizeLabel">
+                            <button type="button" class="custom-select-toggle" aria-haspopup="listbox" aria-expanded="false">
+                                <span class="custom-select-label">Select number of employees</span>
+                            </button>
+                            <div class="custom-select-menu" tabindex="-1">
+                                <div class="custom-select-item" data-value="1-10">1-10 employees</div>
+                                <div class="custom-select-item" data-value="11-50">11-50 employees</div>
+                                <div class="custom-select-item" data-value="51-200">51-200 employees</div>
+                                <div class="custom-select-item" data-value="201-500">201-500 employees</div>
+                                <div class="custom-select-item" data-value="501-1000">501-1000 employees</div>
+                                <div class="custom-select-item" data-value="1000+">1000+ employees</div>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="form-group">
@@ -2270,6 +2566,7 @@
             </div>
         </section>
     </main>
+
 
     <footer class="footer">
         <div class="container-wide">
@@ -2445,19 +2742,25 @@
             initSmoothScrolling();
             initGlowingCards();
             initVideoModal();
+            initCustomSelect('companySize', 'companySizeSelect');
+            initCreateEventScrollIn();
         });
 
-        // Scroll-triggered animations
+        // Scroll-triggered animations with fade in/out
         function initScrollAnimations() {
             const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
+                threshold: 0,
+                rootMargin: '0px 0px 0px 0px'
             };
 
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('animated');
+                        entry.target.classList.remove('fade-out');
+                    } else {
+                        entry.target.classList.remove('animated');
+                        entry.target.classList.add('fade-out');
                     }
                 });
             }, observerOptions);
@@ -2849,14 +3152,18 @@
         // Scroll-triggered fade-in animations
         function initFadeInAnimations() {
             const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
+                threshold: 0,
+                rootMargin: '0px 0px 0px 0px'
             };
 
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
+                        entry.target.classList.remove('fade-out');
+                    } else {
+                        entry.target.classList.remove('visible');
+                        entry.target.classList.add('fade-out');
                     }
                 });
             }, observerOptions);
@@ -2872,6 +3179,97 @@
             initEventManagementSliding();
             initFadeInAnimations();
         });
+
+        // Animate Create Event images on scroll
+        function initCreateEventScrollIn() {
+            const mobile = document.querySelector('.create-event-mobile');
+            const desktop = document.querySelector('.create-event-desktop');
+            const section = document.getElementById('create-event');
+            if (!mobile || !desktop || !section) return;
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        mobile.classList.add('in-view');
+                        desktop.classList.add('in-view');
+                        observer.disconnect();
+                    }
+                });
+            }, { threshold: 0.25 });
+
+            observer.observe(section);
+        }
+
+
+        // Custom select implementation: syncs hidden native select with styled UI
+        function initCustomSelect(nativeSelectId, customSelectId) {
+            const native = document.getElementById(nativeSelectId);
+            const custom = document.getElementById(customSelectId);
+            if (!native || !custom) return;
+
+            const toggle = custom.querySelector('.custom-select-toggle');
+            const label = custom.querySelector('.custom-select-label');
+            const menu = custom.querySelector('.custom-select-menu');
+            const items = Array.from(custom.querySelectorAll('.custom-select-item'));
+
+            function closeMenu() {
+                custom.classList.remove('open');
+                toggle.setAttribute('aria-expanded', 'false');
+            }
+
+            function openMenu() {
+                custom.classList.add('open');
+                toggle.setAttribute('aria-expanded', 'true');
+                menu.focus({ preventScroll: true });
+            }
+
+            function selectValue(value, text) {
+                native.value = value;
+                label.textContent = text;
+                items.forEach(i => i.classList.toggle('selected', i.getAttribute('data-value') === value));
+                closeMenu();
+            }
+
+            toggle.addEventListener('click', () => {
+                if (custom.classList.contains('open')) closeMenu(); else openMenu();
+            });
+
+            items.forEach(item => {
+                item.addEventListener('click', () => {
+                    selectValue(item.getAttribute('data-value'), item.textContent);
+                });
+                item.addEventListener('mouseenter', () => items.forEach(i => i.classList.toggle('focused', i === item)));
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!custom.contains(e.target)) closeMenu();
+            });
+
+            // Keyboard support
+            custom.addEventListener('keydown', (e) => {
+                const currentIndex = items.findIndex(i => i.classList.contains('focused'));
+                if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    const next = items[Math.min(items.length - 1, currentIndex + 1)] || items[0];
+                    items.forEach(i => i.classList.remove('focused'));
+                    next.classList.add('focused');
+                    next.scrollIntoView({ block: 'nearest' });
+                } else if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    const prev = items[Math.max(0, currentIndex - 1)] || items[items.length - 1];
+                    items.forEach(i => i.classList.remove('focused'));
+                    prev.classList.add('focused');
+                    prev.scrollIntoView({ block: 'nearest' });
+                } else if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    const focused = items.find(i => i.classList.contains('focused')) || items[0];
+                    if (focused) selectValue(focused.getAttribute('data-value'), focused.textContent);
+                } else if (e.key === 'Escape') {
+                    closeMenu();
+                    toggle.focus();
+                }
+            });
+        }
     </script>
 </body>
 </html> 

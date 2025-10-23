@@ -1,0 +1,1363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OnTimely - Professional Event Management Platform</title>
+    <meta name="description" content="Transform your event management with OnTimely. Professional forms, guest management, and seamless organization for events of any scale.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #e5e7eb;
+            background: radial-gradient(1200px 800px at 20% -10%, rgba(34,197,94,0.12), transparent 40%),
+                        radial-gradient(1000px 700px at 120% 10%, rgba(34,197,94,0.08), transparent 45%),
+                        #0f1115;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: rgba(17, 24, 39, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 20px 0;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        header.scrolled {
+            background: rgba(17, 24, 39, 0.95);
+            backdrop-filter: blur(30px);
+            border-radius: 20px;
+            margin: 10px 20px;
+            width: calc(100% - 40px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            padding: 15px 0;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .logo {
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-img {
+            height: 60px;
+            width: auto;
+            display: none; /* Hide current logo as fallback */
+        }
+
+        .animated-logo {
+            height: 60px;
+            width: auto;
+            display: block;
+        }
+
+        .logo-container {
+            position: relative;
+            height: 60px;
+            width: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #e5e7eb;
+            font-weight: 500;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(34, 197, 94, 0.1));
+            opacity: 0;
+            transition: all 0.4s ease;
+            border-radius: 12px;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.6s ease;
+        }
+
+        .nav-links a:hover {
+            color: #10b981;
+            background: rgba(16, 185, 129, 0.15);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.2);
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+
+        .nav-links a:hover::before {
+            opacity: 1;
+        }
+
+        .nav-links a:hover::after {
+            width: 100px;
+            height: 100px;
+        }
+
+        /* Sign In Button Styling */
+        .sign-in-btn {
+            background: linear-gradient(135deg, #22c55e, #16a34a) !important;
+            color: #0b1411 !important;
+            padding: 12px 24px !important;
+            border-radius: 10px !important;
+            font-weight: 700 !important;
+            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        }
+
+        .sign-in-btn:hover {
+            background: linear-gradient(135deg, #16a34a, #15803d) !important;
+            transform: translateY(-1px) !important;
+            box-shadow: 0 6px 20px rgba(34, 197, 94, 0.4) !important;
+            color: #0b1411 !important;
+        }
+
+        /* Hero Section - Wide Layout */
+        .hero {
+            padding: 140px 0 100px;
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(15, 17, 21, 0.7);
+            z-index: 1;
+        }
+
+        .hero video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            object-fit: cover;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-left {
+            max-width: 600px;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+            color: #ffffff;
+            line-height: 1.1;
+            text-align: left;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 3rem;
+            color: #9ca3af;
+            line-height: 1.7;
+            text-align: left;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 18px 36px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.2rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+            border: none;
+            cursor: pointer;
+            min-width: 180px;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(16, 185, 129, 0.4);
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+        }
+
+        .cta-button.secondary {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #e5e7eb;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .cta-button.secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(255, 255, 255, 0.1);
+        }
+
+        /* App Download Section - Right Side */
+        .hero-right {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .app-downloads {
+            background: rgba(17, 24, 39, 0.4);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 50px;
+            backdrop-filter: blur(10px);
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .app-downloads h3 {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            color: #e5e7eb;
+            text-align: center;
+        }
+
+        .download-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+        }
+
+        .download-btn {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 20px 24px;
+            color: #e5e7eb;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            width: 100%;
+            justify-content: flex-start;
+        }
+
+        .download-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .download-btn.primary {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: rgba(16, 185, 129, 0.3);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.2);
+        }
+
+        .download-btn.primary:hover {
+            background: rgba(16, 185, 129, 0.15);
+            border-color: rgba(16, 185, 129, 0.4);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
+        }
+
+        .download-btn i {
+            font-size: 2rem;
+            color: #10b981;
+            min-width: 40px;
+        }
+
+        .download-btn .text {
+            text-align: left;
+        }
+
+        .download-btn .text .label {
+            font-size: 0.9rem;
+            color: #9ca3af;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .download-btn .text .store {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #e5e7eb;
+        }
+
+        /* Sign In Section Styling */
+        .sign-in-section {
+            padding: 80px 0;
+            background: rgba(17, 24, 39, 0.3);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .sign-in-content {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .sign-in-content h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #e5e7eb;
+        }
+
+        .sign-in-content p {
+            font-size: 1.2rem;
+            color: #9ca3af;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .dashboard-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            color: #0b1411;
+            padding: 18px 36px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.2rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 25px rgba(34, 197, 94, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            min-width: 200px;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dashboard-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .dashboard-btn:hover::before {
+            left: 100%;
+        }
+
+        .dashboard-btn:hover {
+            background: linear-gradient(135deg, #16a34a, #15803d);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(34, 197, 94, 0.4);
+            color: #0b1411;
+        }
+
+        .dashboard-btn i {
+            font-size: 1.1rem;
+        }
+
+        /* Features Section - Wide Grid */
+        .features {
+            padding: 120px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 5rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .section-header h2 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #e5e7eb;
+        }
+
+        .section-header p {
+            font-size: 1.3rem;
+            color: #9ca3af;
+            line-height: 1.7;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2.5rem;
+            margin-top: 4rem;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 0 40px;
+        }
+
+        .feature-card {
+            background: rgba(17, 24, 39, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.05), rgba(34, 197, 94, 0.05));
+            opacity: 0;
+            transition: all 0.5s ease;
+            border-radius: 20px;
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(16, 185, 129, 0.4);
+            box-shadow: 0 25px 50px rgba(16, 185, 129, 0.2), 0 0 30px rgba(16, 185, 129, 0.1);
+            padding: 3rem;
+        }
+
+        .feature-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            color: #10b981;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .feature-icon i {
+            background: rgba(16, 185, 129, 0.1);
+            padding: 20px;
+            border-radius: 16px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-icon i::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(34, 197, 94, 0.2));
+            opacity: 0;
+            transition: all 0.4s ease;
+            border-radius: 16px;
+        }
+
+        .feature-card:hover .feature-icon i {
+            transform: scale(1.1) rotate(5deg);
+            background: rgba(16, 185, 129, 0.2);
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
+        }
+
+        .feature-card:hover .feature-icon i::before {
+            opacity: 1;
+        }
+
+        .feature-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #e5e7eb;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card .feature-subtitle {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #10b981;
+            margin-bottom: 1rem;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .feature-card .feature-description {
+            color: #9ca3af;
+            line-height: 1.8;
+            font-size: 1.1rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition-delay: 0.1s;
+        }
+
+        .feature-card:hover .feature-subtitle,
+        .feature-card:hover .feature-description {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Stats Section - Wide Layout */
+        .stats {
+            padding: 100px 0;
+            background: rgba(17, 24, 39, 0.3);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 3rem;
+            text-align: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .stat-item {
+            padding: 2rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.05), rgba(34, 197, 94, 0.05));
+            opacity: 0;
+            transition: all 0.4s ease;
+            border-radius: 16px;
+        }
+
+        .stat-item:hover::before {
+            opacity: 1;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-8px) scale(1.05);
+        }
+
+        .stat-number {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: #10b981;
+            margin-bottom: 1rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-item:hover .stat-number {
+            transform: scale(1.1);
+            text-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+        }
+
+        .stat-label {
+            font-size: 1.2rem;
+            color: #9ca3af;
+            font-weight: 500;
+            position: relative;
+            z-index: 1;
+            transition: all 0.4s ease;
+        }
+
+        .stat-item:hover .stat-label {
+            color: #e5e7eb;
+        }
+
+        /* Footer - Wide Layout */
+        .footer {
+            background: rgba(17, 24, 39, 0.8);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 3rem;
+            margin-bottom: 3rem;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 0 40px;
+        }
+
+        .footer-section h4 {
+            color: #e5e7eb;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+
+        .footer-section p, .footer-section a {
+            color: #9ca3af;
+            text-decoration: none;
+            line-height: 2;
+            font-size: 1rem;
+        }
+
+        .footer-section a:hover {
+            color: #10b981;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 2rem;
+            color: #6b7280;
+            text-align: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-left: 40px;
+            padding-right: 40px;
+        }
+
+        /* Scroll-triggered animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .animate-on-scroll.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 60px;
+                text-align: center;
+            }
+            
+            .hero-left {
+                max-width: 100%;
+            }
+            
+            .hero h1 {
+                text-align: center;
+                font-size: 3.5rem;
+            }
+            
+            .hero p {
+                text-align: center;
+            }
+            
+            .hero-buttons {
+                justify-content: center;
+            }
+            
+            .features-grid {
+                grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+            
+            nav {
+                padding: 0 20px;
+            }
+            
+            .hero-content {
+                padding: 0 20px;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .cta-button {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+                padding: 0 20px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+                padding: 0 20px;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                padding: 0 20px;
+            }
+            
+            .footer-bottom {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+            
+            /* Mobile rounded container adjustments */
+            header.scrolled {
+                margin: 5px 10px;
+                width: calc(100% - 20px);
+                border-radius: 15px;
+                padding: 12px 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding: 120px 0 60px;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .app-downloads {
+                padding: 30px;
+            }
+            
+            .download-btn {
+                padding: 16px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/" class="logo">
+                <div class="logo-container">
+                    <div id="animated-logo" class="animated-logo"></div>
+                    <img src="../on timely official logo.svg" alt="OnTimely Logo" class="logo-img">
+                </div>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="https://dashboard.ontimely.co.uk" class="sign-in-btn">Sign In</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <video autoplay muted loop playsinline>
+                <source src="../0_Technology_Circuit_Board_3840x2160.mp4" type="video/mp4">
+            </video>
+            <div class="hero-content">
+                <div class="hero-left">
+                    <h1>Professional Event Management</h1>
+                    <p>Transform your events with OnTimely's powerful platform. Create stunning forms, manage guests seamlessly, and organize events of any scale with enterprise-grade tools.</p>
+                    
+                    <div class="hero-buttons">
+                        <a href="#features" class="cta-button">
+                            <i class="fas fa-rocket"></i>
+                            Get Started
+                        </a>
+                        <a href="#demo" class="cta-button secondary">
+                            <i class="fas fa-play"></i>
+                            Watch Demo
+                        </a>
+                    </div>
+                </div>
+
+                <div class="hero-right">
+                    <div class="app-downloads">
+                        <h3>Download Our Desktop App</h3>
+                        <div class="download-buttons" id="download-buttons">
+                            <!-- Buttons will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sign In Section for Existing Users -->
+        <section class="sign-in-section">
+            <div class="container">
+                <div class="sign-in-content">
+                    <h2>Already have an account?</h2>
+                    <p>Access your event dashboard and manage your events with our professional tools.</p>
+                    <a href="https://dashboard.ontimely.co.uk" class="dashboard-btn">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Access Dashboard
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="features" id="features">
+            <div class="container">
+                <div class="section-header animate-on-scroll">
+                    <h2>Why Choose OnTimely?</h2>
+                    <p>Built for professionals who demand excellence in event management and guest experience.</p>
+                </div>
+                
+                <div class="features-grid">
+                    <div class="feature-card animate-on-scroll">
+                        <div class="feature-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h3>Custom Guest Apps</h3>
+                        <div class="feature-subtitle">App Inside an App</div>
+                        <div class="feature-description">Create tailored mobile apps for your guests with real-time communication, custom homepages, and personalized event timelines.</div>
+                    </div>
+                    
+                    <div class="feature-card animate-on-scroll">
+                        <div class="feature-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <h3>Real-time Communication</h3>
+                        <div class="feature-subtitle">Instant Messaging & Updates</div>
+                        <div class="feature-description">Enable guests to communicate instantly with organizers and other attendees through built-in chat, announcements, and live updates.</div>
+                    </div>
+                    
+                    <div class="feature-card animate-on-scroll">
+                        <div class="feature-icon">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        <h3>Custom Homepages</h3>
+                        <div class="feature-subtitle">Branded Event Portals</div>
+                        <div class="feature-description">Design beautiful, branded homepages for each event with custom layouts, colors, and content that reflects your company's identity.</div>
+                    </div>
+                    
+                    <div class="feature-card animate-on-scroll">
+                        <div class="feature-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h3>Event Timelines</h3>
+                        <div class="feature-subtitle">Interactive Schedules</div>
+                        <div class="feature-description">Create dynamic timelines that guests can interact with, featuring schedules, reminders, and real-time updates throughout the event.</div>
+                    </div>
+                    
+                    <div class="feature-card animate-on-scroll">
+                        <div class="feature-icon">
+                            <i class="fas fa-puzzle-piece"></i>
+                        </div>
+                        <h3>In-App Applications</h3>
+                        <div class="feature-subtitle">Modular Experience Tools</div>
+                        <div class="feature-description">Build custom applications within the guest app for check-ins, networking, feedback, surveys, and other interactive experiences.</div>
+                    </div>
+                    
+                    <div class="feature-card animate-on-scroll">
+                        <div class="feature-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3>Guest Journey Management</h3>
+                        <div class="feature-subtitle">Complete Experience Control</div>
+                        <div class="feature-description">Track and manage every aspect of your guests' journey from invitation to post-event follow-up with comprehensive analytics.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="stats">
+            <div class="container">
+                <div class="stats-grid">
+                    <div class="stat-item animate-on-scroll">
+                        <div class="stat-number">10K+</div>
+                        <div class="stat-label">Events Managed</div>
+                    </div>
+                    <div class="stat-item animate-on-scroll">
+                        <div class="stat-number">500K+</div>
+                        <div class="stat-label">Guests Served</div>
+                    </div>
+                    <div class="stat-item animate-on-scroll">
+                        <div class="stat-number">99.9%</div>
+                        <div class="stat-label">Uptime</div>
+                    </div>
+                    <div class="stat-item animate-on-scroll">
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-label">Support</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>OnTimely</h4>
+                    <p>Professional event management platform designed for teams who demand excellence.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Product</h4>
+                    <p><a href="#features">Features</a></p>
+                    <p><a href="#pricing">Pricing</a></p>
+                    <p><a href="#integrations">Integrations</a></p>
+                </div>
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <p><a href="#about">About</a></p>
+                    <p><a href="#careers">Careers</a></p>
+                    <p><a href="#contact">Contact</a></p>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <p><a href="#help">Help Center</a></p>
+                    <p><a href="#docs">Documentation</a></p>
+                    <p><a href="#status">System Status</a></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 OnTimely. All rights reserved. | Privacy Policy | Terms of Service</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Device detection and dynamic download button generation
+        function detectPlatform() {
+            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+            
+            // Check if it's macOS
+            if (/Mac|iPod|iPhone|iPad/.test(userAgent)) {
+                return 'mac';
+            }
+            // Check if it's Windows
+            else if (/Win/.test(userAgent)) {
+                return 'windows';
+            }
+            // Check if it's Linux
+            else if (/Linux/.test(userAgent)) {
+                return 'linux';
+            }
+            // Default to showing all options
+            else {
+                return 'unknown';
+            }
+        }
+
+        function createDownloadButton(platform, icon, label, sublabel, filename, isPrimary = false) {
+            const button = document.createElement('a');
+            button.href = filename;
+            button.className = `download-btn ${isPrimary ? 'primary' : ''}`;
+            
+            
+            button.innerHTML = `
+                <i class="${icon}"></i>
+                <div class="text">
+                    <span class="label">${label}</span>
+                    <span class="store">${sublabel}</span>
+                </div>
+            `;
+            
+            return button;
+        }
+
+        function populateDownloadButtons() {
+            const container = document.getElementById('download-buttons');
+            const platform = detectPlatform();
+            
+            // Clear existing buttons
+            container.innerHTML = '';
+            
+            if (platform === 'mac') {
+                // Check if it's Apple Silicon or Intel
+                const isAppleSilicon = navigator.platform.includes('ARM') || 
+                                     (navigator.userAgent.includes('Mac') && navigator.userAgent.includes('ARM'));
+                
+                if (isAppleSilicon) {
+                    // Primary button for Apple Silicon
+                    container.appendChild(createDownloadButton(
+                        'mac', 
+                        'fab fa-apple', 
+                        'Download for Apple Silicon (Recommended)', 
+                        'macOS (ARM64)', 
+                        'https://github.com/leveldesignagency/OnTimely/releases/download/v1.0.1/OnTimely.Desktop.App.v1.0.1.Apple.Silicon.dmg',
+                        true
+                    ));
+                    
+                    // Secondary button for Intel (universal compatibility)
+                    container.appendChild(createDownloadButton(
+                        'mac', 
+                        'fab fa-apple', 
+                        'Download for Intel (Universal)', 
+                        'macOS (Intel)', 
+                        'https://github.com/leveldesignagency/OnTimely/releases/download/v1.0.1/OnTimely.Desktop.App.v1.0.1.dmg'
+                    ));
+                } else {
+                    // Primary button for Intel
+                    container.appendChild(createDownloadButton(
+                        'mac', 
+                        'fab fa-apple', 
+                        'Download for Intel (Universal)', 
+                        'macOS (Intel)', 
+                        'https://github.com/leveldesignagency/OnTimely/releases/download/v1.0.1/OnTimely.Desktop.App.v1.0.1.dmg',
+                        true
+                    ));
+                    
+                    // Secondary button for Apple Silicon
+                    container.appendChild(createDownloadButton(
+                        'mac', 
+                        'fab fa-apple', 
+                        'Download for Apple Silicon (Recommended)', 
+                        'macOS (ARM64)', 
+                        'https://github.com/leveldesignagency/OnTimely/releases/download/v1.0.1/OnTimely.Desktop.App.v1.0.1.Apple.Silicon.dmg'
+                    ));
+                }
+            } else if (platform === 'windows') {
+                // Windows primary button
+                container.appendChild(createDownloadButton(
+                    'windows', 
+                    'fab fa-windows', 
+                    'Download for Windows', 
+                    'Windows 10/11', 
+                    'https://github.com/leveldesignagency/OnTimely/releases/download/v1.0.1/OnTimely.Desktop.App.v1.0.1.exe',
+                    true
+                ));
+            } else {
+                // Show all options for unknown platforms or cross-platform users
+                container.appendChild(createDownloadButton(
+                    'mac', 
+                    'fab fa-apple', 
+                    'Download for macOS', 
+                    'macOS (Intel)', 
+                    'https://github.com/leveldesignagency/OnTimely/releases/download/v1.0.1/OnTimely.Desktop.App.v1.0.1.dmg'
+                ));
+                
+                container.appendChild(createDownloadButton(
+                    'mac', 
+                    'fab fa-apple', 
+                    'Download for Apple Silicon (Recommended)', 
+                    'macOS (ARM64)', 
+                    'https://github.com/leveldesignagency/OnTimely/releases/download/v1.0.1/OnTimely.Desktop.App.v1.0.1.Apple.Silicon.dmg'
+                ));
+                
+                container.appendChild(createDownloadButton(
+                    'windows', 
+                    'fab fa-windows', 
+                    'Download for Windows', 
+                    'Windows 10/11', 
+                    'https://github.com/leveldesignagency/OnTimely/releases/download/v1.0.1/OnTimely.Desktop.App.v1.0.1.exe'
+                ));
+            }
+        }
+
+        // Initialize download buttons when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            populateDownloadButtons();
+            initScrollAnimations();
+            initMenuFadeEffect();
+            initTextFlash();
+            initSmoothScrolling();
+        });
+
+        // Scroll-triggered animations
+        function initScrollAnimations() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animated');
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all elements with animate-on-scroll class
+            document.querySelectorAll('.animate-on-scroll').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        // Menu rounded container effect on scroll
+        function initMenuFadeEffect() {
+            let lastScrollY = window.scrollY;
+            const header = document.querySelector('header');
+            
+            window.addEventListener('scroll', () => {
+                const currentScrollY = window.scrollY;
+                
+                if (currentScrollY > 100) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+                
+                lastScrollY = currentScrollY;
+            });
+        }
+
+        // Text flash animation for hero title - letter by letter
+        function initTextFlash() {
+            // Animation removed - keeping function for compatibility
+        }
+
+        // Smooth scrolling for navigation links
+        function initSmoothScrolling() {
+            // Add smooth scrolling behavior to the page
+            document.documentElement.style.scrollBehavior = 'smooth';
+            
+            // Handle navigation link clicks
+            const navLinks = document.querySelectorAll('a[href^="#"]');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    
+                    if (targetElement) {
+                        // Calculate offset for fixed header
+                        const headerHeight = document.querySelector('header').offsetHeight;
+                        const targetPosition = targetElement.offsetTop - headerHeight - 20;
+                        
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        }
+
+        // Initialize animated logo
+        function initAnimatedLogo() {
+            const animationContainer = document.getElementById('animated-logo');
+            const fallbackImg = document.querySelector('.logo-img');
+            
+            if (animationContainer && typeof lottie !== 'undefined') {
+                try {
+                    const animation = lottie.loadAnimation({
+                        container: animationContainer,
+                        renderer: 'svg',
+                        loop: true,
+                        autoplay: true,
+                        path: '../OfficialLogo.json',
+                        rendererSettings: {
+                            preserveAspectRatio: 'xMidYMid meet'
+                        }
+                    });
+
+                    // Set animation to play every 30 seconds
+                    animation.addEventListener('complete', function() {
+                        setTimeout(() => {
+                            animation.goToAndPlay(0, true);
+                        }, 30000); // 30 second delay
+                    });
+
+                    // Hide fallback image on successful load
+                    animation.addEventListener('DOMLoaded', function() {
+                        if (fallbackImg) {
+                            fallbackImg.style.display = 'none';
+                        }
+                    });
+
+                    // Show fallback image on error
+                    animation.addEventListener('error', function() {
+                        console.error('Lottie animation failed to load, showing fallback');
+                        if (fallbackImg) {
+                            fallbackImg.style.display = 'block';
+                        }
+                        animationContainer.style.display = 'none';
+                    });
+
+                } catch (error) {
+                    console.error('Error initializing Lottie animation:', error);
+                    if (fallbackImg) {
+                        fallbackImg.style.display = 'block';
+                    }
+                    animationContainer.style.display = 'none';
+                }
+            } else {
+                console.warn('Lottie library not loaded or container not found, showing fallback');
+                if (fallbackImg) {
+                    fallbackImg.style.display = 'block';
+                }
+                if (animationContainer) {
+                    animationContainer.style.display = 'none';
+                }
+            }
+        }
+
+        // Initialize animated logo when page loads
+        document.addEventListener('DOMContentLoaded', initAnimatedLogo);
+    </script>
+</body>
+</html> 
