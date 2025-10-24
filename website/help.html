@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --primary-green: #10b981;
-            --primary-green-dark: #059669;
+            --primary-green: #0ab27c;
+            --primary-green-dark: #089c6b;
             --text-primary: #ffffff;
             --text-secondary: #d1d5db;
             --text-muted: #9ca3af;
@@ -438,16 +438,6 @@
                 line-height: 1.5;
             }
 
-            .support-actions {
-                bottom: 20px;
-                right: 20px;
-            }
-
-            .support-btn {
-                width: 50px;
-                height: 50px;
-                font-size: 1rem;
-            }
         }
 
         /* remove old hover color override to match index */
@@ -675,14 +665,14 @@
         .support-btn {
             width: 60px;
             height: 60px;
-            background: linear-gradient(135deg, var(--primary-green), var(--primary-green-dark));
+            background: linear-gradient(135deg, #0ab27c, #089c6b);
             border: none;
             border-radius: 12px;
             color: #000000;
             font-size: 1.2rem;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+            box-shadow: 0 8px 25px rgba(10, 178, 124, 0.3);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -690,20 +680,9 @@
 
         .support-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 12px 35px rgba(16, 185, 129, 0.4);
+            box-shadow: 0 12px 35px rgba(10, 178, 124, 0.4);
         }
 
-        .support-btn.secondary {
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--text-primary);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .support-btn.secondary:hover {
-            background: rgba(16, 185, 129, 0.2);
-            border-color: var(--primary-green);
-        }
 
         /* CTA button style (match homepage hero) */
         .cta-button {
@@ -1296,13 +1275,11 @@
 
     <!-- Support Actions -->
     <div class="support-actions">
-        <button class="support-btn" id="callSupportBtn" title="Call Support">
-            <i class="fas fa-phone"></i>
-        </button>
-        <button class="support-btn secondary" id="speakToAgentBtn" title="Speak to Agent">
-            <i class="fas fa-headset"></i>
+        <button class="support-btn" id="chatBotBtn" title="AI Assistant">
+            <i class="fas fa-robot"></i>
         </button>
     </div>
+
 
     <!-- Chat Modal -->
     <div class="chat-modal" id="chatModal">
@@ -1617,25 +1594,23 @@
         function initChat() {
             const chatModal = document.getElementById('chatModal');
             const chatClose = document.getElementById('chatClose');
-            const speakToAgentBtn = document.getElementById('speakToAgentBtn');
             const chatInput = document.getElementById('chatInput');
             const chatMessages = document.getElementById('chatMessages');
 
-            speakToAgentBtn.addEventListener('click', () => {
-                chatModal.classList.add('active');
-                chatInput.focus();
-            });
+            if (chatClose) {
+                chatClose.addEventListener('click', () => {
+                    chatModal.classList.remove('active');
+                });
+            }
 
-            chatClose.addEventListener('click', () => {
-                chatModal.classList.remove('active');
-            });
-
-            chatInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                    e.preventDefault();
-                    sendMessage();
-                }
-            });
+            if (chatInput) {
+                chatInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        sendMessage();
+                    }
+                });
+            }
 
             async function sendMessage() {
                 const message = chatInput.value.trim();
@@ -1735,15 +1710,6 @@
             });
         }
 
-        // Call support functionality
-        function initCallSupport() {
-            const callSupportBtn = document.getElementById('callSupportBtn');
-            
-            callSupportBtn.addEventListener('click', () => {
-                // Simple call support action - you can customize this
-                alert('Calling support...\n\nPhone: +1 (555) 123-4567\nEmail: support@ontimely.com\n\nOur support team is available 24/7 to help you!');
-            });
-        }
 
         // Mobile menu functionality
         function initMobileMenu() {
@@ -1783,11 +1749,24 @@
             }
         }
 
+        // Chatbot functionality
+        function initChatBot() {
+            const chatBotBtn = document.getElementById('chatBotBtn');
+            
+            chatBotBtn.addEventListener('click', () => {
+                // Open the chat modal
+                const chatModal = document.getElementById('chatModal');
+                if (chatModal) {
+                    chatModal.style.display = 'flex';
+                }
+            });
+        }
+
         // Initialize everything
         document.addEventListener('DOMContentLoaded', function() {
             initNavigation();
             initChat();
-            initCallSupport();
+            initChatBot();
             initSearch();
             initFadeInAnimations();
             initMobileMenu();
