@@ -6,7 +6,11 @@
     { "src": "/confirm-account", "dest": "/website/confirm-account.html" },
     { "src": "/set-initial-password", "dest": "/website/set-initial-password.html" },
     { "src": "/guest-success-email-confirmed", "dest": "/guest-success-email-confirmed.html" },
+    { "src": "/help", "dest": "/website/help.html" },
+    { "src": "/about", "dest": "/website/about.html" },
+    { "src": "/status", "dest": "/website/status.html" },
     { "src": "/config.js", "dest": "/website/config.js" },
+    { "src": "/(.*\\.(png|svg|mp4|ico|jpg|jpeg|gif|webp))", "dest": "/website/$1" },
     { "src": "/api/(.*)", "dest": "/api/$1" }
   ]
 } 
