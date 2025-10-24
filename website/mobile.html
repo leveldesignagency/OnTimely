@@ -74,28 +74,20 @@
         .mobile-header {
             position: fixed;
             top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
+            left: 0;
+            right: 0;
             background: rgba(17, 24, 39, 0.55);
             backdrop-filter: blur(8px);
-            border-radius: 0;
             padding: 20px 0;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             z-index: 1000;
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.04), 0 8px 30px rgba(0,0,0,0.45);
-            transition: top 0.4s ease, border-radius 0.4s ease, width 0.4s ease;
         }
 
         .mobile-header-content {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 40px;
-            max-width: 1600px;
-            margin: 0 auto;
-            padding: 0 40px;
-            transition: padding 0.6s ease;
+            padding: 0 20px;
         }
 
         .mobile-logo {
@@ -267,6 +259,7 @@
             height: auto;
             z-index: -1;
             opacity: 0.3;
+            margin: 0 auto;
         }
 
         /* Desktop Message */
@@ -463,7 +456,7 @@
         }
 
         .mobile-pricing-card.popular::before {
-            content: 'MOST POPULAR';
+            content: 'Most Popular';
             position: absolute;
             top: -10px;
             left: 50%;
@@ -483,10 +476,9 @@
             color: var(--text-primary);
         }
 
-        .mobile-pricing-price {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--primary-green);
+        .mobile-pricing-subtitle {
+            font-size: 0.9rem;
+            color: var(--text-muted);
             margin-bottom: 20px;
         }
 
@@ -664,7 +656,6 @@
         /* Stats Section */
         .mobile-stats {
             padding: 60px 20px;
-            background: var(--bg-secondary);
         }
 
         .mobile-stats-grid {
@@ -806,7 +797,6 @@
         <div class="mobile-header-content">
             <div class="mobile-logo">
                 <img src="on timely official logo.svg" alt="OnTimely Logo">
-                OnTimely
             </div>
             <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
         </div>
@@ -909,50 +899,53 @@
             
             <div class="mobile-pricing-card mobile-fade-in mobile-animate-delay-1">
                 <h3>Solo</h3>
-                <div class="mobile-pricing-price">£29<span style="font-size: 1rem;">/month</span></div>
+                <div class="mobile-pricing-subtitle">Perfect for individual event organizers</div>
                 <ul class="mobile-pricing-features">
-                    <li>Up to 100 guests</li>
-                    <li>Basic event management</li>
-                    <li>Email support</li>
+                    <li>1 user included</li>
+                    <li>Unlimited events</li>
+                    <li>Basic support</li>
+                    <li>Core features included</li>
                 </ul>
                 <button class="mobile-pricing-btn">Get Started</button>
             </div>
             
-            <div class="mobile-pricing-card popular mobile-fade-in mobile-animate-delay-2">
-                <h3>Professional</h3>
-                <div class="mobile-pricing-price">£99<span style="font-size: 1rem;">/month</span></div>
+            <div class="mobile-pricing-card mobile-fade-in mobile-animate-delay-2">
+                <h3>Basic</h3>
+                <div class="mobile-pricing-subtitle">Ideal for small teams</div>
                 <ul class="mobile-pricing-features">
-                    <li>Up to 500 guests</li>
-                    <li>Advanced features</li>
-                    <li>Custom branding</li>
+                    <li>4-10 users included</li>
+                    <li>Advanced analytics</li>
                     <li>Priority support</li>
+                    <li>Custom branding</li>
+                    <li>API access</li>
                 </ul>
                 <button class="mobile-pricing-btn">Get Started</button>
             </div>
             
-            <div class="mobile-pricing-card mobile-fade-in mobile-animate-delay-3">
-                <h3>Enterprise</h3>
-                <div class="mobile-pricing-price">£299<span style="font-size: 1rem;">/month</span></div>
+            <div class="mobile-pricing-card popular mobile-fade-in mobile-animate-delay-3">
+                <h3>Corporate</h3>
+                <div class="mobile-pricing-subtitle">Built for growing organizations</div>
                 <ul class="mobile-pricing-features">
-                    <li>Unlimited guests</li>
-                    <li>All features</li>
-                    <li>White-label solution</li>
-                    <li>24/7 dedicated support</li>
+                    <li>11-35 users included</li>
+                    <li>Advanced integrations</li>
+                    <li>Dedicated support</li>
+                    <li>Custom workflows</li>
+                    <li>White-label options</li>
                 </ul>
                 <button class="mobile-pricing-btn">Get Started</button>
             </div>
             
             <div class="mobile-pricing-card mobile-fade-in mobile-animate-delay-4">
-                <h3>Corporate</h3>
-                <div class="mobile-pricing-price">Custom<span style="font-size: 1rem;">/month</span></div>
+                <h3>Enterprise</h3>
+                <div class="mobile-pricing-subtitle">For large-scale operations</div>
                 <ul class="mobile-pricing-features">
-                    <li>Unlimited everything</li>
+                    <li>35+ users included</li>
                     <li>Custom development</li>
+                    <li>24/7 dedicated support</li>
                     <li>On-premise deployment</li>
-                    <li>Dedicated account manager</li>
                     <li>SLA guarantees</li>
                 </ul>
-                <button class="mobile-pricing-btn">Get Started</button>
+                <button class="mobile-pricing-btn">Contact Sales</button>
             </div>
         </section>
 
