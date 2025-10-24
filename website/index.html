@@ -1205,13 +1205,21 @@
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                gap: 20px;
+                gap: 30px;
+                width: 100%;
+                padding: 0 20px;
             }
 
             .create-event-mobile,
             .create-event-desktop {
-                max-width: 280px;
+                max-width: 320px;
                 height: auto;
+                margin: 0 auto;
+                display: block;
+            }
+
+            .create-event-mobile {
+                margin-bottom: 20px;
             }
 
             .create-event-title {
@@ -1327,16 +1335,24 @@
 
             .guest-chat-left {
                 order: 1;
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                padding: 0 20px;
             }
 
             .guest-chat-right {
                 order: 2;
                 padding-left: 0;
+                width: 100%;
+                padding: 0 20px;
             }
 
             .guest-chat-image {
-                max-width: 280px;
+                max-width: 320px;
                 height: auto;
+                margin: 0 auto;
+                display: block;
             }
 
             .guest-chat-title {
@@ -1856,26 +1872,50 @@
 
             .pricing-card {
                 text-align: center;
-                padding: 30px 20px;
+                padding: 40px 20px;
+                margin-bottom: 30px;
+                position: relative;
             }
 
             .pricing-card h3 {
                 font-size: 1.5rem;
-                margin-bottom: 15px;
+                margin-bottom: 20px;
             }
 
             .pricing-price {
                 font-size: 2rem;
-                margin-bottom: 20px;
+                margin-bottom: 25px;
             }
 
             .pricing-features {
-                margin-bottom: 25px;
+                margin-bottom: 30px;
             }
 
             .pricing-features li {
                 font-size: 0.9rem;
-                margin-bottom: 8px;
+                margin-bottom: 12px;
+                line-height: 1.4;
+            }
+
+            .pricing-popular {
+                position: relative;
+                z-index: 2;
+                margin-bottom: 40px;
+            }
+
+            .pricing-popular::before {
+                content: "MOST POPULAR";
+                position: absolute;
+                top: -15px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: var(--primary-green);
+                color: #000000;
+                padding: 8px 20px;
+                border-radius: 20px;
+                font-size: 0.8rem;
+                font-weight: 600;
+                z-index: 3;
             }
         }
 
@@ -2347,20 +2387,25 @@
 
             /* Mobile Hero Section */
             .hero {
-                padding: 120px 0 80px;
+                padding: 140px 0 100px;
                 text-align: center;
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
             }
 
             .hero-content {
                 flex-direction: column;
-                gap: 40px;
+                gap: 50px;
                 align-items: center;
+                width: 100%;
             }
 
             .hero-left {
                 order: 2;
                 text-align: center;
                 max-width: 100%;
+                padding: 0 20px;
             }
 
             .hero-right {
@@ -2369,24 +2414,39 @@
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                gap: 20px;
+                gap: 30px;
+                padding: 0 20px;
             }
 
             .hero-left h1 {
-                font-size: 2.2rem;
+                font-size: 2.5rem;
                 line-height: 1.2;
-                margin-bottom: 20px;
+                margin-bottom: 25px;
+                word-wrap: break-word;
             }
 
             .hero-left p {
                 font-size: 1.1rem;
-                line-height: 1.6;
-                margin-bottom: 30px;
+                line-height: 1.7;
+                margin-bottom: 35px;
+                max-width: 90%;
+                margin-left: auto;
+                margin-right: auto;
             }
 
             .desktop-image, .mobile-image {
-                max-width: 280px;
+                max-width: 300px;
                 height: auto;
+                margin: 0 auto;
+            }
+
+            /* Fix overlapping text issues */
+            .hero-left h1 br {
+                display: none;
+            }
+
+            .hero-left p br {
+                display: none;
             }
             
             .mobile-auth-buttons .auth-btn.signup-btn {
@@ -2476,6 +2536,69 @@
                 min-height: 120px;
                 max-height: 200px;
             }
+
+            /* Fix floating text and overlapping issues */
+            .sliding-images {
+                position: relative;
+                z-index: 1;
+            }
+
+            .sliding-image {
+                position: relative;
+                z-index: 1;
+            }
+
+            /* Ensure proper spacing for all sections */
+            .event-management-section,
+            .create-event-section,
+            .guest-chat-section,
+            .features,
+            .pricing,
+            .contact-section {
+                padding: 80px 0;
+                position: relative;
+                z-index: 1;
+            }
+
+            /* Fix text wrapping in logo */
+            .logo span {
+                white-space: nowrap;
+                display: block;
+            }
+
+            /* Ensure buttons don't overlap */
+            .cta-button,
+            .pricing-cta button,
+            .auth-btn {
+                margin: 15px 0;
+                min-height: 50px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            /* Fix download buttons spacing */
+            .download-buttons {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+                margin-top: 30px;
+                width: 100%;
+                max-width: 300px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .download-btn {
+                width: 100%;
+                padding: 15px 20px;
+                margin: 0;
+            }
+
+            /* Ensure proper viewport spacing */
+            body {
+                padding-bottom: 80px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -2512,8 +2635,8 @@
                 <ul class="nav-links" id="navLinks">
                     <li><a href="#home" class="active">Home</a></li>
                 <li><a href="#features">Features</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="help.html">Help</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/help">Help</a></li>
                     <li class="mobile-auth-buttons">
                         <a href="https://dashboard.ontimely.co.uk" class="auth-btn login-btn">Login</a>
                         <a href="#contact" class="auth-btn signup-btn">Contact</a>
@@ -2536,9 +2659,9 @@
             <div class="mobile-menu-links">
                 <a href="#home">Home</a>
                 <a href="#features">Features</a>
-                <a href="about.html">About</a>
-                <a href="help.html">Help</a>
-                <a href="status.html">Status</a>
+                <a href="/about">About</a>
+                <a href="/help">Help</a>
+                <a href="/status">Status</a>
             </div>
             <div class="mobile-menu-auth">
                 <a href="https://dashboard.ontimely.co.uk" class="auth-btn login-btn">Login</a>
@@ -2928,15 +3051,15 @@
                 </div>
                 <div class="footer-section">
                     <h4>Company</h4>
-                    <p><a href="about.html">About</a></p>
+                    <p><a href="/about">About</a></p>
                     <p><a href="#careers">Careers</a></p>
                     <p><a href="#contact">Contact</a></p>
                 </div>
                 <div class="footer-section">
                     <h4>Support</h4>
-                    <p><a href="#help">Help Center</a></p>
+                    <p><a href="/help">Help Center</a></p>
                     <p><a href="#docs">Documentation</a></p>
-                    <p><a href="status.html">System Status</a></p>
+                    <p><a href="/status">System Status</a></p>
                 </div>
             </div>
             <div class="footer-bottom">
