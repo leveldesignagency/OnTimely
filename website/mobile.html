@@ -70,24 +70,32 @@
         }
 
 
-        /* Mobile Header - Match About Page */
+        /* Mobile Header - Match About Page Exactly */
         .mobile-header {
             position: fixed;
             top: 0;
-            left: 0;
-            right: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
             background: rgba(17, 24, 39, 0.55);
             backdrop-filter: blur(8px);
+            border-radius: 0;
             padding: 20px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             z-index: 1000;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.04), 0 8px 30px rgba(0,0,0,0.45);
+            transition: top 0.4s ease, border-radius 0.4s ease, width 0.4s ease;
         }
 
         .mobile-header-content {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 20px;
+            gap: 40px;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 40px;
+            transition: padding 0.6s ease;
         }
 
         .mobile-logo {
@@ -196,8 +204,6 @@
         .mobile-hero {
             padding: 40px 20px 60px;
             text-align: center;
-            position: relative;
-            overflow: hidden;
         }
 
         .mobile-hero h1 {
@@ -250,16 +256,13 @@
         }
 
         .mobile-hero-image {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            max-width: 500px;
+            max-width: 600px;
             width: 100%;
             height: auto;
-            z-index: -1;
-            opacity: 0.3;
-            margin: 0 auto;
+            margin: 40px auto 0;
+            display: block;
+            object-fit: cover;
+            object-position: center;
         }
 
         /* Desktop Message */
@@ -282,6 +285,8 @@
         .mobile-event-management {
             padding: 60px 20px;
             text-align: center;
+            position: relative;
+            overflow: hidden;
         }
 
         .mobile-event-management h2 {
@@ -306,6 +311,8 @@
         .mobile-create-event {
             padding: 60px 20px;
             text-align: center;
+            position: relative;
+            overflow: hidden;
         }
 
         .mobile-create-event h2 {
@@ -334,9 +341,15 @@
         }
 
         .mobile-stack-image {
-            max-width: 350px;
+            max-width: 380px;
             height: auto;
             border-radius: 15px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+            opacity: 0.3;
         }
 
         .mobile-stack-image.laptop {
@@ -402,7 +415,7 @@
         }
 
         .mobile-feature-card {
-            background: var(--bg-secondary);
+            background: transparent;
             border: 1px solid var(--border-subtle);
             border-radius: 15px;
             padding: 25px;
@@ -452,7 +465,7 @@
 
         .mobile-pricing-card.popular {
             border-color: var(--primary-green);
-            background: rgba(10, 178, 124, 0.05);
+            background: transparent;
         }
 
         .mobile-pricing-card.popular::before {
@@ -723,7 +736,7 @@
             padding: 15px;
             border: 1px solid var(--border-medium);
             border-radius: 10px;
-            background: var(--bg-secondary);
+            background: transparent;
             color: var(--text-primary);
             font-size: 16px;
             font-family: inherit;
