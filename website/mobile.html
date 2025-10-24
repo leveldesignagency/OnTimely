@@ -528,7 +528,7 @@
 
         /* Section Images */
         .mobile-section-image {
-            max-width: 300px;
+            max-width: 400px;
             height: auto;
             border-radius: 15px;
             margin: 0 auto;
@@ -1055,17 +1055,29 @@
             appearance: none !important;
             -webkit-appearance: none !important;
             -moz-appearance: none !important;
+            -ms-appearance: none !important;
             background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e") !important;
             background-repeat: no-repeat !important;
             background-position: right 15px center !important;
             background-size: 20px !important;
             padding-right: 50px !important;
+            cursor: pointer !important;
+            border: 1px solid rgba(255, 255, 255, 0.08) !important;
+            border-radius: 10px !important;
+            background-color: rgba(17, 24, 39, 0.55) !important;
+            backdrop-filter: blur(8px) !important;
+            color: var(--text-primary) !important;
+            font-size: 16px !important;
+            font-family: inherit !important;
+            height: 50px !important;
+            box-sizing: border-box !important;
         }
 
         .mobile-form-group select option {
-            background: rgba(17, 24, 39, 0.95);
-            color: var(--text-primary);
-            padding: 10px;
+            background: rgba(17, 24, 39, 0.95) !important;
+            color: var(--text-primary) !important;
+            padding: 10px !important;
+            border: none !important;
         }
 
         .mobile-form-group textarea {
@@ -1074,22 +1086,87 @@
             resize: vertical;
         }
 
-        .mobile-form-group select {
-            appearance: none;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
-            background-repeat: no-repeat;
-            background-position: right 15px center;
-            background-size: 16px;
-            padding-right: 40px;
-            cursor: pointer;
+        /* Custom Select Dropdown */
+        .mobile-custom-select {
+            position: relative;
+            width: 100%;
         }
 
-        .mobile-form-group select option {
-            background: rgba(17, 24, 39, 0.95);
+        .mobile-select-trigger {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            background: rgba(17, 24, 39, 0.55);
+            backdrop-filter: blur(8px);
             color: var(--text-primary);
-            padding: 10px;
+            font-size: 16px;
+            font-family: inherit;
+            height: 50px;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-select-trigger:hover {
+            border-color: var(--primary-green);
+        }
+
+        .mobile-select-trigger.active {
+            border-color: var(--primary-green);
+            background: rgba(17, 24, 39, 0.75);
+        }
+
+        .mobile-select-value {
+            color: var(--text-primary);
+        }
+
+        .mobile-select-arrow {
+            color: var(--text-muted);
+            transition: transform 0.3s ease;
+        }
+
+        .mobile-select-trigger.active .mobile-select-arrow {
+            transform: rotate(180deg);
+        }
+
+        .mobile-select-options {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: rgba(17, 24, 39, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            margin-top: 5px;
+            z-index: 1000;
+            display: none;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .mobile-select-options.active {
+            display: block;
+        }
+
+        .mobile-select-option {
+            padding: 15px;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .mobile-select-option:last-child {
+            border-bottom: none;
+        }
+
+        .mobile-select-option:hover {
+            background: rgba(10, 178, 124, 0.1);
+            color: var(--primary-green);
         }
 
         .mobile-form-group input:focus,
@@ -1193,19 +1270,19 @@
 
         <!-- Event Management Section -->
         <section class="mobile-event-management" id="event-management">
-            <img src="CreatEvent.png" alt="Create Multiple Events" class="mobile-section-image mobile-fade-in">
-            <h2 class="mobile-fade-in mobile-animate-delay-1">Event Management</h2>
-            <p class="mobile-fade-in mobile-animate-delay-2">Create and manage multiple events with our comprehensive dashboard. Track everything from guest registration to real-time analytics.</p>
+            <h2 class="mobile-fade-in">Event Management</h2>
+            <p class="mobile-fade-in mobile-animate-delay-1">Create and manage multiple events with our comprehensive dashboard. Track everything from guest registration to real-time analytics.</p>
+            <img src="CreatEvent.png" alt="Create Multiple Events" class="mobile-section-image mobile-fade-in mobile-animate-delay-2">
         </section>
 
         <!-- Create Event Section -->
         <section class="mobile-create-event" id="create-event">
+            <h2 class="mobile-fade-in">Create Custom Event Homepages</h2>
+            <p class="mobile-fade-in mobile-animate-delay-1">Build beautiful, branded event homepages that your guests will love. Customize every detail to match your brand and event style.</p>
             <div class="mobile-image-stack">
-                <img src="HomepageMobile.png" alt="Homepage Mobile" class="mobile-stack-image mobile-fade-in">
+                <img src="HomepageMobile.png" alt="Homepage Mobile" class="mobile-stack-image mobile-fade-in mobile-animate-delay-2">
                 <img src="HomepageBuilder.png" alt="Homepage Builder" class="mobile-stack-image laptop">
             </div>
-            <h2 class="mobile-fade-in mobile-animate-delay-1">Create Custom Event Homepages</h2>
-            <p class="mobile-fade-in mobile-animate-delay-2">Build beautiful, branded event homepages that your guests will love. Customize every detail to match your brand and event style.</p>
         </section>
 
         <!-- Guest Chat Section -->
@@ -1342,13 +1419,19 @@
                     <input type="email" placeholder="Email Address" required>
                 </div>
                 <div class="mobile-form-group">
-                    <select required>
-                        <option value="">Company Size</option>
-                        <option value="1-10">1-10 employees</option>
-                        <option value="11-50">11-50 employees</option>
-                        <option value="51-200">51-200 employees</option>
-                        <option value="200+">200+ employees</option>
-                    </select>
+                    <div class="mobile-custom-select">
+                        <div class="mobile-select-trigger">
+                            <span class="mobile-select-value">Company Size</span>
+                            <span class="mobile-select-arrow">▼</span>
+                        </div>
+                        <div class="mobile-select-options">
+                            <div class="mobile-select-option" data-value="1-10">1-10 employees</div>
+                            <div class="mobile-select-option" data-value="11-50">11-50 employees</div>
+                            <div class="mobile-select-option" data-value="51-200">51-200 employees</div>
+                            <div class="mobile-select-option" data-value="200+">200+ employees</div>
+                        </div>
+                        <input type="hidden" name="company-size" required>
+                    </div>
                 </div>
                 <div class="mobile-form-group">
                     <textarea placeholder="Tell us about your event needs..." rows="4" required></textarea>
@@ -1448,6 +1531,61 @@
                         block: 'start'
                     });
                 }
+            });
+        });
+
+        // Custom Select Dropdown Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const customSelects = document.querySelectorAll('.mobile-custom-select');
+            
+            customSelects.forEach(select => {
+                const trigger = select.querySelector('.mobile-select-trigger');
+                const options = select.querySelector('.mobile-select-options');
+                const optionItems = select.querySelectorAll('.mobile-select-option');
+                const hiddenInput = select.querySelector('input[type="hidden"]');
+                const valueSpan = select.querySelector('.mobile-select-value');
+                
+                trigger.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const isActive = options.classList.contains('active');
+                    
+                    // Close all other dropdowns
+                    document.querySelectorAll('.mobile-select-options').forEach(opt => {
+                        opt.classList.remove('active');
+                    });
+                    document.querySelectorAll('.mobile-select-trigger').forEach(trig => {
+                        trig.classList.remove('active');
+                    });
+                    
+                    // Toggle current dropdown
+                    if (!isActive) {
+                        options.classList.add('active');
+                        trigger.classList.add('active');
+                    }
+                });
+                
+                optionItems.forEach(option => {
+                    option.addEventListener('click', function() {
+                        const value = this.getAttribute('data-value');
+                        const text = this.textContent;
+                        
+                        valueSpan.textContent = text;
+                        hiddenInput.value = value;
+                        
+                        options.classList.remove('active');
+                        trigger.classList.remove('active');
+                    });
+                });
+            });
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function() {
+                document.querySelectorAll('.mobile-select-options').forEach(opt => {
+                    opt.classList.remove('active');
+                });
+                document.querySelectorAll('.mobile-select-trigger').forEach(trig => {
+                    trig.classList.remove('active');
+                });
             });
         });
 
