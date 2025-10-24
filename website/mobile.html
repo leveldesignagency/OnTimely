@@ -57,104 +57,58 @@
             pointer-events: none;
         }
 
-        body::after {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            pointer-events: none;
-            z-index: 1000;
-        }
 
-        .mobile-main::before {
-            content: '';
-            position: fixed;
-            top: 10px;
-            left: 10px;
-            right: 10px;
-            bottom: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            pointer-events: none;
-            z-index: 1000;
-        }
-
-        /* Section Dividers */
-        .mobile-hero,
-        .mobile-event-management,
-        .mobile-create-event,
-        .mobile-guest-chat,
-        .mobile-features,
-        .mobile-pricing,
-        .mobile-stats,
-        .mobile-signin,
-        .mobile-contact {
-            position: relative;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            margin: 10px;
-            border-radius: 15px;
-        }
-
-        .mobile-hero::before,
-        .mobile-event-management::before,
-        .mobile-create-event::before,
-        .mobile-guest-chat::before,
-        .mobile-features::before,
-        .mobile-pricing::before,
-        .mobile-stats::before,
-        .mobile-signin::before,
-        .mobile-contact::before {
-            content: '';
-            position: absolute;
-            top: -1px;
-            left: -1px;
-            right: -1px;
-            bottom: -1px;
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            border-radius: 15px;
-            pointer-events: none;
-        }
-
-        /* Mobile Header */
+        /* Mobile Header - Match About Page */
         .mobile-header {
             position: fixed;
             top: 0;
-            left: 0;
-            right: 0;
-            background: rgba(15, 17, 21, 0.95);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border-subtle);
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            background: rgba(17, 24, 39, 0.55);
+            backdrop-filter: blur(8px);
+            border-radius: 0;
+            padding: 20px 0;
+            border: 1px solid rgba(255, 255, 255, 0.08);
             z-index: 1000;
-            padding: 15px 20px;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.04), 0 8px 30px rgba(0,0,0,0.45);
+            transition: top 0.4s ease, border-radius 0.4s ease, width 0.4s ease;
         }
 
         .mobile-header-content {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            max-width: 100%;
+            justify-content: space-between;
+            gap: 40px;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 40px;
+            transition: padding 0.6s ease;
         }
 
         .mobile-logo {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #ffffff;
+            text-decoration: none;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
         .mobile-logo img {
-            height: 32px;
+            height: 40px;
             width: auto;
         }
 
         .mobile-menu-btn {
             background: none;
             border: none;
-            color: var(--text-primary);
-            font-size: 24px;
+            color: #ffffff;
+            font-size: 1.5rem;
             cursor: pointer;
-            padding: 8px;
+            padding: 5px;
         }
 
         /* Mobile Menu */
@@ -693,10 +647,12 @@
         }
 
         .mobile-stats-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            display: flex;
+            flex-direction: column;
             gap: 30px;
             text-align: center;
+            max-width: 400px;
+            margin: 0 auto;
         }
 
         .mobile-stat-item {
@@ -758,6 +714,23 @@
             color: var(--text-primary);
             font-size: 16px;
             font-family: inherit;
+            height: 50px;
+            box-sizing: border-box;
+        }
+
+        .mobile-form-group textarea {
+            height: auto;
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .mobile-form-group select {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 16px;
+            padding-right: 40px;
         }
 
         .mobile-form-group input:focus,
@@ -943,7 +916,20 @@
                     <li>White-label solution</li>
                     <li>24/7 dedicated support</li>
                 </ul>
-                <button class="mobile-pricing-btn">Contact Sales</button>
+                <button class="mobile-pricing-btn">Get Started</button>
+            </div>
+            
+            <div class="mobile-pricing-card mobile-fade-in mobile-animate-delay-4">
+                <h3>Corporate</h3>
+                <div class="mobile-pricing-price">Custom<span style="font-size: 1rem;">/month</span></div>
+                <ul class="mobile-pricing-features">
+                    <li>Unlimited everything</li>
+                    <li>Custom development</li>
+                    <li>On-premise deployment</li>
+                    <li>Dedicated account manager</li>
+                    <li>SLA guarantees</li>
+                </ul>
+                <button class="mobile-pricing-btn">Get Started</button>
             </div>
         </section>
 
@@ -1014,6 +1000,10 @@
     <!-- Footer -->
     <footer class="mobile-footer">
         <div class="mobile-footer-content">
+            <div class="mobile-footer-logo">
+                <img src="on timely official logo.svg" alt="OnTimely Logo" style="height: 40px; margin-bottom: 20px;">
+            </div>
+            
             <div class="mobile-footer-section">
                 <h3>Product</h3>
                 <ul>

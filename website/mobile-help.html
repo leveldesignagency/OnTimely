@@ -12,9 +12,9 @@
             --text-primary: #ffffff;
             --text-secondary: #d1d5db;
             --text-muted: #9ca3af;
-            --bg-primary: #000000;
-            --bg-secondary: #0f1015;
-            --border-color: rgba(255, 255, 255, 0.1);
+            --accent-grey: #6b7280;
+            --shadow-large: 0 25px 50px rgba(0, 0, 0, 0.5);
+            --sidebar-width: 300px;
         }
 
         * {
@@ -24,13 +24,15 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: var(--bg-primary);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #000000;
             color: var(--text-primary);
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
-        .mobile-help-header {
+        /* Navigation */
+        .navbar {
             position: fixed;
             top: 0;
             left: 50%;
@@ -46,7 +48,7 @@
             transition: top 0.4s ease, border-radius 0.4s ease, width 0.4s ease;
         }
 
-        .mobile-help-nav {
+        .nav-container {
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -57,467 +59,701 @@
             transition: padding 0.6s ease;
         }
 
-        .mobile-help-logo {
+        .navbar.scrolled .nav-container {
+            padding: 0 15px;
+        }
+
+        .nav-center {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 30px;
+            flex: 1;
+            justify-content: flex-end;
+            margin-right: 20px;
+        }
+
+        .logo {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #ffffff;
             text-decoration: none;
-            color: var(--text-primary);
+            display: flex;
+            align-items: center;
         }
 
-        .mobile-help-logo img {
-            height: 30px;
+        .logo img {
+            height: 40px;
+            width: auto;
         }
 
-        .mobile-help-logo h1 {
-            font-size: 1.2rem;
-            font-weight: 700;
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
         }
 
-        .mobile-back-btn {
+        .nav-links a {
+            color: #e0e0e0;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #ffffff;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            background: var(--primary-green);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        /* Auth buttons */
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .auth-btn {
+            padding: 8px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-auth-buttons {
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .login-btn {
+            color: #e0e0e0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .login-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .signup-btn {
             background: var(--primary-green);
             color: #000000;
+        }
+
+        .signup-btn:hover {
+            background: var(--primary-green-dark);
+            transform: translateY(-2px);
+        }
+
+        /* Mobile menu */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
             border: none;
-            padding: 8px 16px;
-            border-radius: 8px;
-            font-weight: 600;
-            text-decoration: none;
-            font-size: 14px;
-        }
-
-        .mobile-help-container {
-            padding: 20px;
-            max-width: 100%;
-        }
-
-        .mobile-help-search {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 30px;
-        }
-
-        .mobile-search-title {
+            color: #ffffff;
             font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 15px;
-            background: linear-gradient(135deg, var(--text-primary), var(--primary-green));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            cursor: pointer;
+            padding: 5px;
         }
 
-        .mobile-search-box {
-            position: relative;
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1001;
+            padding: 80px 20px 20px;
+            overflow-y: auto;
+        }
+
+        .mobile-menu.active {
+            display: block;
+        }
+
+        .mobile-menu-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        .mobile-nav-links {
+            list-style: none;
+            margin-bottom: 40px;
+        }
+
+        .mobile-nav-links li {
             margin-bottom: 20px;
         }
 
-        .mobile-search-input {
+        .mobile-nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 500;
+            display: block;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .mobile-menu-auth {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .mobile-auth-btn {
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-auth-btn.login {
+            color: #e0e0e0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .mobile-auth-btn.signup {
+            background: var(--primary-green);
+            color: #000000;
+        }
+
+        /* Main content */
+        .main-content {
+            display: flex;
+            min-height: 100vh;
+            padding-top: 80px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: rgba(17, 24, 39, 0.55);
+            backdrop-filter: blur(8px);
+            border-right: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 40px 0;
+            position: fixed;
+            top: 80px;
+            left: 0;
+            height: calc(100vh - 80px);
+            overflow-y: auto;
+            z-index: 100;
+        }
+
+        .sidebar-content {
+            padding: 0 30px;
+        }
+
+        .sidebar h2 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: var(--text-primary);
+        }
+
+        .sidebar-nav {
+            list-style: none;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 15px;
+        }
+
+        .sidebar-nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            padding: 8px 0;
+            display: block;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            padding-left: 12px;
+        }
+
+        .sidebar-nav a:hover,
+        .sidebar-nav a.active {
+            color: var(--primary-green);
+            background: rgba(10, 178, 124, 0.1);
+        }
+
+        /* Content area */
+        .content {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: calc(100% - var(--sidebar-width));
+        }
+
+        .help-header {
+            margin-bottom: 40px;
+        }
+
+        .help-header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        .help-header p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* Search */
+        .search-container {
+            margin-bottom: 40px;
+        }
+
+        .search-box {
+            position: relative;
+            max-width: 500px;
+        }
+
+        .search-input {
             width: 100%;
             padding: 15px 50px 15px 20px;
-            background: var(--bg-primary);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
+            background: rgba(17, 24, 39, 0.55);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
             color: var(--text-primary);
-            font-size: 16px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
         }
 
-        .mobile-search-input:focus {
+        .search-input:focus {
             outline: none;
             border-color: var(--primary-green);
+            box-shadow: 0 0 0 3px rgba(10, 178, 124, 0.1);
         }
 
-        .mobile-search-icon {
+        .search-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .search-icon {
             position: absolute;
             right: 15px;
             top: 50%;
             transform: translateY(-50%);
             color: var(--text-muted);
+            font-size: 1.2rem;
         }
 
-        .mobile-help-categories {
-            margin-bottom: 30px;
+        /* FAQ Section */
+        .faq-section {
+            margin-bottom: 40px;
         }
 
-        .mobile-category-title {
-            font-size: 1.3rem;
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: var(--text-primary);
+        }
+
+        .faq-list {
+            list-style: none;
+        }
+
+        .faq-item {
+            background: rgba(17, 24, 39, 0.55);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .faq-item:hover {
+            border-color: var(--primary-green);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .faq-question {
+            padding: 20px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            color: var(--primary-green);
+        }
+
+        .faq-icon {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            padding: 0 20px 20px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            display: none;
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        /* Contact support */
+        .contact-support {
+            background: rgba(17, 24, 39, 0.55);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .contact-support h3 {
+            font-size: 1.5rem;
             font-weight: 700;
             margin-bottom: 15px;
             color: var(--text-primary);
         }
 
-        .mobile-category-item {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            text-decoration: none;
-            color: var(--text-primary);
-            transition: all 0.3s ease;
-        }
-
-        .mobile-category-item:hover {
-            border-color: var(--primary-green);
-            transform: translateY(-2px);
-        }
-
-        .mobile-category-info {
-            flex: 1;
-        }
-
-        .mobile-category-name {
-            font-weight: 600;
-            font-size: 1rem;
-            margin-bottom: 4px;
-        }
-
-        .mobile-category-description {
+        .contact-support p {
             color: var(--text-muted);
-            font-size: 0.9rem;
+            margin-bottom: 25px;
+            line-height: 1.6;
         }
 
-        .mobile-category-arrow {
-            color: var(--text-muted);
-            font-size: 1.2rem;
-        }
-
-        .mobile-popular-articles {
-            margin-bottom: 30px;
-        }
-
-        .mobile-article-item {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 10px;
-            text-decoration: none;
-            color: var(--text-primary);
-            transition: all 0.3s ease;
-        }
-
-        .mobile-article-item:hover {
-            border-color: var(--primary-green);
-            transform: translateY(-2px);
-        }
-
-        .mobile-article-title {
-            font-weight: 600;
-            font-size: 1rem;
-            margin-bottom: 8px;
-        }
-
-        .mobile-article-meta {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .mobile-contact-section {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 15px;
-            padding: 20px;
-            text-align: center;
-        }
-
-        .mobile-contact-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-            color: var(--text-primary);
-        }
-
-        .mobile-contact-description {
-            color: var(--text-muted);
-            margin-bottom: 20px;
-            font-size: 0.9rem;
-        }
-
-        .mobile-contact-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .mobile-contact-btn {
+        .contact-btn {
             background: var(--primary-green);
             color: #000000;
             border: none;
-            padding: 12px 20px;
-            border-radius: 10px;
+            padding: 12px 30px;
+            border-radius: 25px;
             font-weight: 600;
-            text-decoration: none;
-            font-size: 14px;
-            transition: all 0.3s ease;
-        }
-
-        .mobile-contact-btn:hover {
-            background: var(--primary-green-dark);
-        }
-
-        .mobile-contact-btn.secondary {
-            background: transparent;
-            color: var(--primary-green);
-            border: 1px solid var(--primary-green);
-        }
-
-        .mobile-contact-btn.secondary:hover {
-            background: var(--primary-green);
-            color: #000000;
-        }
-
-        /* FAQ Content */
-        .mobile-faq-content {
-            margin-bottom: 30px;
-        }
-
-        .mobile-faq-item {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 10px;
+            font-size: 1rem;
             cursor: pointer;
             transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
         }
 
-        .mobile-faq-item:hover {
-            border-color: var(--primary-green);
+        .contact-btn:hover {
+            background: var(--primary-green-dark);
             transform: translateY(-2px);
         }
 
-        .mobile-faq-question {
-            font-weight: 600;
-            font-size: 1rem;
-            margin-bottom: 8px;
-            color: var(--text-primary);
-        }
-
-        .mobile-faq-answer {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            line-height: 1.5;
-            display: none;
-        }
-
-        .mobile-faq-item.active .mobile-faq-answer {
-            display: block;
-        }
-
-        .mobile-footer {
-            background: var(--bg-secondary);
-            border-top: 1px solid var(--border-color);
-            padding: 20px;
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        .mobile-footer a {
-            color: var(--primary-green);
-            text-decoration: none;
-        }
-
-        /* Animations */
-        .mobile-fade-in {
-            opacity: 0;
-            animation: fadeInUp 0.6s ease forwards;
-        }
-
-        .mobile-animate-delay-1 {
-            animation-delay: 0.2s;
-        }
-
-        .mobile-animate-delay-2 {
-            animation-delay: 0.4s;
-        }
-
-        .mobile-animate-delay-3 {
-            animation-delay: 0.6s;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
             }
-            to {
-                opacity: 1;
-                transform: translateY(0);
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            .content {
+                margin-left: 0;
+                padding: 20px;
+                max-width: 100%;
+            }
+
+            .help-header h1 {
+                font-size: 2rem;
+            }
+
+            .search-box {
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-container {
+                padding: 0 20px;
+            }
+
+            .content {
+                padding: 15px;
+            }
+
+            .help-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .faq-question {
+                padding: 15px;
+                font-size: 1rem;
+            }
+
+            .faq-answer {
+                padding: 0 15px 15px;
             }
         }
     </style>
 </head>
 <body>
-    <header class="mobile-help-header">
-        <nav class="mobile-help-nav">
-            <a href="/mobile" class="mobile-help-logo">
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="logo">
                 <img src="on timely official logo.svg" alt="OnTimely Logo">
+                OnTimely
+            </a>
+            
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/#features">Features</a></li>
+                <li><a href="/#pricing">Pricing</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/help" class="active">Help</a></li>
+            </ul>
+            
+            <div class="auth-buttons">
+                <a href="https://apps.apple.com/app/ontimely/id123456789" class="auth-btn login-btn">Download App</a>
+            </div>
+            
+            <button class="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="mobile-menu-close" id="mobileMenuClose">
+            <i class="fas fa-times"></i>
+        </button>
+        
+        <ul class="mobile-nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/#features">Features</a></li>
+            <li><a href="/#pricing">Pricing</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/help">Help</a></li>
+        </ul>
+        
+        <div class="mobile-menu-auth">
+            <a href="https://apps.apple.com/app/ontimely/id123456789" class="mobile-auth-btn login">Download App</a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-content">
+                <h2>Help Center</h2>
+                <ul class="sidebar-nav">
+                    <li><a href="#getting-started" class="active">Getting Started</a></li>
+                    <li><a href="#account">Account & Billing</a></li>
+                    <li><a href="#events">Event Management</a></li>
+                    <li><a href="#guests">Guest Management</a></li>
+                    <li><a href="#mobile">Mobile App</a></li>
+                    <li><a href="#troubleshooting">Troubleshooting</a></li>
+                    <li><a href="#api">API & Integrations</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Content -->
+        <main class="content">
+            <div class="help-header">
                 <h1>Help Center</h1>
-            </a>
-            <a href="/mobile" class="mobile-back-btn">
-                <i class="fas fa-arrow-left"></i> Back
-            </a>
-        </nav>
-    </header>
-
-    <main class="mobile-help-container">
-        <!-- Search Section -->
-        <section class="mobile-help-search mobile-fade-in">
-            <h1 class="mobile-search-title">How can we help you?</h1>
-            <div class="mobile-search-box">
-                <input type="text" class="mobile-search-input" placeholder="Search for help articles...">
-                <i class="fas fa-search mobile-search-icon"></i>
+                <p>Find answers to common questions and get the support you need to make the most of OnTimely.</p>
             </div>
-        </section>
 
-        <!-- Help Categories -->
-        <section class="mobile-help-categories mobile-fade-in mobile-animate-delay-1">
-            <h2 class="mobile-category-title">Browse by Category</h2>
-            
-            <a href="#getting-started" class="mobile-category-item" data-category="getting-started">
-                <div class="mobile-category-info">
-                    <div class="mobile-category-name">Getting Started</div>
-                    <div class="mobile-category-description">Learn the basics of OnTimely</div>
+            <!-- Search -->
+            <div class="search-container">
+                <div class="search-box">
+                    <input type="text" class="search-input" placeholder="Search for help articles...">
+                    <i class="fas fa-search search-icon"></i>
                 </div>
-                <i class="fas fa-chevron-right mobile-category-arrow"></i>
-            </a>
-
-            <a href="#event-management" class="mobile-category-item" data-category="event-management">
-                <div class="mobile-category-info">
-                    <div class="mobile-category-name">Event Management</div>
-                    <div class="mobile-category-description">Creating and managing events</div>
-                </div>
-                <i class="fas fa-chevron-right mobile-category-arrow"></i>
-            </a>
-
-            <a href="#guest-management" class="mobile-category-item" data-category="guest-management">
-                <div class="mobile-category-info">
-                    <div class="mobile-category-name">Guest Management</div>
-                    <div class="mobile-category-description">Managing guest lists and check-ins</div>
-                </div>
-                <i class="fas fa-chevron-right mobile-category-arrow"></i>
-            </a>
-
-            <a href="#mobile-apps" class="mobile-category-item" data-category="mobile-apps">
-                <div class="mobile-category-info">
-                    <div class="mobile-category-name">Mobile Apps</div>
-                    <div class="mobile-category-description">iOS and Android app support</div>
-                </div>
-                <i class="fas fa-chevron-right mobile-category-arrow"></i>
-            </a>
-
-            <a href="#billing" class="mobile-category-item" data-category="billing">
-                <div class="mobile-category-info">
-                    <div class="mobile-category-name">Billing & Plans</div>
-                    <div class="mobile-category-description">Subscription and payment help</div>
-                </div>
-                <i class="fas fa-chevron-right mobile-category-arrow"></i>
-            </a>
-
-            <a href="#technical" class="mobile-category-item" data-category="technical">
-                <div class="mobile-category-info">
-                    <div class="mobile-category-name">Technical Support</div>
-                    <div class="mobile-category-description">Troubleshooting and technical issues</div>
-                </div>
-                <i class="fas fa-chevron-right mobile-category-arrow"></i>
-            </a>
-        </section>
-
-        <!-- FAQ Content -->
-        <section class="mobile-faq-content mobile-fade-in mobile-animate-delay-2">
-            <h2 class="mobile-category-title">Frequently Asked Questions</h2>
-            
-            <div class="mobile-faq-item">
-                <div class="mobile-faq-question">How do I create my first event?</div>
-                <div class="mobile-faq-answer">Navigate to the Events section in your dashboard and click "Create New Event". Fill in the basic details like event name, date, and location. You can customize the event homepage and add modules later.</div>
             </div>
 
-            <div class="mobile-faq-item">
-                <div class="mobile-faq-question">What's the difference between the desktop and mobile app?</div>
-                <div class="mobile-faq-answer">The desktop app is for event organizers and provides full administrative control, analytics, and management features. The mobile app is designed for guests to access event information, chat, and travel tools.</div>
-            </div>
+            <!-- FAQ Section -->
+            <section class="faq-section">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+                <ul class="faq-list">
+                    <li class="faq-item">
+                        <div class="faq-question">
+                            How do I create my first event?
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            To create your first event, log into your OnTimely dashboard and click the "Create Event" button. You'll be guided through a step-by-step process to set up your event details, guest list, and custom homepage.
+                        </div>
+                    </li>
+                    
+                    <li class="faq-item">
+                        <div class="faq-question">
+                            How do I invite guests to my event?
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            You can invite guests by uploading a CSV file with their email addresses, or by manually adding them one by one. Once added, you can send them custom invitation emails with your event homepage link.
+                        </div>
+                    </li>
+                    
+                    <li class="faq-item">
+                        <div class="faq-question">
+                            Can I customize the event homepage?
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            Yes! OnTimely offers extensive customization options including your logo, colors, background images, and content layout. You can create a unique branded experience for each event.
+                        </div>
+                    </li>
+                    
+                    <li class="faq-item">
+                        <div class="faq-question">
+                            How does real-time communication work?
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            Our real-time communication system allows you to send instant updates, announcements, and messages to all your guests. They'll receive notifications on their mobile devices and can respond in real-time.
+                        </div>
+                    </li>
+                    
+                    <li class="faq-item">
+                        <div class="faq-question">
+                            What payment methods do you accept?
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            We accept all major credit cards (Visa, MasterCard, American Express) and PayPal. All payments are processed securely through our encrypted payment system.
+                        </div>
+                    </li>
+                    
+                    <li class="faq-item">
+                        <div class="faq-question">
+                            Is there a mobile app for guests?
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            Yes! Guests can access your event through our mobile app available on iOS and Android. They can view event details, receive updates, and communicate with other guests.
+                        </div>
+                    </li>
+                </ul>
+            </section>
 
-            <div class="mobile-faq-item">
-                <div class="mobile-faq-question">How do I invite guests to my event?</div>
-                <div class="mobile-faq-answer">Use the Guest Management section to upload guest lists via CSV or manually add guests. You can send invitations via email with custom messages and track RSVP responses in real-time.</div>
-            </div>
-
-            <div class="mobile-faq-item">
-                <div class="mobile-faq-question">Can I customize the event homepage?</div>
-                <div class="mobile-faq-answer">Yes! Use the Homepage Builder to customize colors, add your logo, create custom sections, and arrange modules to match your event's branding and style.</div>
-            </div>
-
-            <div class="mobile-faq-item">
-                <div class="mobile-faq-question">How do guests access the mobile app?</div>
-                <div class="mobile-faq-answer">Guests can download the OnTimely app from the App Store or Google Play, then use the event code you provide to join your specific event.</div>
-            </div>
-
-            <div class="mobile-faq-item">
-                <div class="mobile-faq-question">What analytics are available?</div>
-                <div class="mobile-faq-answer">Track guest engagement, check-in rates, chat activity, module usage, and real-time attendance. Export detailed reports for post-event analysis.</div>
-            </div>
-        </section>
-
-        <!-- Contact Support -->
-        <section class="mobile-contact-section mobile-fade-in mobile-animate-delay-3">
-            <h2 class="mobile-contact-title">Still need help?</h2>
-            <p class="mobile-contact-description">Our support team is here to help you succeed with OnTimely.</p>
-            <div class="mobile-contact-buttons">
-                <a href="mailto:support@ontimely.co.uk" class="mobile-contact-btn">
-                    <i class="fas fa-envelope"></i> Email Support
-                </a>
-                <a href="tel:+44123456789" class="mobile-contact-btn secondary">
-                    <i class="fas fa-phone"></i> Call Us
-                </a>
-            </div>
-        </section>
-    </main>
-
-    <footer class="mobile-footer">
-        <p>© 2024 OnTimely. All rights reserved.</p>
-        <p>Need immediate help? <a href="mailto:support@ontimely.co.uk">Contact Support</a></p>
-    </footer>
+            <!-- Contact Support -->
+            <section class="contact-support">
+                <h3>Still need help?</h3>
+                <p>Can't find what you're looking for? Our support team is here to help you get the most out of OnTimely.</p>
+                <a href="/#contact" class="contact-btn">Contact Support</a>
+            </section>
+        </main>
+    </div>
 
     <script>
-        // Search functionality
-        const searchInput = document.querySelector('.mobile-search-input');
-        searchInput.addEventListener('input', function(e) {
-            const query = e.target.value.toLowerCase();
-            // Simple search - in a real app, this would filter articles
-            console.log('Searching for:', query);
+        // Mobile menu toggle
+        const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileMenuClose = document.getElementById('mobileMenuClose');
+
+        mobileMenuToggle.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
         });
 
-        // Add click handlers for categories (in a real app, these would navigate to category pages)
-        document.querySelectorAll('.mobile-category-item').forEach(item => {
-            item.addEventListener('click', function(e) {
-                e.preventDefault();
-                const categoryName = this.querySelector('.mobile-category-name').textContent;
-                alert(`Opening ${categoryName} category...`);
-            });
+        mobileMenuClose.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
         });
 
-        // Add click handlers for FAQ items
-        document.querySelectorAll('.mobile-faq-item').forEach(item => {
+        // Close mobile menu when clicking outside
+        mobileMenu.addEventListener('click', (e) => {
+            if (e.target === mobileMenu) {
+                mobileMenu.classList.remove('active');
+            }
+        });
+
+        // FAQ interactions
+        document.querySelectorAll('.faq-item').forEach(item => {
             item.addEventListener('click', function() {
                 // Close other FAQ items
-                document.querySelectorAll('.mobile-faq-item').forEach(otherItem => {
+                document.querySelectorAll('.faq-item').forEach(otherItem => {
                     if (otherItem !== this) {
                         otherItem.classList.remove('active');
                     }
                 });
                 
-                // Toggle current FAQ item
+                // Toggle current item
                 this.classList.toggle('active');
             });
+        });
+
+        // Search functionality
+        const searchInput = document.querySelector('.search-input');
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question').textContent.toLowerCase();
+                const answer = item.querySelector('.faq-answer').textContent.toLowerCase();
+                
+                if (question.includes(searchTerm) || answer.includes(searchTerm)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
         });
     </script>
 </body>
