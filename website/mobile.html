@@ -122,7 +122,7 @@
             }
             
             .menu-toggle {
-                display: block;
+                display: block !important;
             }
         }
 
@@ -279,7 +279,7 @@
 
         /* Hero Section */
         .mobile-hero {
-            padding: 40px 20px 60px;
+            padding: 60px 20px 60px;
             text-align: center;
             position: relative;
             overflow: hidden;
@@ -335,16 +335,13 @@
             border: 1px solid var(--border-medium);
         }
 
-        .mobile-hero {
-            position: relative;
-        }
 
         .mobile-hero-image {
             position: absolute;
-            top: 0;
+            top: -10%;
             left: 0;
-            width: 100%;
-            height: 100%;
+            width: 80%;
+            height: 80%;
             object-fit: cover;
             object-position: center;
             z-index: -1;
@@ -886,6 +883,23 @@
             font-family: inherit;
             height: 50px;
             box-sizing: border-box;
+        }
+
+        .mobile-form-group select {
+            appearance: none !important;
+            -webkit-appearance: none !important;
+            -moz-appearance: none !important;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e") !important;
+            background-repeat: no-repeat !important;
+            background-position: right 15px center !important;
+            background-size: 20px !important;
+            padding-right: 50px !important;
+        }
+
+        .mobile-form-group select option {
+            background: rgba(17, 24, 39, 0.95);
+            color: var(--text-primary);
+            padding: 10px;
         }
 
         .mobile-form-group textarea {
