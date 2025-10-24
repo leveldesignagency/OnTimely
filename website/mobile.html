@@ -281,8 +281,13 @@
         .mobile-hero {
             padding: 100px 20px 60px;
             text-align: center;
-            position: relative;
+            position: relative !important;
             overflow: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
         .mobile-hero h1 {
@@ -337,18 +342,18 @@
 
 
         .mobile-hero-image {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 70%;
-            height: 70%;
-            object-fit: cover;
-            object-position: center;
-            z-index: -1;
-            opacity: 0.3;
-            margin: 0;
-            padding: 0;
+            position: absolute !important;
+            top: 50% !important;
+            left: 50% !important;
+            transform: translate(-50%, -50%) !important;
+            width: 70% !important;
+            height: 70% !important;
+            object-fit: cover !important;
+            object-position: center !important;
+            z-index: -1 !important;
+            opacity: 0.3 !important;
+            margin: 0 !important;
+            padding: 0 !important;
         }
 
         /* Desktop Message */
