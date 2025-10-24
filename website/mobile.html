@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, shrink-to-fit=no">
     <title>OnTimely - Elite Event Management Platform</title>
     <meta name="description" content="The most advanced event management platform for professionals. Create custom guest apps, manage real-time communication, and deliver exceptional event experiences.">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -42,6 +42,18 @@
             background: #000000;
             min-height: 100vh;
             overflow-x: hidden;
+            touch-action: pan-x pan-y;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        /* Prevent zooming on double tap */
+        * {
+            touch-action: manipulation;
         }
 
         body::before {
@@ -192,12 +204,14 @@
         .mobile-hero {
             padding: 40px 20px 60px;
             text-align: center;
+            position: relative;
+            overflow: hidden;
         }
 
         .mobile-hero h1 {
             font-size: 2.5rem;
             font-weight: 800;
-            line-height: 1.1;
+            line-height: 0.9;
             margin-bottom: 20px;
             background: linear-gradient(135deg, var(--text-primary), var(--primary-green));
             -webkit-background-clip: text;
@@ -244,11 +258,15 @@
         }
 
         .mobile-hero-image {
-            max-width: 400px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 500px;
+            width: 100%;
             height: auto;
-            margin: 20px auto 0;
-            border-radius: 15px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            z-index: -1;
+            opacity: 0.3;
         }
 
         /* Desktop Message */
@@ -274,8 +292,9 @@
         }
 
         .mobile-event-management h2 {
-            font-size: 2.5rem;
+            font-size: 2.375rem;
             font-weight: 800;
+            line-height: 0.9;
             margin-bottom: 15px;
             background: linear-gradient(135deg, var(--text-primary), var(--primary-green));
             -webkit-background-clip: text;
@@ -297,8 +316,9 @@
         }
 
         .mobile-create-event h2 {
-            font-size: 2.5rem;
+            font-size: 2.375rem;
             font-weight: 800;
+            line-height: 0.9;
             margin-bottom: 20px;
             background: linear-gradient(135deg, var(--text-primary), var(--primary-green));
             -webkit-background-clip: text;
@@ -324,7 +344,6 @@
             max-width: 350px;
             height: auto;
             border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
         .mobile-stack-image.laptop {
@@ -338,8 +357,9 @@
         }
 
         .mobile-guest-chat h2 {
-            font-size: 2.5rem;
+            font-size: 2.375rem;
             font-weight: 800;
+            line-height: 0.9;
             margin-bottom: 20px;
             background: linear-gradient(135deg, var(--text-primary), var(--primary-green));
             -webkit-background-clip: text;
@@ -358,7 +378,6 @@
             max-width: 350px;
             height: auto;
             border-radius: 15px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
             margin: 0 auto;
             mask: linear-gradient(to bottom, black 0%, black 70%, transparent 100%);
             -webkit-mask: linear-gradient(to bottom, black 0%, black 70%, transparent 100%);
@@ -369,7 +388,6 @@
             max-width: 300px;
             height: auto;
             border-radius: 15px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
             margin: 0 auto;
         }
 
@@ -379,8 +397,9 @@
         }
 
         .mobile-features h2 {
-            font-size: 2.5rem;
+            font-size: 2.375rem;
             font-weight: 800;
+            line-height: 0.9;
             text-align: center;
             margin-bottom: 30px;
             background: linear-gradient(135deg, var(--text-primary), var(--primary-green));
@@ -417,8 +436,9 @@
         }
 
         .mobile-pricing h2 {
-            font-size: 2.5rem;
+            font-size: 2.375rem;
             font-weight: 800;
+            line-height: 0.9;
             text-align: center;
             margin-bottom: 30px;
             background: linear-gradient(135deg, var(--text-primary), var(--primary-green));
@@ -508,8 +528,9 @@
         }
 
         .mobile-signin h2 {
-            font-size: 2.2rem;
+            font-size: 2.375rem;
             font-weight: 800;
+            line-height: 0.9;
             margin-bottom: 15px;
             background: linear-gradient(135deg, var(--text-primary), var(--primary-green));
             -webkit-background-clip: text;
@@ -679,8 +700,9 @@
         }
 
         .mobile-contact h2 {
-            font-size: 2.5rem;
+            font-size: 2.375rem;
             font-weight: 800;
+            line-height: 0.9;
             margin-bottom: 20px;
             background: linear-gradient(135deg, var(--text-primary), var(--primary-green));
             -webkit-background-clip: text;
@@ -784,6 +806,7 @@
         <div class="mobile-header-content">
             <div class="mobile-logo">
                 <img src="on timely official logo.svg" alt="OnTimely Logo">
+                OnTimely
             </div>
             <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
         </div>
