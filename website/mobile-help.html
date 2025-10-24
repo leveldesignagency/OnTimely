@@ -31,8 +31,8 @@
             overflow-x: hidden;
         }
 
-        /* Navigation */
-        .navbar {
+        /* Mobile Header - Match Other Mobile Pages */
+        .mobile-header {
             position: fixed;
             top: 0;
             left: 50%;
@@ -45,10 +45,10 @@
             border: 1px solid rgba(255, 255, 255, 0.08);
             z-index: 1000;
             box-shadow: inset 0 1px 0 rgba(255,255,255,0.04), 0 8px 30px rgba(0,0,0,0.45);
-            transition: top 0.4s ease, border-radius 0.4s ease, width 0.4s ease;
+            transition: all 0.6s ease;
         }
 
-        .nav-container {
+        .mobile-header-content {
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -59,17 +59,26 @@
             transition: padding 0.6s ease;
         }
 
-        .navbar.scrolled .nav-container {
-            padding: 0 15px;
-        }
+        /* Mobile-specific header styling to match other pages */
+        @media (max-width: 768px) {
+            .mobile-header {
+                top: 10px;
+                padding: 15px 20px;
+                width: calc(100% - 20px);
+                max-width: none;
+                border-radius: 15px;
+            }
 
-        .nav-center {
-            display: flex;
-            align-items: center;
-            gap: 30px;
-            flex: 1;
-            justify-content: flex-end;
-            margin-right: 20px;
+            .mobile-header-content {
+                justify-content: space-between;
+                gap: 0;
+                align-items: center;
+                padding: 0 1rem;
+            }
+            
+            .menu-toggle {
+                display: block !important;
+            }
         }
 
         .logo {
@@ -85,6 +94,186 @@
         .logo img {
             height: 40px;
             width: auto;
+        }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+        .menu-toggle:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Mobile Full Screen Menu */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(15, 17, 21, 0.98);
+            backdrop-filter: blur(20px);
+            z-index: 9999;
+            border-radius: 0;
+            opacity: 0;
+            transform: scale(0.95);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .mobile-menu.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .mobile-menu-header {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 10000;
+        }
+
+        .mobile-menu-close {
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 50%;
+            transition: background-color 0.3s ease;
+        }
+
+        .mobile-menu-close:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .mobile-menu-links {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 300px;
+            padding: 0 20px;
+        }
+
+        .mobile-menu-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            padding: 20px 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            position: relative;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .mobile-menu-links a:last-child {
+            border-bottom: none;
+        }
+
+        .mobile-menu-links a::after {
+            content: '→';
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+            color: var(--primary-green);
+        }
+
+        .mobile-menu-links a:hover {
+            color: var(--primary-green);
+            padding-left: 10px;
+            background: linear-gradient(90deg, rgba(10, 178, 124, 0.1) 0%, transparent 100%);
+        }
+
+        .mobile-menu-links a:hover::after {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .mobile-menu-auth {
+            margin-top: 50px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+            max-width: 300px;
+            padding: 0 20px;
+        }
+
+        .mobile-menu-auth .auth-btn {
+            padding: 18px 30px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mobile-menu-auth .auth-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .mobile-menu-auth .auth-btn:hover::before {
+            left: 100%;
+        }
+
+        .mobile-menu-auth .login-btn {
+            background: rgba(255, 255, 255, 0.05);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .mobile-menu-auth .login-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--primary-green);
+            color: var(--primary-green);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(10, 178, 124, 0.3);
+        }
+
+        .mobile-menu-auth .signup-btn {
+            background: linear-gradient(135deg, var(--primary-green), var(--primary-green-dark));
+            color: #000000;
+            border: 1px solid var(--primary-green);
+            box-shadow: 0 4px 15px rgba(10, 178, 124, 0.3);
+        }
+
+        .mobile-menu-auth .signup-btn:hover {
+            background: linear-gradient(135deg, var(--primary-green-dark), var(--primary-green));
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(10, 178, 124, 0.4);
         }
 
         .nav-links {
@@ -604,28 +793,15 @@
     </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="/" class="logo">
+    <!-- Mobile Header -->
+    <header class="mobile-header">
+        <div class="mobile-header-content">
+            <div class="mobile-logo">
                 <img src="on timely official logo.svg" alt="OnTimely Logo">
-            </a>
-            
-            <ul class="nav-links">
-                <li><a href="/">Home</a></li>
-                <li><a href="/#features">Features</a></li>
-                <li><a href="/#pricing">Pricing</a></li>
-                <li><a href="/about">About</a></li>
-                <li><a href="/help" class="active">Help</a></li>
-            </ul>
-            
-            <div class="auth-buttons">
-                <a href="https://apps.apple.com/app/ontimely/id123456789" class="auth-btn login-btn">Download App</a>
             </div>
-            
             <button class="menu-toggle" id="menuToggle">☰</button>
         </div>
-    </nav>
+    </header>
 
     <!-- Mobile Full Screen Menu -->
     <div class="mobile-menu" id="mobileMenu">
@@ -830,15 +1006,41 @@
             });
         });
 
-        // Navbar scroll effect
-        window.addEventListener('scroll', () => {
-            const navbar = document.querySelector('.navbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
+        // Mobile menu functionality
+        const menuToggle = document.getElementById('menuToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileMenuClose = document.getElementById('mobileMenuClose');
+        const mobileMenuLinks = document.querySelectorAll('.mobile-menu-links a');
+
+        if (menuToggle && mobileMenu) {
+            menuToggle.addEventListener('click', () => {
+                mobileMenu.classList.add('active');
+                document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            });
+
+            if (mobileMenuClose) {
+                mobileMenuClose.addEventListener('click', () => {
+                    mobileMenu.classList.remove('active');
+                    document.body.style.overflow = ''; // Restore scrolling
+                });
             }
-        });
+
+            // Close menu when clicking on links
+            mobileMenuLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.remove('active');
+                    document.body.style.overflow = ''; // Restore scrolling
+                });
+            });
+
+            // Close menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!mobileMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+                    mobileMenu.classList.remove('active');
+                    document.body.style.overflow = ''; // Restore scrolling
+                }
+            });
+        }
     </script>
 </body>
 </html>
