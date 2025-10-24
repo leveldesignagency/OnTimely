@@ -260,10 +260,13 @@
         }
 
         .mobile-event-management h2 {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            color: var(--text-primary);
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--text-primary), var(--primary-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .mobile-event-management p {
@@ -280,10 +283,13 @@
         }
 
         .mobile-create-event h2 {
-            font-size: 2rem;
-            font-weight: 700;
+            font-size: 2.5rem;
+            font-weight: 800;
             margin-bottom: 20px;
-            color: var(--text-primary);
+            background: linear-gradient(135deg, var(--text-primary), var(--primary-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .mobile-create-event p {
@@ -301,10 +307,14 @@
         }
 
         .mobile-stack-image {
-            max-width: 280px;
+            max-width: 350px;
             height: auto;
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .mobile-stack-image.laptop {
+            display: none;
         }
 
         /* Guest Chat Section */
@@ -314,10 +324,13 @@
         }
 
         .mobile-guest-chat h2 {
-            font-size: 2rem;
-            font-weight: 700;
+            font-size: 2.5rem;
+            font-weight: 800;
             margin-bottom: 20px;
-            color: var(--text-primary);
+            background: linear-gradient(135deg, var(--text-primary), var(--primary-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .mobile-guest-chat p {
@@ -325,6 +338,16 @@
             margin-bottom: 30px;
             font-size: 1rem;
             line-height: 1.6;
+        }
+
+        .mobile-guest-chat-image {
+            max-width: 350px;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            margin: 0 auto;
+            mask: linear-gradient(to bottom, black 0%, black 70%, transparent 100%);
+            -webkit-mask: linear-gradient(to bottom, black 0%, black 70%, transparent 100%);
         }
 
         /* Section Images */
@@ -342,11 +365,14 @@
         }
 
         .mobile-features h2 {
-            font-size: 2rem;
-            font-weight: 700;
+            font-size: 2.5rem;
+            font-weight: 800;
             text-align: center;
-            margin-bottom: 40px;
-            color: var(--text-primary);
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, var(--text-primary), var(--primary-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .mobile-feature-card {
@@ -377,11 +403,14 @@
         }
 
         .mobile-pricing h2 {
-            font-size: 2rem;
-            font-weight: 700;
+            font-size: 2.5rem;
+            font-weight: 800;
             text-align: center;
-            margin-bottom: 40px;
-            color: var(--text-primary);
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, var(--text-primary), var(--primary-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .mobile-pricing-card {
@@ -465,10 +494,13 @@
         }
 
         .mobile-signin h2 {
-            font-size: 1.8rem;
-            font-weight: 700;
+            font-size: 2.2rem;
+            font-weight: 800;
             margin-bottom: 15px;
-            color: var(--text-primary);
+            background: linear-gradient(135deg, var(--text-primary), var(--primary-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .mobile-signin p {
@@ -545,8 +577,53 @@
             }
         }
 
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
         .mobile-fade-in {
-            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .mobile-fade-in-left {
+            opacity: 0;
+            animation: fadeInLeft 0.8s ease forwards;
+        }
+
+        .mobile-fade-in-right {
+            opacity: 0;
+            animation: fadeInRight 0.8s ease forwards;
+        }
+
+        .mobile-animate-delay-1 {
+            animation-delay: 0.2s;
+        }
+
+        .mobile-animate-delay-2 {
+            animation-delay: 0.4s;
+        }
+
+        .mobile-animate-delay-3 {
+            animation-delay: 0.6s;
         }
 
         /* Stats Section */
@@ -586,10 +663,13 @@
         }
 
         .mobile-contact h2 {
-            font-size: 2rem;
-            font-weight: 700;
+            font-size: 2.5rem;
+            font-weight: 800;
             margin-bottom: 20px;
-            color: var(--text-primary);
+            background: linear-gradient(135deg, var(--text-primary), var(--primary-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .mobile-contact p {
@@ -684,10 +764,11 @@
             <a href="#features">Features</a>
             <a href="#pricing">Pricing</a>
             <a href="/about">About</a>
-            <a href="/help">Help</a>
+            <a href="/mobile/help">Help</a>
+            <a href="/mobile/status">Status</a>
         </div>
         <div class="mobile-menu-auth">
-            <a href="https://dashboard.ontimely.co.uk" class="mobile-auth-btn login">Login</a>
+            <a href="https://apps.apple.com/app/ontimely/id123456789" class="mobile-auth-btn login">Download App</a>
             <a href="#contact" class="mobile-auth-btn contact">Contact</a>
         </div>
     </div>
@@ -719,48 +800,48 @@
 
         <!-- Event Management Section -->
         <section class="mobile-event-management" id="event-management">
-            <h2>Event Management</h2>
-            <p>Create and manage multiple events with our comprehensive dashboard. Track everything from guest registration to real-time analytics.</p>
-            <img src="CreatEvent.png" alt="Create Multiple Events" class="mobile-section-image">
+            <h2 class="mobile-fade-in">Event Management</h2>
+            <p class="mobile-fade-in mobile-animate-delay-1">Create and manage multiple events with our comprehensive dashboard. Track everything from guest registration to real-time analytics.</p>
+            <img src="CreatEvent.png" alt="Create Multiple Events" class="mobile-section-image mobile-fade-in mobile-animate-delay-2">
         </section>
 
         <!-- Create Event Section -->
         <section class="mobile-create-event" id="create-event">
-            <h2>Create Custom Event Homepages</h2>
-            <p>Build beautiful, branded event homepages that your guests will love. Customize every detail to match your brand and event style.</p>
+            <h2 class="mobile-fade-in">Create Custom Event Homepages</h2>
+            <p class="mobile-fade-in mobile-animate-delay-1">Build beautiful, branded event homepages that your guests will love. Customize every detail to match your brand and event style.</p>
             <div class="mobile-image-stack">
-                <img src="HomepageMobile.png" alt="Homepage Mobile" class="mobile-stack-image">
-                <img src="HomepageBuilder.png" alt="Homepage Builder" class="mobile-stack-image">
+                <img src="HomepageMobile.png" alt="Homepage Mobile" class="mobile-stack-image mobile-fade-in mobile-animate-delay-2">
+                <img src="HomepageBuilder.png" alt="Homepage Builder" class="mobile-stack-image laptop">
             </div>
         </section>
 
         <!-- Guest Chat Section -->
         <section class="mobile-guest-chat">
-            <h2>Real-time Guest Communication</h2>
-            <p>Keep your guests connected with real-time chat, announcements, and updates. Foster engagement and community throughout your event.</p>
-            <img src="ChatScreen.png" alt="Guest Chat Interface" class="mobile-section-image">
+            <img src="ChatScreen.png" alt="Guest Chat Interface" class="mobile-guest-chat-image mobile-fade-in">
+            <h2 class="mobile-fade-in mobile-animate-delay-1">Real-time Guest Communication</h2>
+            <p class="mobile-fade-in mobile-animate-delay-2">Keep your guests connected with real-time chat, announcements, and updates. Foster engagement and community throughout your event.</p>
         </section>
 
         <!-- Features Section -->
         <section class="mobile-features" id="features">
-            <h2>Why Choose OnTimely?</h2>
+            <h2 class="mobile-fade-in">Why Choose OnTimely?</h2>
             
-            <div class="mobile-feature-card">
+            <div class="mobile-feature-card mobile-fade-in mobile-animate-delay-1">
                 <h3>Custom Event Apps</h3>
                 <p>Create branded mobile apps for your events with custom features and real-time updates.</p>
             </div>
             
-            <div class="mobile-feature-card">
+            <div class="mobile-feature-card mobile-fade-in mobile-animate-delay-2">
                 <h3>Real-time Communication</h3>
                 <p>Keep guests informed with instant announcements, chat, and push notifications.</p>
             </div>
             
-            <div class="mobile-feature-card">
+            <div class="mobile-feature-card mobile-fade-in mobile-animate-delay-3">
                 <h3>Guest Management</h3>
                 <p>Streamline check-ins, manage guest lists, and track attendance with ease.</p>
             </div>
             
-            <div class="mobile-feature-card">
+            <div class="mobile-feature-card mobile-fade-in mobile-animate-delay-1">
                 <h3>Analytics & Insights</h3>
                 <p>Get detailed reports on guest engagement and event performance.</p>
             </div>
@@ -768,9 +849,9 @@
 
         <!-- Pricing Section -->
         <section class="mobile-pricing" id="pricing">
-            <h2>Choose Your Plan</h2>
+            <h2 class="mobile-fade-in">Choose Your Plan</h2>
             
-            <div class="mobile-pricing-card">
+            <div class="mobile-pricing-card mobile-fade-in mobile-animate-delay-1">
                 <h3>Solo</h3>
                 <div class="mobile-pricing-price">£29<span style="font-size: 1rem;">/month</span></div>
                 <ul class="mobile-pricing-features">
@@ -781,7 +862,7 @@
                 <button class="mobile-pricing-btn">Get Started</button>
             </div>
             
-            <div class="mobile-pricing-card popular">
+            <div class="mobile-pricing-card popular mobile-fade-in mobile-animate-delay-2">
                 <h3>Professional</h3>
                 <div class="mobile-pricing-price">£99<span style="font-size: 1rem;">/month</span></div>
                 <ul class="mobile-pricing-features">
@@ -793,7 +874,7 @@
                 <button class="mobile-pricing-btn">Get Started</button>
             </div>
             
-            <div class="mobile-pricing-card">
+            <div class="mobile-pricing-card mobile-fade-in mobile-animate-delay-3">
                 <h3>Enterprise</h3>
                 <div class="mobile-pricing-price">£299<span style="font-size: 1rem;">/month</span></div>
                 <ul class="mobile-pricing-features">
@@ -809,19 +890,19 @@
         <!-- Stats Section -->
         <section class="mobile-stats">
             <div class="mobile-stats-grid">
-                <div class="mobile-stat-item">
+                <div class="mobile-stat-item mobile-fade-in mobile-animate-delay-1">
                     <div class="mobile-stat-number">10K+</div>
                     <div class="mobile-stat-label">Elite Events Managed</div>
                 </div>
-                <div class="mobile-stat-item">
+                <div class="mobile-stat-item mobile-fade-in mobile-animate-delay-2">
                     <div class="mobile-stat-number">500K+</div>
                     <div class="mobile-stat-label">Guests Served</div>
                 </div>
-                <div class="mobile-stat-item">
+                <div class="mobile-stat-item mobile-fade-in mobile-animate-delay-1">
                     <div class="mobile-stat-number">99.9%</div>
                     <div class="mobile-stat-label">Uptime Guarantee</div>
                 </div>
-                <div class="mobile-stat-item">
+                <div class="mobile-stat-item mobile-fade-in mobile-animate-delay-2">
                     <div class="mobile-stat-number">24/7</div>
                     <div class="mobile-stat-label">Elite Support</div>
                 </div>
@@ -830,9 +911,9 @@
 
         <!-- Sign-in Section -->
         <section class="mobile-signin">
-            <h2>Already Have an Account?</h2>
-            <p>Access your professional event dashboard and manage your events with our elite suite of tools.</p>
-            <a href="https://dashboard.ontimely.co.uk" class="mobile-dashboard-btn">
+            <h2 class="mobile-fade-in">Already Have an Account?</h2>
+            <p class="mobile-fade-in mobile-animate-delay-1">Access your professional event dashboard and manage your events with our elite suite of tools.</p>
+            <a href="https://dashboard.ontimely.co.uk" class="mobile-dashboard-btn mobile-fade-in mobile-animate-delay-2">
                 <i class="fas fa-sign-in-alt"></i>
                 Access Dashboard
             </a>
@@ -840,10 +921,10 @@
 
         <!-- Contact Section -->
         <section class="mobile-contact" id="contact">
-            <h2>Get In Touch</h2>
-            <p>Ready to transform your events? Contact our team to learn more about OnTimely's capabilities.</p>
+            <h2 class="mobile-fade-in">Get In Touch</h2>
+            <p class="mobile-fade-in mobile-animate-delay-1">Ready to transform your events? Contact our team to learn more about OnTimely's capabilities.</p>
             
-            <form class="mobile-contact-form">
+            <form class="mobile-contact-form mobile-fade-in mobile-animate-delay-2">
                 <div class="mobile-form-group">
                     <input type="text" placeholder="Your Name" required>
                 </div>

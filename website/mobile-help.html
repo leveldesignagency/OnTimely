@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help Center - OnTimely</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-green: #0ab27c;
+            --primary-green-dark: #089c6b;
+            --text-primary: #ffffff;
+            --text-secondary: #d1d5db;
+            --text-muted: #9ca3af;
+            --bg-primary: #000000;
+            --bg-secondary: #0f1015;
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .mobile-help-header {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            padding: 15px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .mobile-help-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .mobile-help-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .mobile-help-logo img {
+            height: 30px;
+        }
+
+        .mobile-help-logo h1 {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .mobile-back-btn {
+            background: var(--primary-green);
+            color: #000000;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .mobile-help-container {
+            padding: 20px;
+            max-width: 100%;
+        }
+
+        .mobile-help-search {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .mobile-search-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--text-primary), var(--primary-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .mobile-search-box {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .mobile-search-input {
+            width: 100%;
+            padding: 15px 50px 15px 20px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 16px;
+        }
+
+        .mobile-search-input:focus {
+            outline: none;
+            border-color: var(--primary-green);
+        }
+
+        .mobile-search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        .mobile-help-categories {
+            margin-bottom: 30px;
+        }
+
+        .mobile-category-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        .mobile-category-item {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+
+        .mobile-category-item:hover {
+            border-color: var(--primary-green);
+            transform: translateY(-2px);
+        }
+
+        .mobile-category-info {
+            flex: 1;
+        }
+
+        .mobile-category-name {
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+
+        .mobile-category-description {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .mobile-category-arrow {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+        }
+
+        .mobile-popular-articles {
+            margin-bottom: 30px;
+        }
+
+        .mobile-article-item {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 10px;
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+
+        .mobile-article-item:hover {
+            border-color: var(--primary-green);
+            transform: translateY(-2px);
+        }
+
+        .mobile-article-title {
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+
+        .mobile-article-meta {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .mobile-contact-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .mobile-contact-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+
+        .mobile-contact-description {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+
+        .mobile-contact-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .mobile-contact-btn {
+            background: var(--primary-green);
+            color: #000000;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-contact-btn:hover {
+            background: var(--primary-green-dark);
+        }
+
+        .mobile-contact-btn.secondary {
+            background: transparent;
+            color: var(--primary-green);
+            border: 1px solid var(--primary-green);
+        }
+
+        .mobile-contact-btn.secondary:hover {
+            background: var(--primary-green);
+            color: #000000;
+        }
+
+        .mobile-footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            padding: 20px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .mobile-footer a {
+            color: var(--primary-green);
+            text-decoration: none;
+        }
+
+        /* Animations */
+        .mobile-fade-in {
+            opacity: 0;
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .mobile-animate-delay-1 {
+            animation-delay: 0.2s;
+        }
+
+        .mobile-animate-delay-2 {
+            animation-delay: 0.4s;
+        }
+
+        .mobile-animate-delay-3 {
+            animation-delay: 0.6s;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="mobile-help-header">
+        <nav class="mobile-help-nav">
+            <a href="/mobile" class="mobile-help-logo">
+                <img src="on timely official logo.svg" alt="OnTimely Logo">
+                <h1>Help Center</h1>
+            </a>
+            <a href="/mobile" class="mobile-back-btn">
+                <i class="fas fa-arrow-left"></i> Back
+            </a>
+        </nav>
+    </header>
+
+    <main class="mobile-help-container">
+        <!-- Search Section -->
+        <section class="mobile-help-search mobile-fade-in">
+            <h1 class="mobile-search-title">How can we help you?</h1>
+            <div class="mobile-search-box">
+                <input type="text" class="mobile-search-input" placeholder="Search for help articles...">
+                <i class="fas fa-search mobile-search-icon"></i>
+            </div>
+        </section>
+
+        <!-- Help Categories -->
+        <section class="mobile-help-categories mobile-fade-in mobile-animate-delay-1">
+            <h2 class="mobile-category-title">Browse by Category</h2>
+            
+            <a href="#" class="mobile-category-item">
+                <div class="mobile-category-info">
+                    <div class="mobile-category-name">Getting Started</div>
+                    <div class="mobile-category-description">Learn the basics of OnTimely</div>
+                </div>
+                <i class="fas fa-chevron-right mobile-category-arrow"></i>
+            </a>
+
+            <a href="#" class="mobile-category-item">
+                <div class="mobile-category-info">
+                    <div class="mobile-category-name">Event Management</div>
+                    <div class="mobile-category-description">Creating and managing events</div>
+                </div>
+                <i class="fas fa-chevron-right mobile-category-arrow"></i>
+            </a>
+
+            <a href="#" class="mobile-category-item">
+                <div class="mobile-category-info">
+                    <div class="mobile-category-name">Guest Management</div>
+                    <div class="mobile-category-description">Managing guest lists and check-ins</div>
+                </div>
+                <i class="fas fa-chevron-right mobile-category-arrow"></i>
+            </a>
+
+            <a href="#" class="mobile-category-item">
+                <div class="mobile-category-info">
+                    <div class="mobile-category-name">Mobile Apps</div>
+                    <div class="mobile-category-description">iOS and Android app support</div>
+                </div>
+                <i class="fas fa-chevron-right mobile-category-arrow"></i>
+            </a>
+
+            <a href="#" class="mobile-category-item">
+                <div class="mobile-category-info">
+                    <div class="mobile-category-name">Billing & Plans</div>
+                    <div class="mobile-category-description">Subscription and payment help</div>
+                </div>
+                <i class="fas fa-chevron-right mobile-category-arrow"></i>
+            </a>
+
+            <a href="#" class="mobile-category-item">
+                <div class="mobile-category-info">
+                    <div class="mobile-category-name">Technical Support</div>
+                    <div class="mobile-category-description">Troubleshooting and technical issues</div>
+                </div>
+                <i class="fas fa-chevron-right mobile-category-arrow"></i>
+            </a>
+        </section>
+
+        <!-- Popular Articles -->
+        <section class="mobile-popular-articles mobile-fade-in mobile-animate-delay-2">
+            <h2 class="mobile-category-title">Popular Articles</h2>
+            
+            <a href="#" class="mobile-article-item">
+                <div class="mobile-article-title">How to create your first event</div>
+                <div class="mobile-article-meta">
+                    <span>Getting Started</span>
+                    <span>5 min read</span>
+                </div>
+            </a>
+
+            <a href="#" class="mobile-article-item">
+                <div class="mobile-article-title">Setting up guest check-in</div>
+                <div class="mobile-article-meta">
+                    <span>Guest Management</span>
+                    <span>3 min read</span>
+                </div>
+            </a>
+
+            <a href="#" class="mobile-article-item">
+                <div class="mobile-article-title">Customizing your event homepage</div>
+                <div class="mobile-article-meta">
+                    <span>Event Management</span>
+                    <span>7 min read</span>
+                </div>
+            </a>
+
+            <a href="#" class="mobile-article-item">
+                <div class="mobile-article-title">Downloading the mobile app</div>
+                <div class="mobile-article-meta">
+                    <span>Mobile Apps</span>
+                    <span>2 min read</span>
+                </div>
+            </a>
+
+            <a href="#" class="mobile-article-item">
+                <div class="mobile-article-title">Understanding your billing</div>
+                <div class="mobile-article-meta">
+                    <span>Billing & Plans</span>
+                    <span>4 min read</span>
+                </div>
+            </a>
+        </section>
+
+        <!-- Contact Support -->
+        <section class="mobile-contact-section mobile-fade-in mobile-animate-delay-3">
+            <h2 class="mobile-contact-title">Still need help?</h2>
+            <p class="mobile-contact-description">Our support team is here to help you succeed with OnTimely.</p>
+            <div class="mobile-contact-buttons">
+                <a href="mailto:support@ontimely.co.uk" class="mobile-contact-btn">
+                    <i class="fas fa-envelope"></i> Email Support
+                </a>
+                <a href="tel:+44123456789" class="mobile-contact-btn secondary">
+                    <i class="fas fa-phone"></i> Call Us
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="mobile-footer">
+        <p>© 2024 OnTimely. All rights reserved.</p>
+        <p>Need immediate help? <a href="mailto:support@ontimely.co.uk">Contact Support</a></p>
+    </footer>
+
+    <script>
+        // Search functionality
+        const searchInput = document.querySelector('.mobile-search-input');
+        searchInput.addEventListener('input', function(e) {
+            const query = e.target.value.toLowerCase();
+            // Simple search - in a real app, this would filter articles
+            console.log('Searching for:', query);
+        });
+
+        // Add click handlers for categories (in a real app, these would navigate to category pages)
+        document.querySelectorAll('.mobile-category-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                const categoryName = this.querySelector('.mobile-category-name').textContent;
+                alert(`Opening ${categoryName} category...`);
+            });
+        });
+
+        // Add click handlers for articles
+        document.querySelectorAll('.mobile-article-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                const articleTitle = this.querySelector('.mobile-article-title').textContent;
+                alert(`Opening article: ${articleTitle}`);
+            });
+        });
+    </script>
+</body>
+</html>

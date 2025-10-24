@@ -2,6 +2,8 @@
   "routes": [
     { "src": "/", "dest": "/website/index.html" },
     { "src": "/mobile", "dest": "/website/mobile.html" },
+    { "src": "/mobile/status", "dest": "/website/mobile-status.html" },
+    { "src": "/mobile/help", "dest": "/website/mobile-help.html" },
     { "src": "/help", "dest": "/website/help.html" },
     { "src": "/about", "dest": "/website/about.html" },
     { "src": "/status", "dest": "/website/status.html" },
