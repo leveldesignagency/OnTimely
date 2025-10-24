@@ -253,6 +253,89 @@
             margin: 0;
         }
 
+        /* Event Management Section */
+        .mobile-event-management {
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .mobile-event-management h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .mobile-event-management p {
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        /* Create Event Section */
+        .mobile-create-event {
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .mobile-create-event h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .mobile-create-event p {
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .mobile-image-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .mobile-stack-image {
+            max-width: 280px;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Guest Chat Section */
+        .mobile-guest-chat {
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .mobile-guest-chat h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .mobile-guest-chat p {
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        /* Section Images */
+        .mobile-section-image {
+            max-width: 300px;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            margin: 0 auto;
+        }
+
         /* Features Section */
         .mobile-features {
             padding: 60px 20px;
@@ -466,6 +549,105 @@
             animation: fadeInUp 0.6s ease forwards;
         }
 
+        /* Stats Section */
+        .mobile-stats {
+            padding: 60px 20px;
+            background: var(--bg-secondary);
+        }
+
+        .mobile-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            text-align: center;
+        }
+
+        .mobile-stat-item {
+            padding: 20px;
+        }
+
+        .mobile-stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-green);
+            margin-bottom: 10px;
+        }
+
+        .mobile-stat-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        /* Contact Section */
+        .mobile-contact {
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .mobile-contact h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .mobile-contact p {
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            font-size: 1rem;
+        }
+
+        .mobile-contact-form {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .mobile-form-group {
+            margin-bottom: 20px;
+        }
+
+        .mobile-form-group input,
+        .mobile-form-group select,
+        .mobile-form-group textarea {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid var(--border-medium);
+            border-radius: 10px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            font-size: 16px;
+            font-family: inherit;
+        }
+
+        .mobile-form-group input:focus,
+        .mobile-form-group select:focus,
+        .mobile-form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-green);
+        }
+
+        .mobile-submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: var(--primary-green);
+            color: #000000;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .mobile-submit-btn:hover {
+            background: var(--primary-green-dark);
+        }
+
         /* Responsive adjustments */
         @media (max-width: 480px) {
             .mobile-hero h1 {
@@ -535,6 +717,30 @@
             </div>
         </section>
 
+        <!-- Event Management Section -->
+        <section class="mobile-event-management" id="event-management">
+            <h2>Event Management</h2>
+            <p>Create and manage multiple events with our comprehensive dashboard. Track everything from guest registration to real-time analytics.</p>
+            <img src="CreatEvent.png" alt="Create Multiple Events" class="mobile-section-image">
+        </section>
+
+        <!-- Create Event Section -->
+        <section class="mobile-create-event" id="create-event">
+            <h2>Create Custom Event Homepages</h2>
+            <p>Build beautiful, branded event homepages that your guests will love. Customize every detail to match your brand and event style.</p>
+            <div class="mobile-image-stack">
+                <img src="HomepageMobile.png" alt="Homepage Mobile" class="mobile-stack-image">
+                <img src="HomepageBuilder.png" alt="Homepage Builder" class="mobile-stack-image">
+            </div>
+        </section>
+
+        <!-- Guest Chat Section -->
+        <section class="mobile-guest-chat">
+            <h2>Real-time Guest Communication</h2>
+            <p>Keep your guests connected with real-time chat, announcements, and updates. Foster engagement and community throughout your event.</p>
+            <img src="ChatScreen.png" alt="Guest Chat Interface" class="mobile-section-image">
+        </section>
+
         <!-- Features Section -->
         <section class="mobile-features" id="features">
             <h2>Why Choose OnTimely?</h2>
@@ -600,6 +806,28 @@
             </div>
         </section>
 
+        <!-- Stats Section -->
+        <section class="mobile-stats">
+            <div class="mobile-stats-grid">
+                <div class="mobile-stat-item">
+                    <div class="mobile-stat-number">10K+</div>
+                    <div class="mobile-stat-label">Elite Events Managed</div>
+                </div>
+                <div class="mobile-stat-item">
+                    <div class="mobile-stat-number">500K+</div>
+                    <div class="mobile-stat-label">Guests Served</div>
+                </div>
+                <div class="mobile-stat-item">
+                    <div class="mobile-stat-number">99.9%</div>
+                    <div class="mobile-stat-label">Uptime Guarantee</div>
+                </div>
+                <div class="mobile-stat-item">
+                    <div class="mobile-stat-number">24/7</div>
+                    <div class="mobile-stat-label">Elite Support</div>
+                </div>
+            </div>
+        </section>
+
         <!-- Sign-in Section -->
         <section class="mobile-signin">
             <h2>Already Have an Account?</h2>
@@ -608,6 +836,37 @@
                 <i class="fas fa-sign-in-alt"></i>
                 Access Dashboard
             </a>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="mobile-contact" id="contact">
+            <h2>Get In Touch</h2>
+            <p>Ready to transform your events? Contact our team to learn more about OnTimely's capabilities.</p>
+            
+            <form class="mobile-contact-form">
+                <div class="mobile-form-group">
+                    <input type="text" placeholder="Your Name" required>
+                </div>
+                <div class="mobile-form-group">
+                    <input type="email" placeholder="Email Address" required>
+                </div>
+                <div class="mobile-form-group">
+                    <select required>
+                        <option value="">Company Size</option>
+                        <option value="1-10">1-10 employees</option>
+                        <option value="11-50">11-50 employees</option>
+                        <option value="51-200">51-200 employees</option>
+                        <option value="200+">200+ employees</option>
+                    </select>
+                </div>
+                <div class="mobile-form-group">
+                    <textarea placeholder="Tell us about your event needs..." rows="4" required></textarea>
+                </div>
+                <button type="submit" class="mobile-submit-btn">
+                    <i class="fas fa-paper-plane"></i>
+                    Send Message
+                </button>
+            </form>
         </section>
     </main>
 
