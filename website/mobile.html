@@ -256,13 +256,11 @@
         }
 
         .mobile-hero-image {
-            max-width: 600px;
+            max-width: 500px;
             width: 100%;
             height: auto;
-            margin: 40px auto 0;
+            margin: 0 auto 40px;
             display: block;
-            object-fit: cover;
-            object-position: center;
         }
 
         /* Desktop Message */
@@ -285,8 +283,6 @@
         .mobile-event-management {
             padding: 60px 20px;
             text-align: center;
-            position: relative;
-            overflow: hidden;
         }
 
         .mobile-event-management h2 {
@@ -311,8 +307,6 @@
         .mobile-create-event {
             padding: 60px 20px;
             text-align: center;
-            position: relative;
-            overflow: hidden;
         }
 
         .mobile-create-event h2 {
@@ -344,12 +338,8 @@
             max-width: 380px;
             height: auto;
             border-radius: 15px;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: -1;
-            opacity: 0.3;
+            margin: 20px auto;
+            display: block;
         }
 
         .mobile-stack-image.laptop {
@@ -415,12 +405,21 @@
         }
 
         .mobile-feature-card {
-            background: transparent;
-            border: 1px solid var(--border-subtle);
-            border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 20px;
+            background: rgba(17, 24, 39, 0.55);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 18px;
+            padding: 2rem;
+            padding-top: 1.5rem;
             text-align: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: visible;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.04), 0 8px 30px rgba(0,0,0,0.45);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            margin-bottom: 20px;
         }
 
         .mobile-feature-card h3 {
@@ -454,22 +453,57 @@
         }
 
         .mobile-pricing-card {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-subtle);
-            border-radius: 15px;
-            padding: 30px 20px;
-            margin-bottom: 20px;
+            background: rgba(17, 24, 39, 0.55);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 18px;
+            padding: 2rem;
+            padding-top: 1.5rem;
             text-align: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
+            overflow: visible;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.04), 0 8px 30px rgba(0,0,0,0.45);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            margin-bottom: 20px;
+        }
+
+        .mobile-pricing-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.05), rgba(107, 114, 128, 0.03));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            border-radius: 25px;
+        }
+
+        .mobile-pricing-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-large);
+            border-color: var(--primary-green);
+        }
+
+        .mobile-pricing-card:hover::before {
+            opacity: 1;
         }
 
         .mobile-pricing-card.popular {
             border-color: var(--primary-green);
-            background: transparent;
+            transform: none;
         }
 
         .mobile-pricing-card.popular::before {
-            content: 'Most Popular';
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(107, 114, 128, 0.05));
+            opacity: 1;
+        }
+
+        .mobile-popular-badge {
             position: absolute;
             top: -10px;
             left: 50%;
@@ -734,9 +768,10 @@
         .mobile-form-group textarea {
             width: 100%;
             padding: 15px;
-            border: 1px solid var(--border-medium);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 10px;
-            background: transparent;
+            background: rgba(17, 24, 39, 0.55);
+            backdrop-filter: blur(8px);
             color: var(--text-primary);
             font-size: 16px;
             font-family: inherit;
@@ -836,21 +871,21 @@
     <main class="mobile-main">
         <!-- Hero Section -->
         <section class="mobile-hero" id="home">
-            <h1 class="mobile-fade-in">Elite Event Management Platform</h1>
-            <p class="mobile-fade-in">Transform your events with OnTimely's enterprise-grade platform. Create custom guest apps, manage real-time communication, and deliver exceptional experiences.</p>
+            <img src="LoadingScreen.png" alt="OnTimely Mobile App" class="mobile-hero-image mobile-fade-in">
+            
+            <h1 class="mobile-fade-in mobile-animate-delay-1">Elite Event Management Platform</h1>
+            <p class="mobile-fade-in mobile-animate-delay-2">Transform your events with OnTimely's enterprise-grade platform. Create custom guest apps, manage real-time communication, and deliver exceptional experiences.</p>
             
             <div class="mobile-hero-buttons">
-                <a href="#features" class="mobile-cta-btn primary mobile-fade-in">
+                <a href="#features" class="mobile-cta-btn primary mobile-fade-in mobile-animate-delay-3">
                     <i class="fas fa-play"></i>
                     Watch Demo
                 </a>
-                <a href="#contact" class="mobile-cta-btn secondary mobile-fade-in">
+                <a href="#contact" class="mobile-cta-btn secondary mobile-fade-in mobile-animate-delay-3">
                     <i class="fas fa-rocket"></i>
                     Get Started
                 </a>
             </div>
-
-            <img src="LoadingScreen.png" alt="OnTimely Mobile App" class="mobile-hero-image mobile-fade-in">
             
             <div class="mobile-desktop-message">
                 <p>Visit on a desktop computer to download our desktop application</p>
@@ -946,6 +981,7 @@
                     <li>White-label options</li>
                 </ul>
                 <button class="mobile-pricing-btn">Get Started</button>
+                <div class="mobile-popular-badge">Most Popular</div>
             </div>
             
             <div class="mobile-pricing-card mobile-fade-in mobile-animate-delay-4">
