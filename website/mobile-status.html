@@ -57,23 +57,78 @@
         }
 
         .mobile-status-logo img {
-            height: 30px;
+            height: 40px;
         }
 
         .mobile-status-logo h1 {
-            font-size: 1.2rem;
+            font-size: 1.5rem;
             font-weight: 700;
         }
 
-        .mobile-back-btn {
+        .mobile-menu-toggle {
             background: var(--primary-green);
             color: #000000;
             border: none;
-            padding: 8px 16px;
+            padding: 10px;
             border-radius: 8px;
             font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .mobile-menu.active {
+            display: flex;
+        }
+
+        .mobile-menu-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--primary-green);
+            color: #000000;
+            border: none;
+            padding: 10px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .mobile-menu-links {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            text-align: center;
+        }
+
+        .mobile-menu-links a {
+            color: var(--text-primary);
             text-decoration: none;
-            font-size: 14px;
+            font-size: 1.5rem;
+            font-weight: 500;
+            padding: 15px 30px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu-links a:hover {
+            background: rgba(10, 178, 124, 0.2);
+            color: var(--primary-green);
         }
 
         .mobile-status-container {
@@ -113,6 +168,10 @@
             border-radius: 25px;
             font-weight: 600;
             font-size: 1rem;
+        }
+
+        .mobile-status-indicator-text {
+            display: none;
         }
 
         .mobile-status-operational {
@@ -278,11 +337,22 @@
                 <img src="on timely official logo.svg" alt="OnTimely Logo">
                 <h1>OnTimely</h1>
             </a>
-            <a href="/mobile" class="mobile-back-btn">
-                <i class="fas fa-arrow-left"></i> Back
-            </a>
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">☰</button>
         </nav>
     </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="mobile-menu-close" id="mobileMenuClose">×</button>
+        <div class="mobile-menu-links">
+            <a href="/mobile">Home</a>
+            <a href="/mobile#features">Features</a>
+            <a href="/mobile#pricing">Pricing</a>
+            <a href="/about">About</a>
+            <a href="/mobile/help">Help</a>
+            <a href="/mobile/status">Status</a>
+        </div>
+    </div>
 
     <main class="mobile-status-container">
         <!-- Status Overview -->
@@ -291,7 +361,7 @@
             <p class="mobile-status-subtitle">Real-time status of all OnTimely services</p>
             <div class="mobile-status-indicator mobile-status-operational">
                 <div class="mobile-status-dot"></div>
-                All Systems Operational
+                <span class="mobile-status-indicator-text">All Systems Operational</span>
             </div>
         </section>
 
@@ -306,7 +376,7 @@
                 </div>
                 <div class="mobile-service-status mobile-status-operational">
                     <div class="mobile-status-dot"></div>
-                    Operational
+                    <span class="mobile-status-indicator-text">Operational</span>
                 </div>
             </div>
 
@@ -317,7 +387,7 @@
                 </div>
                 <div class="mobile-service-status mobile-status-operational">
                     <div class="mobile-status-dot"></div>
-                    Operational
+                    <span class="mobile-status-indicator-text">Operational</span>
                 </div>
             </div>
 
@@ -328,7 +398,7 @@
                 </div>
                 <div class="mobile-service-status mobile-status-operational">
                     <div class="mobile-status-dot"></div>
-                    Operational
+                    <span class="mobile-status-indicator-text">Operational</span>
                 </div>
             </div>
 
@@ -339,7 +409,7 @@
                 </div>
                 <div class="mobile-service-status mobile-status-operational">
                     <div class="mobile-status-dot"></div>
-                    Operational
+                    <span class="mobile-status-indicator-text">Operational</span>
                 </div>
             </div>
 
@@ -350,7 +420,7 @@
                 </div>
                 <div class="mobile-service-status mobile-status-operational">
                     <div class="mobile-status-dot"></div>
-                    Operational
+                    <span class="mobile-status-indicator-text">Operational</span>
                 </div>
             </div>
         </section>
@@ -394,6 +464,25 @@
         setInterval(() => {
             location.reload();
         }, 300000);
+
+        // Mobile menu toggle functionality
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const mobileMenuClose = document.getElementById('mobileMenuClose');
+
+        if (mobileMenuToggle && mobileMenu) {
+            mobileMenuToggle.addEventListener('click', () => {
+                mobileMenu.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+
+            if (mobileMenuClose) {
+                mobileMenuClose.addEventListener('click', () => {
+                    mobileMenu.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                });
+            }
+        }
     </script>
 </body>
 </html>

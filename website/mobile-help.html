@@ -262,6 +262,44 @@
             color: #000000;
         }
 
+        /* FAQ Content */
+        .mobile-faq-content {
+            margin-bottom: 30px;
+        }
+
+        .mobile-faq-item {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-faq-item:hover {
+            border-color: var(--primary-green);
+            transform: translateY(-2px);
+        }
+
+        .mobile-faq-question {
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .mobile-faq-answer {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            display: none;
+        }
+
+        .mobile-faq-item.active .mobile-faq-answer {
+            display: block;
+        }
+
         .mobile-footer {
             background: var(--bg-secondary);
             border-top: 1px solid var(--border-color);
@@ -333,7 +371,7 @@
         <section class="mobile-help-categories mobile-fade-in mobile-animate-delay-1">
             <h2 class="mobile-category-title">Browse by Category</h2>
             
-            <a href="#" class="mobile-category-item">
+            <a href="#getting-started" class="mobile-category-item" data-category="getting-started">
                 <div class="mobile-category-info">
                     <div class="mobile-category-name">Getting Started</div>
                     <div class="mobile-category-description">Learn the basics of OnTimely</div>
@@ -341,7 +379,7 @@
                 <i class="fas fa-chevron-right mobile-category-arrow"></i>
             </a>
 
-            <a href="#" class="mobile-category-item">
+            <a href="#event-management" class="mobile-category-item" data-category="event-management">
                 <div class="mobile-category-info">
                     <div class="mobile-category-name">Event Management</div>
                     <div class="mobile-category-description">Creating and managing events</div>
@@ -349,7 +387,7 @@
                 <i class="fas fa-chevron-right mobile-category-arrow"></i>
             </a>
 
-            <a href="#" class="mobile-category-item">
+            <a href="#guest-management" class="mobile-category-item" data-category="guest-management">
                 <div class="mobile-category-info">
                     <div class="mobile-category-name">Guest Management</div>
                     <div class="mobile-category-description">Managing guest lists and check-ins</div>
@@ -357,7 +395,7 @@
                 <i class="fas fa-chevron-right mobile-category-arrow"></i>
             </a>
 
-            <a href="#" class="mobile-category-item">
+            <a href="#mobile-apps" class="mobile-category-item" data-category="mobile-apps">
                 <div class="mobile-category-info">
                     <div class="mobile-category-name">Mobile Apps</div>
                     <div class="mobile-category-description">iOS and Android app support</div>
@@ -365,7 +403,7 @@
                 <i class="fas fa-chevron-right mobile-category-arrow"></i>
             </a>
 
-            <a href="#" class="mobile-category-item">
+            <a href="#billing" class="mobile-category-item" data-category="billing">
                 <div class="mobile-category-info">
                     <div class="mobile-category-name">Billing & Plans</div>
                     <div class="mobile-category-description">Subscription and payment help</div>
@@ -373,7 +411,7 @@
                 <i class="fas fa-chevron-right mobile-category-arrow"></i>
             </a>
 
-            <a href="#" class="mobile-category-item">
+            <a href="#technical" class="mobile-category-item" data-category="technical">
                 <div class="mobile-category-info">
                     <div class="mobile-category-name">Technical Support</div>
                     <div class="mobile-category-description">Troubleshooting and technical issues</div>
@@ -382,49 +420,39 @@
             </a>
         </section>
 
-        <!-- Popular Articles -->
-        <section class="mobile-popular-articles mobile-fade-in mobile-animate-delay-2">
-            <h2 class="mobile-category-title">Popular Articles</h2>
+        <!-- FAQ Content -->
+        <section class="mobile-faq-content mobile-fade-in mobile-animate-delay-2">
+            <h2 class="mobile-category-title">Frequently Asked Questions</h2>
             
-            <a href="#" class="mobile-article-item">
-                <div class="mobile-article-title">How to create your first event</div>
-                <div class="mobile-article-meta">
-                    <span>Getting Started</span>
-                    <span>5 min read</span>
-                </div>
-            </a>
+            <div class="mobile-faq-item">
+                <div class="mobile-faq-question">How do I create my first event?</div>
+                <div class="mobile-faq-answer">Navigate to the Events section in your dashboard and click "Create New Event". Fill in the basic details like event name, date, and location. You can customize the event homepage and add modules later.</div>
+            </div>
 
-            <a href="#" class="mobile-article-item">
-                <div class="mobile-article-title">Setting up guest check-in</div>
-                <div class="mobile-article-meta">
-                    <span>Guest Management</span>
-                    <span>3 min read</span>
-                </div>
-            </a>
+            <div class="mobile-faq-item">
+                <div class="mobile-faq-question">What's the difference between the desktop and mobile app?</div>
+                <div class="mobile-faq-answer">The desktop app is for event organizers and provides full administrative control, analytics, and management features. The mobile app is designed for guests to access event information, chat, and travel tools.</div>
+            </div>
 
-            <a href="#" class="mobile-article-item">
-                <div class="mobile-article-title">Customizing your event homepage</div>
-                <div class="mobile-article-meta">
-                    <span>Event Management</span>
-                    <span>7 min read</span>
-                </div>
-            </a>
+            <div class="mobile-faq-item">
+                <div class="mobile-faq-question">How do I invite guests to my event?</div>
+                <div class="mobile-faq-answer">Use the Guest Management section to upload guest lists via CSV or manually add guests. You can send invitations via email with custom messages and track RSVP responses in real-time.</div>
+            </div>
 
-            <a href="#" class="mobile-article-item">
-                <div class="mobile-article-title">Downloading the mobile app</div>
-                <div class="mobile-article-meta">
-                    <span>Mobile Apps</span>
-                    <span>2 min read</span>
-                </div>
-            </a>
+            <div class="mobile-faq-item">
+                <div class="mobile-faq-question">Can I customize the event homepage?</div>
+                <div class="mobile-faq-answer">Yes! Use the Homepage Builder to customize colors, add your logo, create custom sections, and arrange modules to match your event's branding and style.</div>
+            </div>
 
-            <a href="#" class="mobile-article-item">
-                <div class="mobile-article-title">Understanding your billing</div>
-                <div class="mobile-article-meta">
-                    <span>Billing & Plans</span>
-                    <span>4 min read</span>
-                </div>
-            </a>
+            <div class="mobile-faq-item">
+                <div class="mobile-faq-question">How do guests access the mobile app?</div>
+                <div class="mobile-faq-answer">Guests can download the OnTimely app from the App Store or Google Play, then use the event code you provide to join your specific event.</div>
+            </div>
+
+            <div class="mobile-faq-item">
+                <div class="mobile-faq-question">What analytics are available?</div>
+                <div class="mobile-faq-answer">Track guest engagement, check-in rates, chat activity, module usage, and real-time attendance. Export detailed reports for post-event analysis.</div>
+            </div>
         </section>
 
         <!-- Contact Support -->
@@ -465,12 +493,18 @@
             });
         });
 
-        // Add click handlers for articles
-        document.querySelectorAll('.mobile-article-item').forEach(item => {
-            item.addEventListener('click', function(e) {
-                e.preventDefault();
-                const articleTitle = this.querySelector('.mobile-article-title').textContent;
-                alert(`Opening article: ${articleTitle}`);
+        // Add click handlers for FAQ items
+        document.querySelectorAll('.mobile-faq-item').forEach(item => {
+            item.addEventListener('click', function() {
+                // Close other FAQ items
+                document.querySelectorAll('.mobile-faq-item').forEach(otherItem => {
+                    if (otherItem !== this) {
+                        otherItem.classList.remove('active');
+                    }
+                });
+                
+                // Toggle current FAQ item
+                this.classList.toggle('active');
             });
         });
     </script>
