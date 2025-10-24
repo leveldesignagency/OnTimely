@@ -1,6 +1,7 @@
 {
   "routes": [
     { "src": "/", "dest": "/website/index.html" },
+    { "src": "/mobile", "dest": "/website/mobile.html" },
     { "src": "/help", "dest": "/website/help.html" },
     { "src": "/about", "dest": "/website/about.html" },
     { "src": "/status", "dest": "/website/status.html" },

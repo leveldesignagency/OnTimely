@@ -3164,6 +3164,17 @@
     </footer>
 
     <script>
+        // Mobile detection and redirect
+        function isMobileDevice() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
+                   window.innerWidth <= 768;
+        }
+
+        // Redirect mobile users to mobile version
+        if (isMobileDevice() && !window.location.pathname.includes('/mobile')) {
+            window.location.href = '/mobile';
+        }
+
         // Device detection and dynamic download button generation
         function detectPlatform() {
             const userAgent = navigator.userAgent || navigator.vendor || window.opera;
