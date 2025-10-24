@@ -632,11 +632,23 @@
             border-radius: 12px;
             padding: 1.5rem;
             transition: all 0.3s ease;
+            cursor: pointer;
         }
 
         .faq-item:hover {
             border-color: var(--primary-green);
             transform: translateY(-2px);
+        }
+
+        .faq-answer {
+            display: none;
+            margin-top: 1rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
         }
 
         .faq-question {
@@ -1770,7 +1782,25 @@
             initSearch();
             initFadeInAnimations();
             initMobileMenu();
+            initFAQInteractions();
         });
+
+        function initFAQInteractions() {
+            // Add click handlers for FAQ items
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    // Close other FAQ items
+                    document.querySelectorAll('.faq-item').forEach(otherItem => {
+                        if (otherItem !== this) {
+                            otherItem.classList.remove('active');
+                        }
+                    });
+                    
+                    // Toggle current FAQ item
+                    this.classList.toggle('active');
+                });
+            });
+        }
     </script>
 </body>
 </html>
