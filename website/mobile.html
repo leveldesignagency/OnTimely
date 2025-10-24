@@ -812,6 +812,115 @@
             animation-delay: 0.6s;
         }
 
+        .mobile-animate-delay-4 {
+            animation-delay: 0.8s;
+        }
+
+        .mobile-animate-delay-5 {
+            animation-delay: 1.0s;
+        }
+
+        .mobile-animate-delay-6 {
+            animation-delay: 1.2s;
+        }
+
+        .mobile-animate-delay-7 {
+            animation-delay: 1.4s;
+        }
+
+        .mobile-animate-delay-8 {
+            animation-delay: 1.6s;
+        }
+
+        /* Additional Animation Types */
+        .mobile-bounce-in {
+            opacity: 0;
+            animation: bounceIn 1s ease forwards;
+        }
+
+        .mobile-slide-in-up {
+            opacity: 0;
+            animation: slideInUp 0.8s ease forwards;
+        }
+
+        .mobile-zoom-in {
+            opacity: 0;
+            animation: zoomIn 0.8s ease forwards;
+        }
+
+        .mobile-rotate-in {
+            opacity: 0;
+            animation: rotateIn 0.8s ease forwards;
+        }
+
+        .mobile-flip-in {
+            opacity: 0;
+            animation: flipIn 0.8s ease forwards;
+        }
+
+        /* Enhanced Keyframes */
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3) translateY(-50px);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.05) translateY(0);
+            }
+            70% {
+                transform: scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes zoomIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes rotateIn {
+            0% {
+                opacity: 0;
+                transform: rotate(-180deg) scale(0.5);
+            }
+            100% {
+                opacity: 1;
+                transform: rotate(0deg) scale(1);
+            }
+        }
+
+        @keyframes flipIn {
+            0% {
+                opacity: 0;
+                transform: perspective(400px) rotateY(-90deg);
+            }
+            100% {
+                opacity: 1;
+                transform: perspective(400px) rotateY(0deg);
+            }
+        }
+
         /* Stats Section */
         .mobile-stats {
             padding: 60px 20px;
@@ -1027,7 +1136,7 @@
                 </a>
             </div>
             
-            <div class="mobile-desktop-message">
+            <div class="mobile-desktop-message mobile-bounce-in mobile-animate-delay-4">
                 <p>Visit on a desktop computer to download our desktop application</p>
             </div>
         </section>
@@ -1060,22 +1169,22 @@
         <section class="mobile-features" id="features">
             <h2 class="mobile-fade-in">Why Choose OnTimely?</h2>
             
-            <div class="mobile-feature-card mobile-fade-in mobile-animate-delay-1">
+            <div class="mobile-feature-card mobile-bounce-in mobile-animate-delay-1">
                 <h3>Custom Event Apps</h3>
                 <p>Create branded mobile apps for your events with custom features and real-time updates.</p>
             </div>
             
-            <div class="mobile-feature-card mobile-fade-in mobile-animate-delay-2">
+            <div class="mobile-feature-card mobile-slide-in-up mobile-animate-delay-2">
                 <h3>Real-time Communication</h3>
                 <p>Keep guests informed with instant announcements, chat, and push notifications.</p>
             </div>
             
-            <div class="mobile-feature-card mobile-fade-in mobile-animate-delay-3">
+            <div class="mobile-feature-card mobile-zoom-in mobile-animate-delay-3">
                 <h3>Guest Management</h3>
                 <p>Streamline check-ins, manage guest lists, and track attendance with ease.</p>
             </div>
             
-            <div class="mobile-feature-card mobile-fade-in mobile-animate-delay-1">
+            <div class="mobile-feature-card mobile-rotate-in mobile-animate-delay-4">
                 <h3>Analytics & Insights</h3>
                 <p>Get detailed reports on guest engagement and event performance.</p>
             </div>
@@ -1085,7 +1194,7 @@
         <section class="mobile-pricing" id="pricing">
             <h2 class="mobile-fade-in">Choose Your Plan</h2>
             
-            <div class="mobile-pricing-card mobile-fade-in mobile-animate-delay-1">
+            <div class="mobile-pricing-card mobile-bounce-in mobile-animate-delay-1">
                 <h3>Solo</h3>
                 <div class="mobile-pricing-subtitle">Perfect for individual event organizers</div>
                 <ul class="mobile-pricing-features">
@@ -1097,7 +1206,7 @@
                 <a href="#contact" class="mobile-pricing-btn">Get Started</a>
             </div>
             
-            <div class="mobile-pricing-card mobile-fade-in mobile-animate-delay-2">
+            <div class="mobile-pricing-card mobile-slide-in-up mobile-animate-delay-2">
                 <h3>Basic</h3>
                 <div class="mobile-pricing-subtitle">Ideal for small teams</div>
                 <ul class="mobile-pricing-features">
@@ -1110,7 +1219,7 @@
                 <a href="#contact" class="mobile-pricing-btn">Get Started</a>
             </div>
             
-            <div class="mobile-pricing-card popular mobile-fade-in mobile-animate-delay-3">
+            <div class="mobile-pricing-card popular mobile-zoom-in mobile-animate-delay-3">
                 <h3>Corporate</h3>
                 <div class="mobile-pricing-subtitle">Built for growing organizations</div>
                 <ul class="mobile-pricing-features">
@@ -1124,7 +1233,7 @@
                 <div class="mobile-popular-badge">Most Popular</div>
             </div>
             
-            <div class="mobile-pricing-card mobile-fade-in mobile-animate-delay-4">
+            <div class="mobile-pricing-card mobile-flip-in mobile-animate-delay-4">
                 <h3>Enterprise</h3>
                 <div class="mobile-pricing-subtitle">For large-scale operations</div>
                 <ul class="mobile-pricing-features">
@@ -1141,19 +1250,19 @@
         <!-- Stats Section -->
         <section class="mobile-stats">
             <div class="mobile-stats-grid">
-                <div class="mobile-stat-item mobile-fade-in mobile-animate-delay-1">
+                <div class="mobile-stat-item mobile-bounce-in mobile-animate-delay-1">
                     <div class="mobile-stat-number">10K+</div>
                     <div class="mobile-stat-label">Elite Events Managed</div>
                 </div>
-                <div class="mobile-stat-item mobile-fade-in mobile-animate-delay-2">
+                <div class="mobile-stat-item mobile-slide-in-up mobile-animate-delay-2">
                     <div class="mobile-stat-number">500K+</div>
                     <div class="mobile-stat-label">Guests Served</div>
                 </div>
-                <div class="mobile-stat-item mobile-fade-in mobile-animate-delay-1">
+                <div class="mobile-stat-item mobile-zoom-in mobile-animate-delay-3">
                     <div class="mobile-stat-number">99.9%</div>
                     <div class="mobile-stat-label">Uptime Guarantee</div>
                 </div>
-                <div class="mobile-stat-item mobile-fade-in mobile-animate-delay-2">
+                <div class="mobile-stat-item mobile-rotate-in mobile-animate-delay-4">
                     <div class="mobile-stat-number">24/7</div>
                     <div class="mobile-stat-label">Elite Support</div>
                 </div>
@@ -1162,9 +1271,9 @@
 
         <!-- Sign-in Section -->
         <section class="mobile-signin">
-            <h2 class="mobile-fade-in">Already Have an Account?</h2>
-            <p class="mobile-fade-in mobile-animate-delay-1">Access your professional event dashboard and manage your events with our elite suite of tools.</p>
-            <a href="https://dashboard.ontimely.co.uk" class="mobile-dashboard-btn mobile-fade-in mobile-animate-delay-2">
+            <h2 class="mobile-bounce-in">Already Have an Account?</h2>
+            <p class="mobile-slide-in-up mobile-animate-delay-1">Access your professional event dashboard and manage your events with our elite suite of tools.</p>
+            <a href="https://dashboard.ontimely.co.uk" class="mobile-dashboard-btn mobile-zoom-in mobile-animate-delay-2">
                 <i class="fas fa-sign-in-alt"></i>
                 Access Dashboard
             </a>
@@ -1172,10 +1281,10 @@
 
         <!-- Contact Section -->
         <section class="mobile-contact" id="contact">
-            <h2 class="mobile-fade-in">Get In Touch</h2>
-            <p class="mobile-fade-in mobile-animate-delay-1">Ready to transform your events? Contact our team to learn more about OnTimely's capabilities.</p>
+            <h2 class="mobile-flip-in">Get In Touch</h2>
+            <p class="mobile-slide-in-up mobile-animate-delay-1">Ready to transform your events? Contact our team to learn more about OnTimely's capabilities.</p>
             
-            <form class="mobile-contact-form mobile-fade-in mobile-animate-delay-2">
+            <form class="mobile-contact-form mobile-zoom-in mobile-animate-delay-2">
                 <div class="mobile-form-group">
                     <input type="text" placeholder="Your Name" required>
                 </div>
@@ -1205,11 +1314,11 @@
     <!-- Footer -->
     <footer class="mobile-footer">
         <div class="mobile-footer-content">
-            <div class="mobile-footer-logo">
+            <div class="mobile-footer-logo mobile-bounce-in mobile-animate-delay-1">
                 <img src="on timely official logo.svg" alt="OnTimely Logo" style="height: 40px; margin-bottom: 20px;">
             </div>
             
-            <div class="mobile-footer-section">
+            <div class="mobile-footer-section mobile-slide-in-up mobile-animate-delay-2">
                 <h3>Product</h3>
                 <ul>
                     <li><a href="/#features">Features</a></li>
@@ -1218,7 +1327,7 @@
                 </ul>
             </div>
             
-            <div class="mobile-footer-section">
+            <div class="mobile-footer-section mobile-zoom-in mobile-animate-delay-3">
                 <h3>Company</h3>
                 <ul>
                     <li><a href="/about">About</a></li>
@@ -1227,7 +1336,7 @@
                 </ul>
             </div>
             
-            <div class="mobile-footer-section">
+            <div class="mobile-footer-section mobile-rotate-in mobile-animate-delay-4">
                 <h3>Legal</h3>
                 <ul>
                     <li><a href="#">Privacy Policy</a></li>
@@ -1236,7 +1345,7 @@
             </div>
         </div>
         
-        <div class="mobile-footer-bottom">
+        <div class="mobile-footer-bottom mobile-flip-in mobile-animate-delay-5">
             <p>&copy; 2024 OnTimely. All rights reserved.</p>
         </div>
     </footer>
