@@ -577,6 +577,10 @@
             display: none;
         }
 
+        .mobile-download-message {
+            display: none;
+        }
+
         .download-buttons {
             display: flex;
             flex-direction: row;
@@ -1192,16 +1196,18 @@
 
             .create-event-content {
                 flex-direction: column;
-                gap: 30px;
+                gap: 40px;
                 text-align: center;
             }
 
             .create-event-left {
-                order: 2;
+                order: 1;
+                text-align: center;
+                padding: 0 20px;
             }
 
             .create-event-right {
-                order: 1;
+                order: 2;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
@@ -1225,11 +1231,13 @@
             .create-event-title {
                 font-size: 2rem;
                 margin-bottom: 15px;
+                text-align: center;
             }
 
             .create-event-description {
                 font-size: 1rem;
                 margin-bottom: 20px;
+                text-align: center;
             }
         }
 
@@ -1334,7 +1342,7 @@
             }
 
             .guest-chat-left {
-                order: 1;
+                order: 2;
                 width: 100%;
                 display: flex;
                 justify-content: center;
@@ -1342,27 +1350,29 @@
             }
 
             .guest-chat-right {
-                order: 2;
+                order: 1;
                 padding-left: 0;
                 width: 100%;
                 padding: 0 20px;
             }
 
             .guest-chat-image {
-                max-width: 320px;
+                max-width: 350px;
                 height: auto;
-                margin: 0 auto;
+                margin: 0 auto 0 0;
                 display: block;
             }
 
             .guest-chat-title {
                 font-size: 2rem;
                 margin-bottom: 15px;
+                text-align: center;
             }
 
             .guest-chat-description {
                 font-size: 1rem;
                 margin-bottom: 20px;
+                text-align: center;
             }
         }
 
@@ -1384,6 +1394,7 @@
 
             .feature-card {
                 padding: 30px 20px;
+                text-align: center;
             }
 
             .feature-icon {
@@ -1393,11 +1404,13 @@
             .feature-card h3 {
                 font-size: 1.3rem;
                 margin-bottom: 15px;
+                text-align: center;
             }
 
             .feature-card p {
                 font-size: 0.95rem;
                 line-height: 1.5;
+                text-align: center;
             }
         }
 
@@ -1865,7 +1878,7 @@
             
             .pricing-grid {
                 grid-template-columns: 1fr;
-                gap: 20px;
+                gap: 35px;
                 max-width: 400px;
                 margin: 0 auto;
             }
@@ -1873,12 +1886,13 @@
             .pricing-card {
                 text-align: center;
                 padding: 40px 20px;
-                margin-bottom: 30px;
+                margin-bottom: 15px;
                 position: relative;
             }
 
             .pricing-card h3 {
-                font-size: 1.5rem;
+                font-size: 1.3rem;
+                text-align: center;
                 margin-bottom: 20px;
             }
 
@@ -2385,9 +2399,9 @@
                 padding: 0 20px;
             }
 
-            /* Mobile Hero Section */
+            /* Mobile Hero Section - Text first, then image */
             .hero {
-                padding: 140px 0 100px;
+                padding: 120px 0 80px;
                 text-align: center;
                 min-height: 100vh;
                 display: flex;
@@ -2396,20 +2410,20 @@
 
             .hero-content {
                 flex-direction: column;
-                gap: 50px;
+                gap: 40px;
                 align-items: center;
                 width: 100%;
             }
 
             .hero-left {
-                order: 2;
+                order: 1;
                 text-align: center;
                 max-width: 100%;
                 padding: 0 20px;
             }
 
             .hero-right {
-                order: 1;
+                order: 2;
                 width: 100%;
                 display: flex;
                 flex-direction: column;
@@ -2438,6 +2452,43 @@
                 max-width: 300px;
                 height: auto;
                 margin: 0 auto;
+            }
+
+            /* Mobile Download Section - Replace with desktop message */
+            .app-downloads {
+                display: none;
+            }
+            
+            .mobile-download-message {
+                display: block;
+                text-align: center;
+                margin-top: 20px;
+                padding: 20px;
+                background: rgba(10, 178, 124, 0.1);
+                border-radius: 10px;
+                border: 1px solid rgba(10, 178, 124, 0.3);
+            }
+            
+            .mobile-download-message p {
+                color: var(--primary-green);
+                font-size: 0.9rem;
+                margin: 0;
+            }
+
+            /* Mobile Hero Buttons - Side by side, smaller */
+            .hero-buttons {
+                display: flex;
+                flex-direction: row;
+                gap: 15px;
+                justify-content: center;
+                flex-wrap: wrap;
+                margin-top: 20px;
+            }
+            
+            .cta-button {
+                padding: 12px 20px;
+                font-size: 0.9rem;
+                min-width: 140px;
             }
 
             /* Fix overlapping text issues */
@@ -2595,6 +2646,45 @@
                 margin: 0;
             }
 
+            /* Sign-in Section Mobile */
+            .sign-in-section {
+                padding: 60px 0;
+            }
+            
+            .sign-in-content h2 {
+                font-size: 1.8rem;
+                margin-bottom: 15px;
+            }
+            
+            .sign-in-content p {
+                font-size: 1rem;
+                margin-bottom: 25px;
+                padding: 0 20px;
+            }
+            
+            .dashboard-btn {
+                padding: 12px 20px;
+                font-size: 0.9rem;
+                white-space: nowrap;
+            }
+
+            /* Footer Mobile - Center align items */
+            .footer-content {
+                text-align: center;
+            }
+            
+            .footer-section {
+                text-align: center;
+            }
+            
+            .footer-section h3 {
+                text-align: center;
+            }
+            
+            .footer-section ul {
+                text-align: center;
+            }
+
             /* Ensure proper viewport spacing */
             body {
                 padding-bottom: 80px;
@@ -2699,6 +2789,11 @@
                         <div class="download-buttons" id="download-buttons">
                             <!-- Buttons will be populated by JavaScript -->
                         </div>
+                    </div>
+                    
+                    <!-- Mobile Download Message -->
+                    <div class="mobile-download-message">
+                        <p>Visit on a desktop computer to download our desktop application</p>
                     </div>
         </section>
 
