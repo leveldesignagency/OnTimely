@@ -40,9 +40,23 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: var(--bg-primary);
+            background: linear-gradient(135deg, #000000 0%, #0a0a0a 25%, #0f0f0f 50%, #0a0a0a 75%, #000000 100%);
+            background-attachment: fixed;
             color: var(--text-primary);
             line-height: 1.6;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at right, rgba(10, 178, 124, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: -1;
         }
 
         /* Navigation */
@@ -146,33 +160,62 @@
         }
 
         .auth-btn {
-            padding: 10px 20px;
-            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 18px 35px;
             text-decoration: none;
-            font-weight: 600;
+            border-radius: 15px;
+            font-weight: 700;
+            font-size: 1.2rem;
             transition: all 0.3s ease;
-            border: 1px solid transparent;
+            box-shadow: none;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .auth-btn:hover::before {
+            left: 100%;
         }
 
         .login-btn {
-            background: transparent;
+            background: rgba(255, 255, 255, 0.1);
             color: var(--text-primary);
-            border-color: rgba(255, 255, 255, 0.2);
+            border: 1px solid var(--border-medium);
+            backdrop-filter: blur(20px);
+            box-shadow: none;
         }
 
         .login-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.3);
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(34, 197, 94, 0.1));
+            border-color: var(--primary-green);
+            box-shadow: 0 8px 25px rgba(34, 197, 94, 0.2);
+            color: #ffffff;
         }
 
         .signup-btn {
-            background: var(--primary-green);
-            color: #000000;
+            background: linear-gradient(135deg, var(--primary-green), var(--primary-green-dark));
+            color: #0b1411;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .signup-btn:hover {
-            background: #059669;
-            transform: translateY(-2px);
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(34, 197, 94, 0.1));
+            border-color: var(--primary-green);
+            box-shadow: 0 8px 25px rgba(34, 197, 94, 0.2);
+            color: #ffffff;
         }
 
         .status-container {
@@ -299,6 +342,11 @@
             gap: 6px;
             font-size: 0.8rem;
             font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
         }
 
         .status-operational {

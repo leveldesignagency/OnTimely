@@ -148,12 +148,19 @@
         }
 
         .auth-btn {
-            padding: 8px 20px;
-            border-radius: 25px;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 18px 35px;
             text-decoration: none;
-            font-weight: 500;
-            font-size: 0.9rem;
+            border-radius: 15px;
+            font-weight: 700;
+            font-size: 1.2rem;
             transition: all 0.3s ease;
+            box-shadow: none;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
         }
 
         .mobile-auth-buttons {
@@ -162,25 +169,48 @@
             gap: 10px;
         }
 
+        .auth-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .auth-btn:hover::before {
+            left: 100%;
+        }
+
         .login-btn {
-            color: #e0e0e0;
-            border: 1px solid #333;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            border: 1px solid var(--border-medium);
+            backdrop-filter: blur(20px);
+            box-shadow: none;
         }
 
         .login-btn:hover {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(34, 197, 94, 0.1));
+            border-color: var(--primary-green);
+            box-shadow: 0 8px 25px rgba(34, 197, 94, 0.2);
             color: #ffffff;
-            border-color: #555;
         }
 
         .signup-btn {
-            background: var(--primary-green);
-            color: #000000;
+            background: linear-gradient(135deg, var(--primary-green), var(--primary-green-dark));
+            color: #0b1411;
+            border: 1px solid rgba(255, 255, 255, 0.1);
             white-space: nowrap;
         }
 
         .signup-btn:hover {
-            background: var(--primary-green-dark);
-            transform: translateY(-1px);
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(34, 197, 94, 0.1));
+            border-color: var(--primary-green);
+            box-shadow: 0 8px 25px rgba(34, 197, 94, 0.2);
+            color: #ffffff;
         }
 
         /* Mobile Menu Toggle */

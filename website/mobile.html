@@ -835,9 +835,26 @@
             }
         }
 
+        @keyframes fadeInUpFromBottom {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -10%);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+        }
+
         .mobile-fade-in {
             opacity: 0;
             animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .mobile-hero-image {
+            opacity: 0;
+            transform: translate(-50%, -30%) !important;
+            animation: fadeInUpFromBottom 1.5s ease forwards;
         }
 
         .mobile-fade-in-left {
@@ -1247,10 +1264,10 @@
     <main class="mobile-main">
         <!-- Hero Section -->
         <section class="mobile-hero" id="home">
-            <h1 class="mobile-fade-in">Elite Event Management Platform</h1>
-            <p class="mobile-fade-in mobile-animate-delay-1">Transform your events with OnTimely's enterprise-grade platform. Create custom guest apps, manage real-time communication, and deliver exceptional experiences.</p>
+            <img src="Mobile Loading Image.png" alt="OnTimely Mobile App" class="mobile-hero-image mobile-fade-in">
             
-            <img src="Mobile Loading Image.png" alt="OnTimely Mobile App" class="mobile-hero-image mobile-fade-in mobile-animate-delay-2">
+            <h1 class="mobile-fade-in mobile-animate-delay-1">Elite Event Management Platform</h1>
+            <p class="mobile-fade-in mobile-animate-delay-2">Transform your events with OnTimely's enterprise-grade platform. Create custom guest apps, manage real-time communication, and deliver exceptional experiences.</p>
             
             <div class="mobile-hero-buttons">
                 <a href="#features" class="mobile-cta-btn primary mobile-fade-in mobile-animate-delay-3">
