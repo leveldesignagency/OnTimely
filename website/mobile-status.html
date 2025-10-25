@@ -2,38 +2,80 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, shrink-to-fit=no">
     <title>System Status - OnTimely</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary-green: #0ab27c;
-            --primary-green-dark: #089c6b;
-            --text-primary: #ffffff;
-            --text-secondary: #d1d5db;
-            --text-muted: #9ca3af;
-            --bg-primary: #000000;
-            --bg-secondary: #0f1015;
-            --border-color: rgba(255, 255, 255, 0.1);
-            --success-color: #10b981;
-            --warning-color: #f59e0b;
-            --error-color: #ef4444;
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.6;
+        :root {
+            --primary-green: #0ab27c;
+            --primary-green-dark: #089c6b;
+            --accent-grey: #6b7280;
+            --light-grey: #9ca3af;
+            --dark-grey: #374151;
+            --bg-primary: #0f1115;
+            --bg-secondary: #111827;
+            --bg-tertiary: #1f2937;
+            --text-primary: #e5e7eb;
+            --text-secondary: #cbd5e1;
+            --text-muted: #9ca3af;
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            --border-medium: rgba(255, 255, 255, 0.12);
+            --shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-medium: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --shadow-large: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
         }
 
-        .mobile-status-header {
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            background: #000000;
+            min-height: 100vh;
+            overflow-x: hidden;
+            touch-action: pan-x pan-y;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        html, body {
+            overflow-x: hidden;
+            width: 100%;
+            max-width: 100%;
+        }
+
+        /* Prevent zooming on double tap */
+        * {
+            touch-action: manipulation;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 80% 20%, rgba(10, 178, 124, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 20% 80%, rgba(10, 178, 124, 0.1) 0%, transparent 50%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Mobile Header - Match Other Mobile Pages Exactly */
+        .mobile-header {
             position: fixed;
             top: 0;
             left: 50%;
@@ -49,7 +91,7 @@
             transition: top 0.4s ease, border-radius 0.4s ease, width 0.4s ease;
         }
 
-        .mobile-status-nav {
+        .mobile-header-content {
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -60,21 +102,14 @@
             transition: padding 0.6s ease;
         }
 
-        .mobile-status-logo {
+        .mobile-logo {
             display: flex;
             align-items: center;
-            gap: 10px;
-            text-decoration: none;
-            color: var(--text-primary);
         }
 
-        .mobile-status-logo img {
+        .mobile-logo img {
             height: 40px;
-        }
-
-        .mobile-status-logo h1 {
-            font-size: 1.5rem;
-            font-weight: 700;
+            width: auto;
         }
 
         /* Mobile Menu Toggle */
@@ -85,7 +120,7 @@
             color: #ffffff;
             font-size: 1.5rem;
             cursor: pointer;
-            padding: 8px;
+            padding: 10px;
             border-radius: 8px;
             transition: background-color 0.3s ease;
         }
@@ -145,283 +180,356 @@
         .mobile-menu-links {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            gap: 30px;
-            text-align: center;
+            width: 100%;
+            max-width: 300px;
+            padding: 0 20px;
         }
 
         .mobile-menu-links a {
             color: #ffffff;
             text-decoration: none;
-            font-size: 1.5rem;
-            font-weight: 500;
-            padding: 15px 30px;
-            border-radius: 15px;
-            transition: all 0.3s ease;
-            min-width: 200px;
-        }
-
-        .mobile-menu-links a:hover {
-            background: rgba(34, 197, 94, 0.2);
-            color: var(--primary-green);
-            transform: translateY(-2px);
-        }
-
-        .mobile-menu-auth {
-            margin-top: 40px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            align-items: center;
-        }
-
-        .mobile-menu-auth .auth-btn {
-            padding: 12px 30px;
-            border-radius: 25px;
-            text-decoration: none;
+            font-size: 1.1rem;
             font-weight: 600;
+            padding: 20px 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
             transition: all 0.3s ease;
-            min-width: 200px;
+            position: relative;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             text-align: center;
         }
 
+        .mobile-menu-links a:last-child {
+            border-bottom: none;
+        }
+
+        .mobile-menu-links a::after {
+            content: '→';
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+            color: var(--primary-green);
+        }
+
+        .mobile-menu-links a:hover {
+            color: var(--primary-green);
+            padding-left: 10px;
+            background: linear-gradient(90deg, rgba(10, 178, 124, 0.1) 0%, transparent 100%);
+        }
+
+        .mobile-menu-links a:hover::after {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .mobile-menu-auth {
+            margin-top: 50px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+            max-width: 300px;
+            padding: 0 20px;
+        }
+
+        .mobile-menu-auth .auth-btn {
+            padding: 18px 30px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mobile-menu-auth .auth-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .mobile-menu-auth .auth-btn:hover::before {
+            left: 100%;
+        }
+
         .mobile-menu-auth .login-btn {
-            background: transparent;
+            background: rgba(255, 255, 255, 0.05);
             color: #ffffff;
-            border: 2px solid rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
         }
 
         .mobile-menu-auth .login-btn:hover {
             background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.5);
+            border-color: var(--primary-green);
+            color: var(--primary-green);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(10, 178, 124, 0.3);
         }
 
         .mobile-menu-auth .signup-btn {
-            background: var(--primary-green);
+            background: linear-gradient(135deg, var(--primary-green), var(--primary-green-dark));
             color: #000000;
-            border: 2px solid var(--primary-green);
+            border: 1px solid var(--primary-green);
+            box-shadow: 0 4px 15px rgba(10, 178, 124, 0.3);
         }
 
         .mobile-menu-auth .signup-btn:hover {
-            background: var(--primary-green-dark);
-            transform: translateY(-2px);
+            background: linear-gradient(135deg, var(--primary-green-dark), var(--primary-green));
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(10, 178, 124, 0.4);
         }
 
+        /* Mobile-specific header styling to match other pages */
+        @media (max-width: 768px) {
+            .mobile-header {
+                top: 10px;
+                padding: 15px 20px;
+                width: calc(100% - 20px);
+                max-width: none;
+                border-radius: 15px;
+            }
+
+            .mobile-header-content {
+                justify-content: space-between;
+                gap: 0;
+                align-items: center;
+                padding: 0 1rem;
+            }
+
+            .menu-toggle {
+                display: block !important;
+            }
+        }
+
+        /* Main Content */
+        .mobile-main {
+            padding-top: 100px;
+            min-height: 100vh;
+        }
+
+        /* Status Page Styles */
         .mobile-status-container {
-            padding: 20px;
-            max-width: 100%;
-        }
-
-        .mobile-status-overview {
-            background: var(--bg-secondary);
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 20px;
-            text-align: center;
+            padding: 40px 20px;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
         .mobile-status-title {
-            font-size: 1.8rem;
+            font-size: 2.5rem;
             font-weight: 800;
+            text-align: center;
             margin-bottom: 10px;
-            background: linear-gradient(135deg, var(--text-primary), var(--primary-green));
+            background: linear-gradient(135deg, #ffffff, var(--primary-green));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            line-height: 0.9;
         }
 
         .mobile-status-subtitle {
+            text-align: center;
             color: var(--text-muted);
-            font-size: 1rem;
-            margin-bottom: 20px;
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+        }
+
+        .mobile-overall-status {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 40px;
+            text-align: center;
         }
 
         .mobile-status-indicator {
-            display: inline-flex;
+            display: flex;
             align-items: center;
-            gap: 8px;
-            padding: 10px 20px;
-            border-radius: 25px;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .mobile-status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--primary-green);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .mobile-status-text {
+            font-size: 1.5rem;
             font-weight: 600;
+            color: var(--primary-green);
+        }
+
+        .mobile-status-description {
+            color: var(--text-secondary);
             font-size: 1rem;
         }
 
-        .mobile-status-indicator-text {
-            display: none;
-        }
-
-        .mobile-status-operational {
-            background: rgba(16, 185, 129, 0.2);
-            color: var(--success-color);
-            border: 1px solid var(--success-color);
-        }
-
-        .mobile-status-degraded {
-            background: rgba(245, 158, 11, 0.2);
-            color: var(--warning-color);
-            border: 1px solid var(--warning-color);
-        }
-
-        .mobile-status-outage {
-            background: rgba(239, 68, 68, 0.2);
-            color: var(--error-color);
-            border: 1px solid var(--error-color);
-        }
-
         .mobile-services-section {
-            margin-bottom: 30px;
+            margin-bottom: 40px;
         }
 
-        .mobile-section-title {
-            font-size: 1.5rem;
+        .mobile-services-title {
+            font-size: 1.8rem;
             font-weight: 700;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            text-align: center;
             color: var(--text-primary);
         }
 
         .mobile-service-item {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-service-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-2px);
         }
 
         .mobile-service-info {
-            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .mobile-service-status {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--primary-green);
         }
 
         .mobile-service-name {
             font-weight: 600;
-            font-size: 1rem;
-            margin-bottom: 4px;
+            color: var(--text-primary);
         }
 
-        .mobile-service-description {
+        .mobile-service-uptime {
             color: var(--text-muted);
             font-size: 0.9rem;
-        }
-
-        .mobile-service-status {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 0.9rem;
-            font-weight: 600;
-        }
-
-        .mobile-status-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-        }
-
-        .mobile-status-operational .mobile-status-dot {
-            background: var(--success-color);
-        }
-
-        .mobile-status-degraded .mobile-status-dot {
-            background: var(--warning-color);
-        }
-
-        .mobile-status-outage .mobile-status-dot {
-            background: var(--error-color);
-        }
-
-        .mobile-incidents-section {
-            margin-bottom: 30px;
-        }
-
-        .mobile-incident-item {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 10px;
-        }
-
-        .mobile-incident-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .mobile-incident-title {
-            font-weight: 600;
-            font-size: 1rem;
-        }
-
-        .mobile-incident-date {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        .mobile-incident-description {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            line-height: 1.5;
         }
 
         .mobile-footer {
-            background: var(--bg-secondary);
-            border-top: 1px solid var(--border-color);
-            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 30px 20px;
             text-align: center;
-            color: var(--text-muted);
-            font-size: 0.9rem;
+            margin-top: 60px;
         }
 
-        .mobile-footer a {
-            color: var(--primary-green);
+        .mobile-footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .mobile-footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .mobile-footer-links a {
+            color: var(--text-secondary);
             text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .mobile-footer-links a:hover {
+            color: var(--primary-green);
+        }
+
+        .mobile-footer-text {
+            color: var(--text-muted);
+            font-size: 0.9rem;
         }
 
         /* Animations */
         .mobile-fade-in {
             opacity: 0;
-            animation: fadeInUp 0.6s ease forwards;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease forwards;
         }
 
-        .mobile-animate-delay-1 {
-            animation-delay: 0.2s;
-        }
-
-        .mobile-animate-delay-2 {
-            animation-delay: 0.4s;
+        .mobile-bounce-in {
+            opacity: 0;
+            transform: scale(0.8);
+            animation: bounceIn 0.8s ease forwards;
         }
 
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
 
-        /* Mobile Responsive */
-        @media (max-width: 768px) {
-            .menu-toggle {
-                display: block;
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.05);
+            }
+            70% {
+                transform: scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
             }
         }
+
+        .mobile-animate-delay-1 { animation-delay: 0.2s; }
+        .mobile-animate-delay-2 { animation-delay: 0.4s; }
+        .mobile-animate-delay-3 { animation-delay: 0.6s; }
+        .mobile-animate-delay-4 { animation-delay: 0.8s; }
     </style>
 </head>
 <body>
-    <header class="mobile-status-header">
-        <nav class="mobile-status-nav">
-            <a href="/mobile" class="mobile-status-logo">
+    <!-- Mobile Header -->
+    <header class="mobile-header">
+        <div class="mobile-header-content">
+            <div class="mobile-logo">
                 <img src="on timely official logo.svg" alt="OnTimely Logo">
-                <h1>OnTimely</h1>
-            </a>
+            </div>
             <button class="menu-toggle" id="menuToggle">☰</button>
-        </nav>
+        </div>
     </header>
 
     <!-- Mobile Full Screen Menu -->
@@ -442,118 +550,106 @@
         </div>
     </div>
 
-    <main class="mobile-status-container">
-        <!-- Status Overview -->
-        <section class="mobile-status-overview mobile-fade-in">
-            <h1 class="mobile-status-title">System Status</h1>
-            <p class="mobile-status-subtitle">Real-time status of all OnTimely services</p>
-            <div class="mobile-status-indicator mobile-status-operational">
-                <div class="mobile-status-dot"></div>
-                <span class="mobile-status-indicator-text">All Systems Operational</span>
-            </div>
-        </section>
+    <!-- Main Content -->
+    <main class="mobile-main">
+        <div class="mobile-status-container">
+            <h1 class="mobile-status-title mobile-fade-in">System Status</h1>
+            <p class="mobile-status-subtitle mobile-fade-in mobile-animate-delay-1">Real-time monitoring of OnTimely services</p>
 
-        <!-- Services Status -->
-        <section class="mobile-services-section mobile-fade-in mobile-animate-delay-1">
-            <h2 class="mobile-section-title">Services</h2>
-            
-            <div class="mobile-service-item">
-                <div class="mobile-service-info">
-                    <div class="mobile-service-name">API Services</div>
-                    <div class="mobile-service-description">Core event management APIs</div>
-                </div>
-                <div class="mobile-service-status mobile-status-operational">
+            <!-- Overall Status -->
+            <div class="mobile-overall-status mobile-fade-in mobile-animate-delay-2">
+                <div class="mobile-status-indicator">
                     <div class="mobile-status-dot"></div>
-                    <span class="mobile-status-indicator-text">Operational</span>
+                    <span class="mobile-status-text">All Systems Operational</span>
                 </div>
+                <p class="mobile-status-description">All services are running normally. No incidents reported.</p>
             </div>
 
-            <div class="mobile-service-item">
-                <div class="mobile-service-info">
-                    <div class="mobile-service-name">Database</div>
-                    <div class="mobile-service-description">Primary data storage</div>
+            <!-- Services Status -->
+            <div class="mobile-services-section">
+                <h2 class="mobile-services-title mobile-fade-in mobile-animate-delay-3">Service Status</h2>
+                
+                <div class="mobile-service-item mobile-fade-in mobile-animate-delay-4">
+                    <div class="mobile-service-info">
+                        <div class="mobile-service-status"></div>
+                        <div>
+                            <div class="mobile-service-name">API Services</div>
+                            <div class="mobile-service-uptime">99.9% uptime</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="mobile-service-status mobile-status-operational">
-                    <div class="mobile-status-dot"></div>
-                    <span class="mobile-status-indicator-text">Operational</span>
-                </div>
-            </div>
 
-            <div class="mobile-service-item">
-                <div class="mobile-service-info">
-                    <div class="mobile-service-name">Mobile App</div>
-                    <div class="mobile-service-description">iOS and Android applications</div>
+                <div class="mobile-service-item mobile-fade-in mobile-animate-delay-4">
+                    <div class="mobile-service-info">
+                        <div class="mobile-service-status"></div>
+                        <div>
+                            <div class="mobile-service-name">Database</div>
+                            <div class="mobile-service-uptime">99.9% uptime</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="mobile-service-status mobile-status-operational">
-                    <div class="mobile-status-dot"></div>
-                    <span class="mobile-status-indicator-text">Operational</span>
-                </div>
-            </div>
 
-            <div class="mobile-service-item">
-                <div class="mobile-service-info">
-                    <div class="mobile-service-name">Web Dashboard</div>
-                    <div class="mobile-service-description">Admin and guest portals</div>
+                <div class="mobile-service-item mobile-fade-in mobile-animate-delay-4">
+                    <div class="mobile-service-info">
+                        <div class="mobile-service-status"></div>
+                        <div>
+                            <div class="mobile-service-name">Mobile App</div>
+                            <div class="mobile-service-uptime">99.9% uptime</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="mobile-service-status mobile-status-operational">
-                    <div class="mobile-status-dot"></div>
-                    <span class="mobile-status-indicator-text">Operational</span>
-                </div>
-            </div>
 
-            <div class="mobile-service-item">
-                <div class="mobile-service-info">
-                    <div class="mobile-service-name">Push Notifications</div>
-                    <div class="mobile-service-description">Real-time guest notifications</div>
+                <div class="mobile-service-item mobile-fade-in mobile-animate-delay-4">
+                    <div class="mobile-service-info">
+                        <div class="mobile-service-status"></div>
+                        <div>
+                            <div class="mobile-service-name">Web Dashboard</div>
+                            <div class="mobile-service-uptime">99.9% uptime</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="mobile-service-status mobile-status-operational">
-                    <div class="mobile-status-dot"></div>
-                    <span class="mobile-status-indicator-text">Operational</span>
-                </div>
-            </div>
-        </section>
 
-        <!-- Recent Incidents -->
-        <section class="mobile-incidents-section mobile-fade-in mobile-animate-delay-2">
-            <h2 class="mobile-section-title">Recent Incidents</h2>
-            
-            <div class="mobile-incident-item">
-                <div class="mobile-incident-header">
-                    <div class="mobile-incident-title">Scheduled Maintenance</div>
-                    <div class="mobile-incident-date">Dec 15, 2024</div>
+                <div class="mobile-service-item mobile-fade-in mobile-animate-delay-4">
+                    <div class="mobile-service-info">
+                        <div class="mobile-service-status"></div>
+                        <div>
+                            <div class="mobile-service-name">Real-time Chat</div>
+                            <div class="mobile-service-uptime">99.9% uptime</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="mobile-incident-description">
-                    Planned maintenance window completed successfully. All services restored to full operational status.
-                </div>
-            </div>
 
-            <div class="mobile-incident-item">
-                <div class="mobile-incident-header">
-                    <div class="mobile-incident-title">API Performance Improvement</div>
-                    <div class="mobile-incident-date">Dec 10, 2024</div>
-                </div>
-                <div class="mobile-incident-description">
-                    Implemented performance optimizations for event creation and guest management APIs.
+                <div class="mobile-service-item mobile-fade-in mobile-animate-delay-4">
+                    <div class="mobile-service-info">
+                        <div class="mobile-service-status"></div>
+                        <div>
+                            <div class="mobile-service-name">File Storage</div>
+                            <div class="mobile-service-uptime">99.9% uptime</div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </section>
+        </div>
+
+        <!-- Footer -->
+        <footer class="mobile-footer mobile-fade-in mobile-animate-delay-4">
+            <div class="mobile-footer-content">
+                <div class="mobile-footer-links">
+                    <a href="/">Home</a>
+                    <a href="/about">About</a>
+                    <a href="/help">Help</a>
+                    <a href="/status">Status</a>
+                    <a href="/#features">Features</a>
+                    <a href="/#pricing">Pricing</a>
+                    <a href="/#contact">Contact</a>
+                </div>
+                <p class="mobile-footer-text">© 2024 OnTimely. All rights reserved.</p>
+            </div>
+        </footer>
     </main>
 
-    <footer class="mobile-footer">
-        <p>Last updated: <span id="lastUpdated"></span></p>
-        <p>For real-time updates, follow us on <a href="#">Twitter</a></p>
-    </footer>
-
     <script>
-        // Update last updated time
-        document.getElementById('lastUpdated').textContent = new Date().toLocaleString();
-        
-        // Auto-refresh every 5 minutes
-        setInterval(() => {
-            location.reload();
-        }, 300000);
-
-        // Mobile menu toggle functionality
+        // Mobile menu functionality
         const menuToggle = document.getElementById('menuToggle');
         const mobileMenu = document.getElementById('mobileMenu');
         const mobileMenuClose = document.getElementById('mobileMenuClose');
@@ -581,8 +677,8 @@
             });
 
             // Close menu when clicking outside
-            mobileMenu.addEventListener('click', (e) => {
-                if (e.target === mobileMenu) {
+            document.addEventListener('click', (e) => {
+                if (!mobileMenu.contains(e.target) && !menuToggle.contains(e.target)) {
                     mobileMenu.classList.remove('active');
                     document.body.style.overflow = ''; // Restore scrolling
                 }
