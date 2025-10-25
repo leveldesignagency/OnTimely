@@ -425,8 +425,9 @@
 
         /* Event Management Section */
         .mobile-event-management {
-            padding: 60px 20px;
+            padding: 40px 20px 60px;
             text-align: center;
+            position: relative;
         }
 
         .mobile-event-management h2 {
@@ -434,6 +435,7 @@
             font-weight: 800;
             line-height: 0.9;
             margin-bottom: 15px;
+            margin-top: 20px;
             text-transform: uppercase;
             background: linear-gradient(135deg, var(--text-primary), var(--primary-green));
             -webkit-background-clip: text;
@@ -446,6 +448,17 @@
             margin-bottom: 30px;
             font-size: 1rem;
             line-height: 1.6;
+        }
+
+        .mobile-event-management .mobile-section-image {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+            opacity: 0.3;
+            max-width: 500px;
+            width: 80%;
         }
 
         /* Create Event Section */
