@@ -1,29 +1,24 @@
-// Client-side function to submit form responses
+// Client-side function to submit form responses via Vercel API
 async function submitFormResponse(token, email, responses) {
   try {
-    // Real Supabase credentials
-    const supabaseUrl = 'https://ijsktwmevnqgzwwuggkf.supabase.co';
-    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlqc2t0d21ldm5xZ3p3d3VnZ2tmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA3MDU4MTYsImV4cCI6MjA2NjI4MTgxNn0.w4eBL4hOZoAOo33ZXX-lSqQmIuSoP3fBEO1lBlpIRNw';
+    // Use Vercel API endpoint instead of direct Supabase call
+    const apiUrl = '/api/submit-form';
     
-    // Call Supabase RPC function to submit form and create guest
-    const response = await fetch(`${supabaseUrl}/rest/v1/rpc/submit_form_and_create_guest`, {
+    const response = await fetch(apiUrl, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        'apikey': supabaseKey,
-        'Authorization': `Bearer ${supabaseKey}`
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        p_token: token,
-        p_email: email,
-        p_responses: responses
+        token: token,
+        responses: responses
       })
     });
 
     if (!response.ok) {
-      const errorText = await response.text();
-      console.error('Supabase response error:', errorText);
-      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      const errorData = await response.json().catch(() => ({ error: response.statusText }));
+      console.error('API response error:', errorData);
+      throw new Error(errorData.error || `HTTP ${response.status}: ${response.statusText}`);
     }
 
     const result = await response.json();
@@ -32,6 +27,6 @@ async function submitFormResponse(token, email, responses) {
 
   } catch (error) {
     console.error('Submit form error:', error);
-    throw new Error('Failed to submit form: ' + error.message);
+    throw new Error('Failed to submit form: ' + (error.message || 'Unknown error'));
   }
-} 
+}
