@@ -13,6 +13,7 @@
     { "src": "/set-initial-password", "dest": "/website/set-initial-password.html" },
     { "src": "/guest-success-email-confirmed", "dest": "/guest-success-email-confirmed.html" },
     { "src": "/config.js", "dest": "/website/config.js" },
+    { "src": "/website/(.*\\.(js|css))", "dest": "/website/$1" },
     { "src": "/(.*\\.(png|svg|mp4|ico|jpg|jpeg|gif|webp))", "dest": "/website/$1" },
     { "src": "/api/(.*)", "dest": "/api/$1" },
     { "src": "/(.*)", "dest": "/website/index.html" }
