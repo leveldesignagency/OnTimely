@@ -2,7 +2,8 @@
   "routes": [
     { "src": "/api/(.*)", "dest": "/api/$1" },
     { "src": "/website/(.*\\.(js|css))", "dest": "/website/$1" },
-    { "src": "/(.*\\.(png|svg|mp4|ico|jpg|jpeg|gif|webp|js|css))", "dest": "/website/$1" },
+    { "src": "/website/(.*\\.(png|svg|mp4|ico|jpg|jpeg|gif|webp))", "dest": "/website/$1" },
+    { "src": "/config.js", "dest": "/website/config.js" },
     { "src": "/", "dest": "/website/index.html" },
     { "src": "/mobile", "dest": "/website/mobile.html" },
     { "src": "/mobile/status", "dest": "/website/mobile-status.html" },
@@ -15,7 +16,7 @@
     { "src": "/confirm-account", "dest": "/website/confirm-account.html" },
     { "src": "/set-initial-password", "dest": "/website/set-initial-password.html" },
     { "src": "/guest-success-email-confirmed", "dest": "/guest-success-email-confirmed.html" },
-    { "src": "/config.js", "dest": "/website/config.js" },
+    { "src": "/(.*\\.(png|svg|mp4|ico|jpg|jpeg|gif|webp))", "dest": "/website/$1" },
     { "src": "/(.*)", "dest": "/website/index.html" }
   ]
 } 
