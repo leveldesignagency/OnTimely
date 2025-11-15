@@ -56,11 +56,10 @@ module.exports = async function handler(req, res) {
       ? `https://ontimely.co.uk/set-initial-password?token=${encodeURIComponent(email)}&type=recovery&mobile=true`
       : `https://ontimely.co.uk/set-initial-password?token=${encodeURIComponent(email)}&type=recovery`;
 
-    // Call the custom email API
-    // Use the same domain as the request (ontimely.co.uk) for the email API
-    const emailApiUrl = process.env.EMAIL_API_URL || 'https://ontimely.co.uk/api/send-account-confirmation-email';
+    // Call the custom password reset email API directly (like desktop app does)
+    const emailApiUrl = process.env.EMAIL_API_URL || 'https://ontimely.co.uk/api/send-password-reset-email';
     
-    console.log('Calling email API:', emailApiUrl);
+    console.log('📧 Calling password reset email API:', emailApiUrl);
     const emailResponse = await fetch(emailApiUrl, {
       method: 'POST',
       headers: {
@@ -69,8 +68,7 @@ module.exports = async function handler(req, res) {
       body: JSON.stringify({
         email: email.toLowerCase().trim(),
         name: userName,
-        companyName: undefined,
-        confirmationUrl: resetUrl
+        resetUrl: resetUrl
       })
     });
 
