@@ -1,6 +1,6 @@
 const { createClient } = require('@supabase/supabase-js')
 
-module.exports = async function handler(req, res) {
+module.exports = async (req, res) => {
   // Enable CORS (needed because called from dashboard.ontimely.co.uk)
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
@@ -12,7 +12,8 @@ module.exports = async function handler(req, res) {
   }
 
   if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
+    res.setHeader('Allow', 'POST');
+    return res.status(405).end('Method Not Allowed');
   }
 
   const supabaseUrl = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL
