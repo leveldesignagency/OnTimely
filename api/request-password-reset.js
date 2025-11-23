@@ -1,19 +1,18 @@
 const { createClient } = require('@supabase/supabase-js')
 
-module.exports = async function handler(req, res) {
+module.exports = async (req, res) => {
   // Enable CORS (needed because called from dashboard.ontimely.co.uk)
   res.setHeader('Access-Control-Allow-Origin', '*')
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS')
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
 
   if (req.method === 'OPTIONS') {
-    res.status(200).end()
-    return
+    return res.status(200).end()
   }
 
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST')
-    return res.status(405).end('Method Not Allowed')
+    return res.status(405).json({ error: 'Method Not Allowed' })
   }
 
   const supabaseUrl = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL
@@ -60,8 +59,8 @@ module.exports = async function handler(req, res) {
       : `https://ontimely.co.uk/set-initial-password?token=${encodeURIComponent(email)}&type=recovery`
 
     // Call the custom password reset email API
-    // Try dashboard.ontimely.co.uk first, fallback to ontimely.co.uk
-    let emailApiUrl = 'https://dashboard.ontimely.co.uk/api/send-password-reset-email'
+    // Use ontimely.co.uk (same repo)
+    let emailApiUrl = 'https://ontimely.co.uk/api/send-password-reset-email'
     
     console.log('📧 Calling password reset email API:', emailApiUrl)
     let emailResponse = await fetch(emailApiUrl, {
@@ -76,22 +75,6 @@ module.exports = async function handler(req, res) {
       })
     })
 
-    // If dashboard API fails, try ontimely.co.uk
-    if (!emailResponse.ok) {
-      console.log('Dashboard API failed, trying ontimely.co.uk')
-      emailApiUrl = 'https://ontimely.co.uk/api/send-password-reset-email'
-      emailResponse = await fetch(emailApiUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: email.toLowerCase().trim(),
-          name: userName,
-          resetUrl: resetUrl
-        })
-      })
-    }
 
     if (!emailResponse.ok) {
       const errorData = await emailResponse.json().catch(() => ({}))
