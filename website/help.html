@@ -1707,18 +1707,18 @@
             const chatMessages = document.getElementById('chatMessages');
 
             if (chatClose) {
-                chatClose.addEventListener('click', () => {
-                    chatModal.classList.remove('active');
-                });
+            chatClose.addEventListener('click', () => {
+                chatModal.classList.remove('active');
+            });
             }
 
             if (chatInput) {
-                chatInput.addEventListener('keypress', (e) => {
-                    if (e.key === 'Enter' && !e.shiftKey) {
-                        e.preventDefault();
-                        sendMessage();
-                    }
-                });
+            chatInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage();
+                }
+            });
             }
 
             async function sendMessage() {
