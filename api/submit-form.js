@@ -17,17 +17,10 @@ module.exports = async function handler(req, res) {
       return res.status(400).json({ error: "Token and responses are required" });
     }
 
-    // Get email directly from form responses - it should be a field in the form
-    const email = responses.email || responses.Email || responses.emailAddress || null;
-    
-    if (!email) {
-      return res.status(400).json({ error: "Email is required in form responses" });
-    }
-
+    // Email comes from form_recipients table (via token), not from form responses
     // Use submit_form_and_create_guest to create guest record when form is submitted
     const { data, error } = await supabase.rpc("submit_form_and_create_guest", {
       p_token: token,
-      p_email: email,
       p_responses: responses
     });
 
