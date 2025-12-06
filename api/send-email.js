@@ -29,92 +29,240 @@ module.exports = async function handler(req, res) {
       const appDownloadUrl = 'https://guest.ontimely.co.uk/app-download';
       
       const loginEmailHtml = `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 24px; background-color: #f8f9fa;">
-          <div style="background-color: white; padding: 32px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-            
-            <!-- Header -->
-            <div style="text-align: center; margin-bottom: 32px;">
-              <h1 style="color: #2563eb; margin: 0 0 8px; font-size: 28px;">Welcome to Timely</h1>
-              <h2 style="color: #374151; margin: 0; font-size: 20px; font-weight: normal;">${eventName}</h2>
-            </div>
-            
-            <!-- Greeting -->
-            <p style="color: #374151; font-size: 16px; line-height: 1.6; margin: 0 0 24px;">
-              Hi ${guestName},
-            </p>
-            
-            <p style="color: #374151; font-size: 16px; line-height: 1.6; margin: 0 0 24px;">
-              You've been invited to join <strong>${eventName}</strong> as a guest. 
-              Your account is ready! Download the Timely mobile app and log in with your credentials below.
-            </p>
-            
-            <!-- Download App Button -->
-            <div style="text-align: center; margin: 32px 0;">
-              <a href="${appDownloadUrl}" 
-                 style="display: inline-block; background-color: #2563eb; color: white; 
-                        padding: 16px 32px; text-decoration: none; border-radius: 8px; 
-                        font-weight: bold; font-size: 16px;">
-                Download App & Get Started
-              </a>
-            </div>
-            
-            <!-- Login Details -->
-            <div style="background-color: #f3f4f6; padding: 24px; border-radius: 8px; margin: 24px 0;">
-              <h3 style="color: #374151; margin: 0 0 16px; font-size: 18px;">Your Login Details</h3>
-              <div style="margin-bottom: 12px;">
-                <strong style="color: #374151;">Email:</strong> 
-                <span style="color: #6b7280; font-family: monospace;">${email}</span>
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <style>
+            * { margin: 0; padding: 0; box-sizing: border-box; }
+            body { 
+              font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+              background-color: #1a1a1a;
+              color: #e5e7eb;
+              line-height: 1.6;
+              padding: 40px 20px;
+            }
+            .email-container {
+              max-width: 600px;
+              margin: 0 auto;
+              background-color: #2a2a2a;
+              border: 1px solid rgba(255, 255, 255, 0.1);
+              border-radius: 16px;
+              box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 8px 32px rgba(0, 0, 0, 0.4);
+              overflow: hidden;
+            }
+            .header {
+              background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+              padding: 40px;
+              text-align: center;
+              border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            .avatar-placeholder {
+              width: 80px;
+              height: 80px;
+              margin: 0 auto 20px;
+              background-color: #22c55e;
+              border-radius: 50%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              border: 3px solid rgba(34, 197, 94, 0.3);
+              box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2), 0 4px 12px rgba(34, 197, 94, 0.2);
+            }
+            .avatar-placeholder img {
+              width: 100%;
+              height: 100%;
+              border-radius: 50%;
+              object-fit: cover;
+            }
+            .header h1 {
+              color: #e5e7eb;
+              font-size: 28px;
+              font-weight: 700;
+              margin-bottom: 8px;
+            }
+            .header h2 {
+              color: #22c55e;
+              font-size: 20px;
+              font-weight: 500;
+            }
+            .content {
+              padding: 40px;
+            }
+            .content p {
+              color: #cbd5e1;
+              font-size: 16px;
+              margin-bottom: 16px;
+            }
+            .credentials-box {
+              background-color: rgba(34, 197, 94, 0.1);
+              border: 1px solid rgba(34, 197, 94, 0.2);
+              border-radius: 12px;
+              padding: 24px;
+              margin: 24px 0;
+            }
+            .credentials-box h3 {
+              color: #22c55e;
+              margin: 0 0 16px;
+              font-size: 18px;
+              font-weight: 600;
+            }
+            .credential-row {
+              margin-bottom: 16px;
+            }
+            .credential-row strong {
+              color: #cbd5e1;
+              display: block;
+              margin-bottom: 4px;
+              font-size: 14px;
+            }
+            .credential-value {
+              color: #e5e7eb;
+              font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+              background-color: rgba(255, 255, 255, 0.05);
+              padding: 10px 14px;
+              border-radius: 6px;
+              border: 1px solid rgba(255, 255, 255, 0.1);
+              display: inline-block;
+            }
+            .app-download-section {
+              background-color: rgba(34, 197, 94, 0.1);
+              border: 1px solid rgba(34, 197, 94, 0.2);
+              border-radius: 12px;
+              padding: 24px;
+              margin: 24px 0;
+              text-align: center;
+            }
+            .app-download-section h3 {
+              color: #22c55e;
+              margin: 0 0 20px;
+              font-size: 18px;
+              font-weight: 600;
+            }
+            .app-links {
+              display: flex;
+              justify-content: center;
+              gap: 16px;
+              flex-wrap: wrap;
+            }
+            .app-link {
+              display: inline-block;
+              padding: 12px 20px;
+              text-decoration: none;
+              border-radius: 10px;
+              font-weight: 600;
+              font-size: 14px;
+            }
+            .app-link.ios {
+              background-color: #000;
+              color: white;
+            }
+            .app-link.android {
+              background: linear-gradient(135deg, #22c55e, #16a34a);
+              color: #0b1411;
+            }
+            .instructions {
+              background-color: rgba(34, 197, 94, 0.1);
+              border: 1px solid rgba(34, 197, 94, 0.2);
+              border-left: 4px solid #22c55e;
+              padding: 20px;
+              border-radius: 8px;
+              margin: 24px 0;
+            }
+            .instructions h4 {
+              color: #22c55e;
+              margin: 0 0 12px;
+              font-size: 16px;
+              font-weight: 600;
+            }
+            .instructions ol {
+              margin: 0;
+              padding-left: 20px;
+            }
+            .instructions li {
+              color: #cbd5e1;
+              margin-bottom: 8px;
+              font-size: 15px;
+            }
+            .footer {
+              background-color: #1a1a1a;
+              padding: 32px 40px;
+              text-align: center;
+              border-top: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            .footer p {
+              color: #9ca3af;
+              font-size: 14px;
+              margin-bottom: 8px;
+            }
+            @media only screen and (max-width: 600px) {
+              body { padding: 20px 10px; }
+              .email-container { border-radius: 12px; }
+              .header, .content, .footer { padding: 30px 20px; text-align: center; }
+              .header h1 { font-size: 24px; }
+              .content p { text-align: center; font-size: 15px; }
+              .credentials-box { text-align: center; }
+              .app-links { flex-direction: column; align-items: center; }
+              .app-link { width: 100%; max-width: 280px; }
+              .instructions { text-align: left; }
+            }
+          </style>
+        </head>
+        <body>
+          <div class="email-container">
+            <div class="header">
+              <div class="avatar-placeholder">
+                <img src="data:image/png;base64,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" alt="OnTimely Logo" style="width: 100%; height: 100%; border-radius: 50%; object-fit: contain; padding: 8px;" />
               </div>
-              <div style="margin-bottom: 12px;">
-                <strong style="color: #374151;">Password:</strong> 
-                <span style="color: #6b7280; font-family: monospace; background-color: #e5e7eb; padding: 4px 8px; border-radius: 4px;">${password}</span>
+              <h1>Welcome to Timely</h1>
+              <h2>${eventName}</h2>
+            </div>
+            
+            <div class="content">
+              <p>Hi ${guestName},</p>
+              <p>You've been invited to join <strong style="color: #22c55e;">${eventName}</strong> as a guest. Your account is ready! Download the Timely mobile app and log in with your credentials below.</p>
+              
+              <div class="credentials-box">
+                <h3>Your Login Details</h3>
+                <div class="credential-row">
+                  <strong>Email:</strong>
+                  <span class="credential-value">${email}</span>
+                </div>
+                <div class="credential-row">
+                  <strong>Password:</strong>
+                  <span class="credential-value" style="background-color: rgba(34, 197, 94, 0.2); border-color: rgba(34, 197, 94, 0.3);">${password}</span>
+                </div>
+                <p style="color: #9ca3af; font-size: 14px; margin: 16px 0 0;">
+                  Use these credentials to log into the Timely mobile app. Your account is ready to use!
+                </p>
               </div>
-              <p style="color: #6b7280; font-size: 14px; margin: 16px 0 0;">
-                Use these credentials to log into the Timely mobile app. Your account is ready to use!
-              </p>
-            </div>
-            
-            <!-- App Download Links -->
-            <div style="text-align: center; margin: 32px 0;">
-              <h3 style="color: #374151; margin: 0 0 16px; font-size: 18px;">Download the App</h3>
-              <div style="display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;">
-                <a href="https://apps.apple.com/app/timely" 
-                   style="display: inline-block; background-color: #000; color: white; 
-                          padding: 12px 24px; text-decoration: none; border-radius: 8px; 
-                          font-weight: bold;">
-                  📱 iOS App
-                </a>
-                <a href="https://play.google.com/store/apps/details?id=com.ontimely.app" 
-                   style="display: inline-block; background-color: #01875f; color: white; 
-                          padding: 12px 24px; text-decoration: none; border-radius: 8px; 
-                          font-weight: bold;">
-                  🤖 Android App
-                </a>
+              
+              <div class="app-download-section">
+                <h3>Download the App</h3>
+                <div class="app-links">
+                  <a href="https://apps.apple.com/app/timely" class="app-link ios">📱 iOS App</a>
+                  <a href="https://play.google.com/store/apps/details?id=com.ontimely.app" class="app-link android">🤖 Android App</a>
+                </div>
+              </div>
+              
+              <div class="instructions">
+                <h4>Next Steps:</h4>
+                <ol>
+                  <li>Download the Timely mobile app using the links above</li>
+                  <li>Open the app and log in with your credentials</li>
+                  <li>Enjoy your event experience!</li>
+                </ol>
               </div>
             </div>
             
-            <!-- Instructions -->
-            <div style="background-color: #fef3c7; border-left: 4px solid #f59e0b; padding: 16px; margin: 24px 0;">
-              <h4 style="color: #92400e; margin: 0 0 8px; font-size: 16px;">Next Steps:</h4>
-              <ol style="color: #92400e; margin: 0; padding-left: 20px;">
-                <li>Download the Timely mobile app using the links above</li>
-                <li>Open the app and log in with your credentials</li>
-                <li>Enjoy your event experience!</li>
-              </ol>
+            <div class="footer">
+              <p>If you have any questions, please contact your event organizer.</p>
+              <p>This email was sent by Timely Event Management System</p>
             </div>
-            
-            <!-- Footer -->
-            <div style="text-align: center; margin-top: 32px; padding-top: 24px; border-top: 1px solid #e5e7eb;">
-              <p style="color: #6b7280; font-size: 14px; margin: 0;">
-                If you have any questions, please contact your event organizer.
-              </p>
-              <p style="color: #9ca3af; font-size: 12px; margin: 8px 0 0;">
-                This email was sent by Timely Event Management System
-              </p>
-            </div>
-            
           </div>
-        </div>
+        </body>
+        </html>
       `;
 
       const { data, error } = await resend.emails.send({
@@ -138,12 +286,149 @@ module.exports = async function handler(req, res) {
     }
 
     const formEmailHtml = `
-      <div style="font-family: Arial, sans-serif; padding:24px;">
-        <h2 style="margin:0 0 8px;">${eventName}</h2>
-        <p style="margin:0 0 14px;">Please complete your form using the link below:</p>
-        <p style="margin:0 0 18px;"><a href="${link}" target="_blank">${link}</a></p>
-        <p style="font-size:12px;color:#666;margin:0;">If you cannot click the link, copy and paste it into your browser.</p>
-      </div>
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+          * { margin: 0; padding: 0; box-sizing: border-box; }
+          body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #000000;
+            color: #ffffff;
+            line-height: 1.6;
+            padding: 0;
+          }
+          .email-wrapper {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #000000;
+            position: relative;
+          }
+          .logo-container {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 80px;
+            height: 80px;
+          }
+          .logo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+          }
+          .content-area {
+            padding: 60px 40px 40px;
+            text-align: left;
+          }
+          .event-title {
+            color: #ffffff;
+            font-size: 32px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 24px;
+            line-height: 1.2;
+          }
+          .content-text {
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 32px;
+            line-height: 1.6;
+          }
+          .button-container {
+            margin: 32px 0;
+          }
+          .button {
+            display: inline-block;
+            background-color: #22c55e;
+            color: #000000;
+            padding: 16px 32px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+          }
+          .link-fallback {
+            border: 2px solid #22c55e;
+            padding: 20px;
+            margin-top: 32px;
+          }
+          .link-fallback-text {
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            line-height: 1.5;
+          }
+          .link-fallback-url {
+            color: #ffffff;
+            font-size: 12px;
+            font-weight: 600;
+            word-break: break-all;
+            line-height: 1.6;
+          }
+          @media only screen and (max-width: 600px) {
+            .email-wrapper {
+              padding: 20px;
+            }
+            .logo-container {
+              top: 10px;
+              right: 10px;
+              width: 60px;
+              height: 60px;
+            }
+            .content-area {
+              padding: 80px 20px 20px;
+              text-align: center;
+            }
+            .event-title {
+              font-size: 24px;
+              text-align: center;
+            }
+            .content-text {
+              text-align: center;
+              font-size: 14px;
+            }
+            .button-container {
+              text-align: center;
+            }
+            .button {
+              display: block;
+              width: 100%;
+              max-width: 280px;
+              margin: 0 auto;
+            }
+            .link-fallback {
+              text-align: center;
+            }
+          }
+        </style>
+      </head>
+      <body>
+        <div class="email-wrapper">
+          <div class="logo-container">
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAIAAAF2dFVsAAAAAXNSR0IArs4c6QAAAHhlWElmTU0AKgAAAAgABAEaAAUAAAABAAAAPgEbAAUAAAABAAAARgEoAAMAAAABAAIAAIdpAAQAAAABAAAATgAAAAAAAAEsAAAAAQAAASwAAAABAAOgAQADAAAAAQABAACgAgAEAAAAAQAAAFCgAwAEAAAAAQAAAFAAAAAAZIwIUwAAAAlwSFlzAAAuIwAALiMBeKU/dgAACk1JREFUeAHtW1tsHFcZ/s/MXr2+xnbsOHVwsB2cuARaWkQV6hDgIUhU4iG8VKoqWqkSDwheeOCN8MQLqEgIHuAFofKAKiSKKFKrNGrVVlxCoyRuAqS51XZa39b2er2X2Z05fGdmd3bGe3Z9dj2+EPZotHvmP//l/P+5/+cfou0k3Ud8sIu62qhoUdF04L5i9sNz7HOfpN4EXZtxikNe6vjkKOk6f2gw+7t3HbjmLc5O3+KrG7mPFlygrxhQ8+I1twyZzcWF8T5v8V7mfWahoQOUiFI659aIVXI/fQbm5Csb9NuLNLvmwCvUkWNHolMnQ1pIi8fM9247xRW9C8NdPJ0rzC8b3VGXpc/m5oUrls4pWmHpKy6M9hLn9PGqS/2/mqmY1KsBe/FZMorECR0WlqJ7C3ThGs2ve3GQ99nELQvfWy3+/m0K6RQL0+oGMRZ+6gvGr193EZyMnLgw1EHfOxufHINk4/07psaNpdQmSrzKiUWbEFl35sm0+EaO2qNChapUg9jGM37+Z2LEPz1Mj4xUEQpAPWL+rakSjcXpD/+Q0reAu2YBed8W4jGzoGegb5gWLZRmj03VkhFrjP34aYGH5s0X+HKKpmfojeubKPFamWoqZY+PYiRUXpGzSouBDyh90SaPsL5ONtDN2qLa+BBrj4W/eYpikWpkefeM/eQ5NtgDbD67JGph8cKfJN1TUm2rPZxbWMy8cQkKs/6u3OJSbnmJcoaqZGcA8qxNIBuMDiN5tUUZY3x+i2lWSmybmjHrur2kjgjlpUlKbGPqWvGtaZEbeVJKCWBNYtbVxp//kiDDom/PSiLvTxJr098+ENhOx0TfRNJlaH5GrbeWBR4UC/hnyPpaTQyxZ6ewNcaCLYYMBg6GTMHkuQJtZGkuSTfv09W5+jzc0spOzwXJM4+OsGemSCsPSyHYXhCwJmCsF4pi44R6GAat5+Uc/NCac4gfjbS8FZpZC31+nB3sFrOCs5g4cwvytuF4Ml18/bLxm4vSGXoTQ1XBgiykZ7/7KxaLCHEraQhjWEIxNadzLBLi69nQVz+DKW+TgFqvqoItxgvzS+wbj0E8K5ixc1PCsHYqvHfTnFtENUzT5JkMFqdawrxwVcGUiNBnR6AqEsf2E01bFswjOh8ddEr48nqtud1GqPwoC66Q2Csfds9maZPA0bOiZT5O1bzINfJlghrFcjD2B9hCWyVTUyZfESwnkEDVBXtGvKaZf79pjyfBkQ900IGEhHddkLpgH5tiCm1pQ1Cf3rinUj60Oi/Kgu8tulxYd4K+/qj7KjKohDOmnV9fmfylwbqePs6+/HBl/irxtDcdc8v8pbcprTRtyevSgrYsEIAFzp49W15fA+DWGIuW4MbstQ3slqm3YbzGSJVXJ4dtPEI97WUJ9tqAhcnZ4WLT00hqQDD7/lPU10GavaBh+TPtHbVR5Nk8rabpxizdWlL3uSp3rhe+Qv2dYjstll778eoHeF8ndUXUD+KqgtnJT3gFyfOJmNcJLccpQ1UFU0gT679zgCgTY08P5UsJxseD9lZLam0cDeuvXg2dOqFNPAQHlhAA/mhrpx54RYYR3PWFl98x//pvFdFqgsEJjqD/zOV/9gr8Z7Se5ZCKk0t3glucoRrpLLVFoz84p66xsqkdLdCT0Y3XcZMh9IUwAUY/T0R5KuOgKP4qawz+40OxX36bOU5wmBeC1zY4XHc4oEbDwoGZTCtKBZqaYKNodkasG3fogxnop0+OhI8eEjLiEZaI5l55t9Tq+YIVUz1wqwmGfk8cEz5/JE3nxaLIOMni1sRhBogwgUazyXLBFv9qgsEEfPGIjP1XPiraELfUwbDRtvpRFuxlZHGOdt1eakYwxwEV87OTGlDSV9NmBAtPTypbFozZw8dR8aUpwWLklBdBzJE9lTtERalAa0YwHFt8uawxjucH7KGlLtPGbEYwXADW7EpJELr35G4Jxsxs3f64JLhgMnayQW0FejMac6Te8gbIspjyUuitX+OCIemRo4THTWqOLRfdySgLdn08oPNOWz5+nD4qt70PLnlRXRb5j16m+FbDZi1D/7ovESIDqS4mlDHowlU2MSRWQLhrobT7IDYjZ/DXrtBL78hESGBjY2PKpga5YfIX/yJh0xRI1dRNMa9H1BJczzqBlrVMHag5azLL5SoxRjWRHqSCvfSv7ZUd92wwtRTeJQu0WniXDL1nYlotvGem3yXBjeynG6oSHMuIwDvcwxCU6ibhr7DdkPDcIA93IA56zoEApwH4U3D3Da/dWpY+TIq4hx1IO6DwkV723Blqj9vONr9LxqswVIX7E0dABFJDWxG5UiAE6uGI1Isrf40Wo7SSpdXGHJRbmihohQe72He+JqR6D7Nb1sKLgMYHLTztBYvgQcTdhxOu6MXZRj7oSevoQVFFx9dYp1r+hi85KUUntx+HED6zcIjgAg80BdrCCP1JbrA3b2g97ayzTXwQEI2wsF66JUK9K5W3x7CAuEPavsOwezjiaEQg+1LK6k7yu4vWzBL8h0FpHajCusZCIc2w8OkCi0Ss63PUFmP9ndZSSkSLiNswQxvo5otrwoMS0vhaRuvrwC/UZj0dIigZgViGiZ6sjR1ih/tZLGqmDbq/sl8VdltB0/jCqriMKZrFy7fCT58uvvpPnkyxgZ7Cm9Pa0AFrcU1/bFybHDbfep/Fo3jF5wVsuNe6cEVER/d3sbyhP37M5RdgJtAWdutlWtCNIVwxEdNPHLHuLehPfErMxlDji8cRXaYjwjusW1fvIvKbNvKst4ONHUJAmn76Yfs+KasdHXQ/KXK5BpIJWmFnlKKLtsVCT56g9jYWD1eCkJwr33LF9VPHS5eCm9yucMqmMhxDF2nL+a/MTfE/UIVxv9UR5mcmzPUsWTmaz9K8XQ27h4eODEZOjPjaTegpLGRcu10ki2Epxsxcmthws6Hxdp06IipBnYraAi1QhR2xWEvgVvUmXDOLrxScebikkLdcTOMR+27dr7BYlmToPtoGX3ZAYWkNhCaIXDB9Lexiil2KsrfapWoqs1sKQ1+Tc9xUQOeqhKIqmA2oAZYjq0EDVxhNKU1MqIqxXX1nAq1QVItOymwbwMAVrtEo0KdQxFemMoW5ODnslsaBK1zD+AhFwWVrbk1yqMBcze35uQZpsODAFa7RNRH9k81byaxkXcW3lD3x0oIcrHIyboErLBMCGD5e2MiLOPfqhB1YZOCBUxgrbSpjTX8oUQwDeKCd+Tdh1WYJCrIrLYydZiRMQ930whlJvbE+Y4MB546IPasx50nImgQFrbC7PfSOZaiEvdfh3np1lGoKJsGdhB3pQXs8Lt/l+NC2w44ZrKefQhmilZIbdOmWAmoDKEG3MBrqF6/xoR72/Bka7hPuKGwqVE48TgujVzvxnfig44+X6GY5gqYBjbZA9fa8LVCbLI7o6hG3YlsCj8eOJVyXBt3C1XUVCuygDtUC60OCHsP1pe2D0pbC+6ARdrQKrRbeUfPuA+b/dy3Mzp8/vw/svktVGB0d/S8gLeDzmw6+RAAAAABJRU5ErkJggg==" alt="OnTimely Logo" />
+          </div>
+          <div class="content-area">
+            <h1 class="event-title">${eventName}</h1>
+            <p class="content-text">Please complete your form using the link below:</p>
+            <div class="button-container">
+              <a href="${link}" target="_blank" class="button">Complete Your Form</a>
+            </div>
+            <div class="link-fallback">
+              <p class="link-fallback-text">If you cannot click the button, copy and paste this link into your browser:</p>
+              <p class="link-fallback-url">${link}</p>
+            </div>
+          </div>
+        </div>
+      </body>
+      </html>
     `;
 
     const { data, error } = await resend.emails.send({
