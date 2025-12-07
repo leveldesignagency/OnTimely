@@ -285,148 +285,64 @@ module.exports = async function handler(req, res) {
       return res.status(400).json({ error: "Missing required fields: emails[], link, eventName" });
     }
 
+    // Logo URL - hosted on CDN
+    const LOGO_URL = 'https://ontimely.co.uk/ontimely-logo-email.png';
+    
     const formEmailHtml = `
       <!DOCTYPE html>
       <html lang="en">
       <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <style>
-          * { margin: 0; padding: 0; box-sizing: border-box; }
-          body { 
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background-color: #000000;
-            color: #ffffff;
-            line-height: 1.6;
-            padding: 0;
-          }
-          .email-wrapper {
-            max-width: 600px;
-            margin: 0 auto;
-            background-color: #000000;
-            position: relative;
-          }
-          .logo-container {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 80px;
-            height: 80px;
-          }
-          .logo-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-          }
-          .content-area {
-            padding: 60px 40px 40px;
-            text-align: left;
-          }
-          .event-title {
-            color: #ffffff;
-            font-size: 32px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 24px;
-            line-height: 1.2;
-          }
-          .content-text {
-            color: #ffffff;
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 32px;
-            line-height: 1.6;
-          }
-          .button-container {
-            margin: 32px 0;
-          }
-          .button {
-            display: inline-block;
-            background-color: #22c55e;
-            color: #000000;
-            padding: 16px 32px;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 700;
-            font-size: 16px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-          }
-          .link-fallback {
-            border: 2px solid #22c55e;
-            padding: 20px;
-            margin-top: 32px;
-          }
-          .link-fallback-text {
-            color: #ffffff;
-            font-size: 14px;
-            font-weight: 700;
-            text-transform: uppercase;
-            margin-bottom: 12px;
-            line-height: 1.5;
-          }
-          .link-fallback-url {
-            color: #ffffff;
-            font-size: 12px;
-            font-weight: 600;
-            word-break: break-all;
-            line-height: 1.6;
-          }
-          @media only screen and (max-width: 600px) {
-            .email-wrapper {
-              padding: 20px;
-            }
-            .logo-container {
-              top: 10px;
-              right: 10px;
-              width: 60px;
-              height: 60px;
-            }
-            .content-area {
-              padding: 80px 20px 20px;
-              text-align: center;
-            }
-            .event-title {
-              font-size: 24px;
-              text-align: center;
-            }
-            .content-text {
-              text-align: center;
-              font-size: 14px;
-            }
-            .button-container {
-              text-align: center;
-            }
-            .button {
-              display: block;
-              width: 100%;
-              max-width: 280px;
-              margin: 0 auto;
-            }
-            .link-fallback {
-              text-align: center;
-            }
-          }
-        </style>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
       </head>
-      <body>
-        <div class="email-wrapper">
-          <div class="logo-container">
-            <img src="data:image/png;base64,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" alt="OnTimely Logo" />
-          </div>
-          <div class="content-area">
-            <h1 class="event-title">${eventName}</h1>
-            <p class="content-text">Please complete your form using the link below:</p>
-            <div class="button-container">
-              <a href="${link}" target="_blank" class="button">Complete Your Form</a>
-            </div>
-            <div class="link-fallback">
-              <p class="link-fallback-text">If you cannot click the button, copy and paste this link into your browser:</p>
-              <p class="link-fallback-url">${link}</p>
-            </div>
-          </div>
-        </div>
+      <body style="margin: 0; padding: 0; background-color: #000000; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;">
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #000000;">
+          <tr>
+            <td align="left" style="padding: 0;">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #000000;">
+                <!-- Logo Header -->
+                <tr>
+                  <td align="right" style="padding: 30px 40px 20px 40px;">
+                    <img src="${LOGO_URL}" alt="OnTimely Logo" width="80" height="80" style="display: block; max-width: 80px; height: auto;" />
+                  </td>
+                </tr>
+                <!-- Main Content -->
+                <tr>
+                  <td align="left" style="padding: 0 40px 60px 40px;">
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                      <tr>
+                        <td>
+                          <h1 style="margin: 0 0 30px 0; font-size: 48px; font-weight: 700; color: #ffffff; text-transform: uppercase; letter-spacing: 2px; line-height: 1.2;">${eventName}</h1>
+                          <p style="margin: 0 0 40px 0; font-size: 18px; font-weight: 600; color: #ffffff; line-height: 1.6;">Please complete your form using the link below:</p>
+                          
+                          <!-- Button -->
+                          <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 40px 0;">
+                            <tr>
+                              <td align="left">
+                                <a href="${link}" target="_blank" style="display: inline-block; background-color: #22c55e; color: #000000; text-decoration: none; padding: 18px 40px; border-radius: 8px; font-weight: 700; font-size: 16px; text-transform: uppercase; letter-spacing: 1px;">Complete Your Form</a>
+                              </td>
+                            </tr>
+                          </table>
+                          
+                          <!-- Link Fallback -->
+                          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: 40px 0; border: 2px solid #22c55e; border-radius: 8px;">
+                            <tr>
+                              <td style="padding: 30px;">
+                                <p style="margin: 0 0 15px 0; font-size: 14px; font-weight: 700; color: #ffffff; text-transform: uppercase; line-height: 1.5;">If you cannot click the button, copy and paste this link into your browser:</p>
+                                <p style="margin: 0; font-size: 12px; font-weight: 600; color: #ffffff; word-break: break-all; line-height: 1.6; font-family: monospace;">${link}</p>
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
       </body>
       </html>
     `;
