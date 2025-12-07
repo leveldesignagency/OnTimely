@@ -3,8 +3,9 @@ const { Resend } = require('resend');
 // Use your verified domain now that DNS is configured
 const FROM_EMAIL = 'noreply@ontimely.co.uk';
 
-// Logo URL - hosted on CDN
-const LOGO_URL = 'https://ontimely.co.uk/ontimely-logo-email.png';
+// Logo and Favicon URLs - hosted on CDN (Vercel automatically serves files from /website folder)
+const LOGO_URL = 'https://ontimely.co.uk/on-timely-official-logo-email.png'; // Logo in email top left
+const FAVICON_URL = 'https://ontimely.co.uk/ontimely-favicon-email.png'; // Email avatar/profile photo
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -46,6 +47,7 @@ export default async function handler(req, res) {
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <link rel="icon" type="image/x-icon" href="${FAVICON_URL}">
           </head>
           <body style="margin: 0; padding: 0; background-color: #000000; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;">
             <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #000000;">
@@ -54,8 +56,8 @@ export default async function handler(req, res) {
                   <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #000000;">
                     <!-- Logo Header -->
                     <tr>
-                      <td align="right" style="padding: 30px 40px 20px 40px;">
-                        <img src="${LOGO_URL}" alt="OnTimely Logo" width="80" height="80" style="display: block; max-width: 80px; height: auto;" />
+                      <td align="left" style="padding: 30px 40px 20px 40px;">
+                        <img src="${LOGO_URL}" alt="OnTimely Logo" width="120" height="auto" style="display: block; max-width: 120px; height: auto;" />
                       </td>
                     </tr>
                     <!-- Main Content -->
