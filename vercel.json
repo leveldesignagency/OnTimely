@@ -1,5 +1,7 @@
 {
   "routes": [
+    { "src": "/api/send-feedback-request", "dest": "/api/feedback" },
+    { "src": "/api/submit-feedback", "dest": "/api/feedback" },
     { "src": "/api/(.*)", "dest": "/api/$1" },
     { "src": "/website/(.*\\.(js|css))", "dest": "/website/$1" },
     { "src": "/website/(.*\\.(png|svg|mp4|ico|jpg|jpeg|gif|webp))", "dest": "/website/$1" },
