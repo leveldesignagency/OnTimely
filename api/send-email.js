@@ -223,38 +223,38 @@ module.exports = async function handler(req, res) {
             <div class="content">
               <p>Hi ${guestName},</p>
               <p>You've been invited to join <strong style="color: #22c55e;">${eventName}</strong> as a guest. Your account is ready! Download the Timely mobile app and log in with your credentials below.</p>
-              
+            
               <div class="credentials-box">
                 <h3>Your Login Details</h3>
                 <div class="credential-row">
                   <strong>Email:</strong>
                   <span class="credential-value">${email}</span>
-                </div>
+            </div>
                 <div class="credential-row">
                   <strong>Password:</strong>
                   <span class="credential-value" style="background-color: rgba(34, 197, 94, 0.2); border-color: rgba(34, 197, 94, 0.3);">${password}</span>
-                </div>
-                <p style="color: #9ca3af; font-size: 14px; margin: 16px 0 0;">
-                  Use these credentials to log into the Timely mobile app. Your account is ready to use!
-                </p>
               </div>
-              
+                <p style="color: #9ca3af; font-size: 14px; margin: 16px 0 0;">
+                Use these credentials to log into the Timely mobile app. Your account is ready to use!
+              </p>
+            </div>
+            
               <div class="app-download-section">
                 <h3>Download the App</h3>
                 <div class="app-links">
                   <a href="https://apps.apple.com/app/timely" class="app-link ios">📱 iOS App</a>
                   <a href="https://play.google.com/store/apps/details?id=com.ontimely.app" class="app-link android">🤖 Android App</a>
-                </div>
               </div>
-              
+            </div>
+            
               <div class="instructions">
                 <h4>Next Steps:</h4>
                 <ol>
-                  <li>Download the Timely mobile app using the links above</li>
-                  <li>Open the app and log in with your credentials</li>
-                  <li>Enjoy your event experience!</li>
-                </ol>
-              </div>
+                <li>Download the Timely mobile app using the links above</li>
+                <li>Open the app and log in with your credentials</li>
+                <li>Enjoy your event experience!</li>
+              </ol>
+            </div>
             </div>
             
             <div class="footer">
@@ -289,7 +289,7 @@ module.exports = async function handler(req, res) {
     // Logo and Favicon URLs - hosted on CDN (Vercel automatically serves files from /website folder)
     const LOGO_URL = 'https://ontimely.co.uk/on-timely-official-logo-email.png'; // Logo in email top left
     const FAVICON_URL = 'https://ontimely.co.uk/ontimely-favicon-email.png'; // Email avatar/profile photo
-    
+
     const formEmailHtml = `
       <!DOCTYPE html>
       <html lang="en">

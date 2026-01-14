@@ -69,8 +69,8 @@ export default async function handler(req, res) {
                               <h1 style="margin: 0 0 30px 0; font-size: 48px; font-weight: 700; color: #ffffff; text-transform: uppercase; letter-spacing: 2px; line-height: 1.2;">${eventName}</h1>
                               <p style="margin: 0 0 30px 0; font-size: 18px; font-weight: 600; color: #ffffff; line-height: 1.6;">Hi ${guestName},</p>
                               <p style="margin: 0 0 30px 0; font-size: 18px; font-weight: 600; color: #ffffff; line-height: 1.6;">You've been invited to join <strong style="color: #22c55e;">${eventName}</strong> as a guest. Please confirm your email and download the OnTimely mobile app to get started.</p>
-                              
-                              <!-- Confirmation Button -->
+                
+                <!-- Confirmation Button -->
                               <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 40px 0;">
                                 <tr>
                                   <td align="left">
@@ -78,8 +78,8 @@ export default async function handler(req, res) {
                                   </td>
                                 </tr>
                               </table>
-                              
-                              <!-- Login Credentials -->
+                
+                <!-- Login Credentials -->
                               <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: 40px 0; background-color: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;">
                                 <tr>
                                   <td style="padding: 30px;">
@@ -102,8 +102,8 @@ export default async function handler(req, res) {
                                   </td>
                                 </tr>
                               </table>
-                              
-                              <!-- App Download Links -->
+                
+                <!-- App Download Links -->
                               <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: 40px 0;">
                                 <tr>
                                   <td align="left">
@@ -183,7 +183,7 @@ export default async function handler(req, res) {
                           <td>
                             <h1 style="margin: 0 0 30px 0; font-size: 48px; font-weight: 700; color: #ffffff; text-transform: uppercase; letter-spacing: 2px; line-height: 1.2;">${eventName}</h1>
                             <p style="margin: 0 0 40px 0; font-size: 18px; font-weight: 600; color: #ffffff; line-height: 1.6;">Please complete your form using the link below:</p>
-                            
+              
                             <!-- Button -->
                             <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 40px 0;">
                               <tr>
@@ -192,7 +192,7 @@ export default async function handler(req, res) {
                                 </td>
                               </tr>
                             </table>
-                            
+              
                             <!-- Link Fallback -->
                             <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: 40px 0; border: 2px solid #22c55e; border-radius: 8px;">
                               <tr>

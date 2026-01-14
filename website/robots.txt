@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /reset-password
+Disallow: /confirm-account
+Disallow: /set-initial-password
+Disallow: /forms
+Disallow: /guest-success-email-confirmed
+
+Sitemap: https://ontimely.com/sitemap.xml
+

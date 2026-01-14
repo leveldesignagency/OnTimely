@@ -29,7 +29,7 @@ module.exports = async (req, res) => {
       from: `OnTimely <${FROM_EMAIL}>`,
       to: [email],
       subject: `Confirm Your OnTimely Account - Welcome ${name}!`,
-      html: `
+             html: `
         <!DOCTYPE html>
         <html lang="en">
         <head>
@@ -177,11 +177,11 @@ module.exports = async (req, res) => {
             <div class="header">
               <div class="avatar-placeholder">
                 <img src="data:image/png;base64,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" alt="OnTimely Logo" style="width: 100%; height: 100%; border-radius: 50%; object-fit: contain; padding: 8px;" />
-              </div>
+                   </div>
               <h1>Welcome to OnTimely!</h1>
               <p>Your account is ready</p>
-            </div>
-            
+                     </div>
+                     
             <div class="content">
               <h2>Hi ${name},</h2>
               <p>Your OnTimely account has been created successfully!</p>
@@ -191,34 +191,34 @@ module.exports = async (req, res) => {
                 <p><strong>Email:</strong> ${email}</p>
                 <p><strong>Company:</strong> ${companyName}</p>
                 <p><strong>Status:</strong> Pending Email Confirmation</p>
-              </div>
+                   </div>
               ` : `
               <div class="info-box">
                 <p><strong>Email:</strong> ${email}</p>
                 <p><strong>Status:</strong> Pending Email Confirmation</p>
-              </div>
+                 </div>
               `}
               
               <p>To complete your account setup, please confirm your email address:</p>
               
               <div style="text-align: center;">
                 <a href="${confirmationUrl}" class="button">Confirm Email Address</a>
-              </div>
-              
+                   </div>
+                   
               <div class="link-fallback">
                 <p>If the button doesn't work, copy this link:</p>
                 <a href="${confirmationUrl}">${confirmationUrl}</a>
-              </div>
-            </div>
-            
+                     </div>
+                   </div>
+                   
             <div class="footer">
               <p><strong>OnTimely</strong> - Professional Event Management Platform</p>
               <p>This link expires in 24 hours for security reasons.</p>
-            </div>
-          </div>
+                   </div>
+                 </div>
         </body>
         </html>
-      `,
+             `,
     };
 
     console.log('Sending email with payload:', emailPayload);
